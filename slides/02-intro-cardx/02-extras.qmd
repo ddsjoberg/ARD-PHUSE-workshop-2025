@@ -1,0 +1,144 @@
+## When things go wrong 😱
+
+What happens when statistics are un-calculable? 
+
+```{r}
+#| message: true
+ard_gone_wrong <- 
+  cards::ADSL |> 
+  cards::ard_continuous(
+    by = ARM,
+    variable = AGEGR1,
+    statistic = ~list(kurtosis = \(x) e1071::kurtosis(x))
+  ) |> 
+  cards::replace_null_statistic()
+ard_gone_wrong
+```
+
+::: {.fragment}
+
+```r
+cards::print_ard_conditions(ard_gone_wrong)
+```
+
+![](images/ard-error-msg.png)
+
+:::
+
+::: {.notes}
+
+- Where is the statistic? `AGEGR1` is _character_
+
+- Even when there are errors or warnings, we still get the ARD with the expected structure returned.
+
+  - THIS IS BIG! There are MANY circumstances, when you are designing TLGs early in a study when you do not have all the data required to calculate every statistic.
+  
+  - This allows you to design everything up-front.
+  
+- We can also report these warnings and errors back to users. <!CLICK!>
+
+:::
+
+## Mock ARDs
+
+Like mock tables, mock ARDs are often useful as well
+
+```{r}
+#| message: true
+cards::bind_ard(
+  cards::mock_categorical(variables = list(AGEGR1 = c("<65", ">=65"))),
+  cards::mock_continuous(variables = "AGE")
+) |> 
+  cards::apply_fmt_fn()
+```
+
+## Mock ARDs
+
+```{r}
+#| message: true
+cards::bind_ard(
+  cards::mock_continuous(variables = "AGE", 
+                         by = list(ARM = c("Drug A", "Drug B"))),
+  cards::mock_categorical(variables = list(AGEGR1 = c("<65", ">=65")),
+                          by = list(ARM = c("Drug A", "Drug B")))
+) |> 
+  gtsummary::tbl_ard_summary(
+    by = ARM,
+    type  = AGE ~ "continuous2",
+    statistic = AGE ~ c("{N}", "{mean} ({sd})", "{median} ({p25}, {p75})")
+  )
+```
+
+## Other ARD Representations
+
+While the data frame-based ARD is easy to work with, language-agnostic representations are often useful.
+
+```{r}
+#| echo: false
+ard <- cards::ard_continuous(cards::ADSL, by = ARM, variables = AGE)
+
+# taken from SO https://stackoverflow.com/questions/23114654
+# this truncates the number of lines in a chunk output
+hook_output <- knitr::knit_hooks$get("output")
+knitr::knit_hooks$set(output = function(x, options) {
+  lines <- options$output.lines
+  if (is.null(lines)) {
+    return(hook_output(x, options)) # pass to default hook
+  }
+  x <- unlist(strsplit(x, "\n"))
+  more <- "..."
+  if (length(lines) == 1) { # first n lines
+    if (length(x) > lines) {
+      # truncate the output, but add ....
+      x <- c(head(x, lines), more)
+    }
+  } else {
+    x <- c(more, x[lines], more)
+  }
+  # paste these lines together
+  x <- paste(c(x, ""), collapse = "\n")
+  hook_output(x, options)
+})
+```
+
+::: columns
+::: {.column width="50%"}
+
+**YAML**
+
+```{r, output.lines=15}
+cards::as_nested_list(ard) |> 
+  yaml::as.yaml() |> 
+  cat()
+```
+
+:::
+
+
+::: {.column width="50%"}
+
+**JSON**
+
+```{r, output.lines=15}
+cards::as_nested_list(ard) |> 
+  jsonlite::toJSON(pretty = TRUE)
+ 
+```
+
+:::
+
+:::
+
+## Break
+
+![](images/sister-act-2-dance.gif){width=100%}
+
+::: aside
+[Sister Act 2: Back in the Habit](https://www.youtube.com/watch?v=GqqhKyMZHe0)
+:::
+```{r}
+#| echo: false
+#| cache: false
+library(countdown)
+countdown(minutes = 10)
+```

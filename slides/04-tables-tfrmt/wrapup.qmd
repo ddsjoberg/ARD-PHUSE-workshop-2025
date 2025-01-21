@@ -1,0 +1,33 @@
+# Workshop recap
+
+## Workshop recap
+
+1. Introduction to the Analysis Results Standard and {cards}
+
+2. Introduction to the {cardx} Package and ARD Extras
+
+3. ARD to Tables with {gtsummary}
+
+4. ARD to Tables with {tfrmt}
+
+
+## Slido
+
+Wrap-up slido quiz
+
+## Learning more
+
+- {cards}: [https://insightsengineering.github.io/cards/](https://insightsengineering.github.io/cards/)
+
+- {cardx}: [https://insightsengineering.github.io/cardx/](https://insightsengineering.github.io/cardx/)
+
+- {gtsummary}: [https://www.danieldsjoberg.com/gtsummary/](https://www.danieldsjoberg.com/gtsummary/)
+
+- {tfrmt}: [https://gsk-biostatistics.github.io/tfrmt/](https://gsk-biostatistics.github.io/tfrmt/)
+
+- {tfrmtbuilder}: [https://gsk-biostatistics.github.io/tfrmtbuilder/](https://gsk-biostatistics.github.io/tfrmtbuilder/)
+
+
+## Thank you for coming! 🎉
+
+ ![](images/questions.jpg){fig-align="center"}

@@ -1,0 +1,37 @@
+---
+title: "ARD to Tables with {tfrmt}" 
+author: "Daniel D. Sjoberg and Becca Krouse"
+logo: "images/tfrmt-hex.png"
+footer: "[bit.ly/rpharma-ard](https://bit.ly/rpharma-ard)"
+editor: source
+engine: knitr
+format: 
+  revealjs: 
+    theme: ../slides.scss
+    transition: fade
+    slide-number: true
+    chalkboard: true
+execute:
+  echo: true
+  freeze: false
+cache: false
+---
+
+## Workshop outline
+
+::: {.larger}
+
+1. Introduction to the Analysis Results Standard and {cards}
+
+2. Introduction to the {cardx} Package and ARD Extras
+
+3. ARD to Tables with {gtsummary}
+
+4. _**ARD to Tables with {tfrmt}**_
+
+:::
+
+
+{{< include tfrmt.qmd >}}
+
+{{< include wrapup.qmd >}}

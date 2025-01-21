@@ -1,0 +1,48 @@
+---
+title: "gtsummary + ARD"
+author: "Daniel D. Sjoberg and Becca Krouse"
+logo: "images/gtsummary-logo.png"
+footer: "[bit.ly/rpharma-ard](https://bit.ly/rpharma-ard)"
+editor: source
+format: 
+  revealjs: 
+    theme: slides.scss
+    transition: fade
+    slide-number: true
+    chalkboard: true
+execute:
+  echo: true
+---
+
+## Workshop outline
+
+::: {.larger}
+
+1. Introduction to the Analysis Results Standard and {cards}
+
+2. Introduction to the {cardx} Package and ARD Extras
+
+3. _**ARD to Tables with {gtsummary}**_
+
+4. ARD to Tables with {tfrmt}
+
+:::
+
+{{< include 00-setup.qmd >}}
+
+{{< include 01-background.qmd >}}
+
+{{< include 02-trial.qmd >}}
+
+{{< include 03-tbl_summary.qmd >}}
+
+{{< include 04-tbl_merge.qmd >}}
+
+{{< include 05-ard-first.qmd >}}
+
+{{< include 07-themes.qmd >}}
+
+{{< include 08-print_engines.qmd >}}
+
+{{< include 09-summary.qmd >}}
+

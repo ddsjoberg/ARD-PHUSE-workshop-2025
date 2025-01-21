@@ -1,0 +1,47 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - "*.qmd"
+    - "!slides/[0-9]*.qmd"
+
+website:
+  page-navigation: true
+  title: "Analysis Results Datasets"
+  description: "R in Pharma Workshop 2024"
+  favicon: "images/cards-hex.png"
+
+  repo-url: https://github.com/ddsjoberg/ARD-RinPharma-workshop-2024
+  repo-actions: [edit, issue]
+
+  page-footer:
+    left: "This page is built with ❤️ and [Quarto](https://quarto.org/). Inspired by [@minecr.bsky.social](https://bsky.app/profile/minecr.bsky.social)."
+    background: "#AD99AE"
+
+  sidebar:
+    background: "#AD99AE"
+    logo: "images/cards-hex.png"
+    pinned: true
+    align: center
+    tools:
+      - icon: github
+        href: https://github.com/ddsjoberg/ARD-RinPharma-workshop-2024
+        text: GitHub
+    style: docked
+    contents:
+     - href: index.qmd
+       text: Home
+     - href: exercises.qmd
+     - href: license.qmd
+
+format:
+  html:
+    theme: [cosmo, theme.scss]
+    toc: true
+    code-copy: true
+    code-overflow: scroll
+    mainfont: "Atkinson Hyperlegible"
+    highlight-style: a11y
+  
+editor: source
+

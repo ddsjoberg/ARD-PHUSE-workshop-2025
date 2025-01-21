@@ -1,0 +1,169 @@
+
+# Introduction
+
+## This workshop is for you if...
+
+- You want to learn about ARDs 
+
+- You want to learn about new tools for working with ARDs
+
+- You want to learn how to make displays from ARDs
+
+- You want to practice coding with hands-on exercises
+
+## Workshop expectations
+
+- What to do if you find a bug? 🐛
+
+- Ask questions!
+
+- Let us know in the chat if you need help
+
+- Be respectful, follow the Terms and Conditions of R/Pharma
+https://rinpharma.com/terms/
+
+
+
+## Who are you?
+
+::: {.larger}
+
+Slido quiz time!
+
+:::
+
+## Working environment
+
+-   For consistency, we will be working in Posit Cloud  
+
+-   Everything has been installed and set up for you 
+
+-   You can also opt to work in local RStudio
+
+-   Following the course, all content from this workshop will be available on the course website and GitHub 
+
+
+## Quick warm-up
+
+```{r}
+#| echo: false
+#| cache: false
+library(countdown)
+countdown(minutes = 5, play_sound = TRUE)
+```
+
+-   If using Posit Cloud:
+
+    -   Navigate to Posit Cloud link
+
+    -   Click on the Project to make a personal copy
+  
+-   If using local RStudio:
+
+    -   Exercises can be found here: https://www.danieldsjoberg.com/ARD-RinPharma-workshop-2024/exercises.html
+
+- Open `exercises/01-warmup.R`
+
+- Complete the exercise
+
+
+## Solution for `00-warmup.R`
+
+Using dplyr:
+ 
+- From the ADSL dataset:
+- Subset to the safety population (SAFFL == "Y")
+- calculate the number of unique subjects in each treatment group (TRT01A)  
+
+```{r}
+library(dplyr)
+
+pharmaverseadam::adsl |> 
+  filter(SAFFL == "Y") |> 
+  count(TRT01A)
+```
+
+# Analysis Results Standard
+
+## Analysis Results Standard (ARS)
+
+![](images/ars-flow.png){.fragment fig-align="center"}
+
+![](images/ars-objectives.png){.fragment fig-align="center"}
+
+
+## Analysis Results Standard (ARS)
+
+::: {.incremental}
+
+-   Emerging standard for **prospectively** encoding statistical analysis reporting pipeline in a machine-readable format.
+
+-   Logical model that describes analysis results and associated metadata.
+
+-   Primary objectives:
+
+    -   Leverage analysis results **metadata** to drive **automation** of results 
+  
+    -   Support storage, access, processing, traceability and reproducibility of results
+  
+:::
+
+::: aside
+-   Learn more at [https://www.cdisc.org/events/webinar/analysis-results-standard-public-review](https://www.cdisc.org/events/webinar/analysis-results-standard-public-review) 
+:::
+
+## Analysis Results Standard (ARS)
+
+Example ARS Flow
+
+![](images/ars-example-flow.png){fig-align="center"}
+
+- The ARS provides a metadata-driven infrastructure for analysis
+
+## Analysis Results Standard (ARS)
+
+Example ARS Flow
+
+![](images/ars-example-flow-with-hex.png){fig-align="center"}
+
+- The ARS provides a metadata-driven infrastructure for analysis
+
+- {cards} serves as the engine for the analysis 
+
+## Analysis Results Data (ARD)
+
+::: {.incremental}
+
+-   Encodes statistical analysis outcomes in a machine-readable format.
+
+-   The ARD model specifies how statistical results are saved into a structured format.
+
+-   The ARD can be used to to subsequently create tables and figures.
+
+-   The ARD does *not* describe the layout of the results
+
+:::
+
+## Analysis Results Data (ARD)
+
+* After the initial creation of an ARD, the results can later be re-used again and again for subsequent reporting needs.
+
+![](images/ard-flow.png){fig-align="center"}
+
+## A few notes about ARDs
+
+:::{.incremental}
+
+-   Rethinking QC
+
+    -   QC can be focused on the raw value, not the formatted display
+  
+        -   You don’t have to waste time trying to match formatting to match QC
+    
+        -   But...QC will be more sensitive to floating point
+    
+-   Flexible data file types
+
+    -   ARD can be saved as a dataset (rds, xpt, etc) or json file
+  
+:::

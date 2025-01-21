@@ -1,0 +1,65 @@
+---
+title: "Unlocking Analysis Results Datasets (ARDs)"
+subtitle: "A Practical Workshop for Creating and Utilizing ARDs for Clinical Reporting"
+author: "Daniel D. Sjoberg and Becca Krouse"
+logo: "images/cards-hex.png"
+footer: "[bit.ly/rpharma-ard](https://bit.ly/rpharma-ard)"
+editor: source
+engine: knitr
+format: 
+  revealjs: 
+    theme: ../slides.scss
+    transition: fade
+    slide-number: true
+    chalkboard: true
+execute:
+  echo: true
+  freeze: false
+cache: false
+---
+
+## Instructors
+
+:::: {.columns}
+
+::: {.column}
+:::{.larger}
+Who are we? 
+
+What do we do? 
+
+Why are we here?
+:::
+:::
+
+::: {.column}
+
+![Daniel Sjoberg, Genentech](images/dan-circle.png){fig-alt="Headshot of Daniel Sjoberg" width="300"}
+:::
+::: {.column}
+
+![Becca Krouse, GSK](images/becca.png){fig-alt="Headshot of Becca Krouse" width="200"}
+:::
+
+::: {.column}
+
+![Jack Talboys, Novartis](images/jack-circle.png){fig-alt="Headshot of Jack Talboys" width="200"}
+
+:::
+
+::::
+
+## Workshop outline
+
+1. Introduction to the Analysis Results Standard and {cards}
+
+2. Introduction to the {cardx} Package and ARD Extras
+
+3. ARD to Tables with {gtsummary}
+
+4. ARD to Tables with {tfrmt}
+
+{{< include intro.qmd >}}
+
+{{< include cards.qmd >}}
+ 

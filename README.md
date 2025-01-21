@@ -1,1 +1,1 @@
-# ARD-PHUSE-workshop-2025
+# ARD-RinPharma-workshop-2024

@@ -1,0 +1,206 @@
+# {cardx} (read: extra cards)
+
+## {cardx}
+
+-   Extension of the {cards} package, providing additional functions to create Analysis Results Datasets (ARDs)
+
+-   The {cardx} package exports many `ard_*()` function for statistical methods.
+
+![](images/cards-cardx-hex.png){fig-alt="cards and cardx package logos" fig-align="center"}
+
+## {cardx}
+
+-   Exports ARD frameworks for statistical analyses from many packages 
+
+::: {.larger}
+
+      - {stats}
+      - {car}
+      - {effectsize}
+      - {emmeans}
+      - {geepack}
+      - {lme4}
+      - {parameters}
+      - {smd}
+      - {survey}
+      - {survival}
+
+:::
+
+-   This list is growing (rather quickly) 🌱
+
+## {cardx} t-test Example
+
+::: {.small}
+
+- We see the results like the mean difference, the confidence interval, and p-value as expected.
+
+- And we also see the function's inputs, which is incredibly useful for re-use, e.g. we know the we did not use equal variances.
+
+:::
+
+```{r}
+#| message: true
+pharmaverseadam::adsl |> 
+  dplyr::filter(ARM %in% c("Xanomeline High Dose", "Xanomeline Low Dose")) |>
+  cardx::ard_stats_t_test(by = ARM, variables = AGE)
+```
+
+## {cardx} t-test Example
+
+- _What to do if a method you need is not implemented?_
+
+- It's simple to wrap existing frameworks to customize.
+
+- One-sample t-test example utilizing `cards::ard_continuous()`.
+
+```{r}
+#| message: true
+pharmaverseadam::adsl |> 
+  dplyr::filter(ARM %in% c("Xanomeline High Dose", "Xanomeline Low Dose")) |>
+  cards::ard_continuous(
+    variables = AGE,
+    statistic = everything() ~ list(t_test = \(x) t.test(x) |> broom::tidy())
+  ) |> 
+  dplyr::mutate(context = "t_test_one_sample")
+```
+
+## {cardx} t-test Example
+
+- How to modify if we need a two-sample test, or more generally accessing other columns in the data frame.
+
+```{r}
+#| message: true
+pharmaverseadam::adsl |> 
+  dplyr::filter(ARM %in% c("Xanomeline High Dose", "Xanomeline Low Dose")) |>
+  cards::ard_complex(
+    variables = AGE,
+    statistic = 
+      ~ list(t_test = \(x, data, ...) t.test(x ~ data$ARM) |> broom::tidy())
+  ) |> 
+  dplyr::mutate(group1 = "ARM", context = "t_test_two_sample") |> 
+  cards::tidy_ard_column_order()
+```
+
+## {cardx} Regression
+
+-   Includes functionality to summarize nearly every type of regression model in the R ecosystem: 
+
+::: {.small}
+
+`r broom.helpers::supported_models$model` (and more)
+
+:::
+
+## {cardx} Regression Example
+
+
+```{r}
+#| message: true
+#| warning: false
+library(survival)
+
+# build model
+mod <- pharmaverseadam::adtte_onco |> 
+  dplyr::filter(PARAM %in% "Progression Free Survival") |>
+  coxph(ggsurvfit::Surv_CNSR() ~ ARM, data = _)
+
+# put model in a summary table
+tbl <- gtsummary::tbl_regression(mod, exponentiate = TRUE) |> 
+  gtsummary::add_n(location = c('label', 'level')) |> 
+  gtsummary::add_nevent(location = c('label', 'level'))
+```
+
+<br>
+
+```{r}
+#| echo: false
+tbl |> 
+  gtsummary::as_gt() |> 
+  gt::cols_width(c(stat_n, stat_nevent, estimate, p.value) ~ gt::px(25))
+```
+
+## {cardx} Regression Example
+
+The `cardx::ard_regression()` does **a lot** for us in the background.
+
+- Identifies the variable from the regression terms (i.e. groups levels of the same variable)
+- Identifies reference groups from categorical covariates
+- Finds variable labels from the source data frames
+- Knows the total N of the model, the number of events, and can do the same for each level of categorical variables
+- Contextually aware of slopes, odds ratios, hazard ratios, and incidence rate ratios
+- And much _**much**_ more.
+  
+## {cardx} Exercise
+
+- Open `exercises/03-cardx.R` 
+
+- Compute the demographic summaries as described
+
+```{r}
+#| echo: false
+#| cache: false
+library(countdown)
+countdown(minutes = 8, play_sound = TRUE)
+```
+
+## {cardx} Exercise Solution
+
+Prompt: Compare AGE, SEX, RACE distributions across treatment arms (TRT01A)
+
+A. First, compute the Kruskal-Wallis test for AGE by TRT01A 
+
+```{r}
+#| message: true
+adsl <- pharmaverseadam::adsl |> dplyr::filter(SAFFL == "Y") 
+
+kruskal_ard <-  
+  cardx::ard_stats_kruskal_test( 
+    data = adsl,  
+    by = TRT01A, 
+    variables = AGE 
+  ) 
+
+kruskal_ard
+```
+
+## {cardx} Exercise Solution: Demographic comparison with {cardx} 
+
+Second, compute the Chi-squared test for SEX, RACE by TRT01A 
+
+::: {.small}
+
+```{r}
+#| message: true
+chisq_ard <-  
+  cardx::ard_stats_chisq_test( 
+    data = adsl,  
+    by = TRT01A, 
+    variables = c(SEX, RACE) 
+  ) 
+chisq_ard |> 
+  dplyr::filter(!stat_name %in% c("p", "B")) |> 
+  dplyr::select(-warning)
+```
+
+:::
+
+## {cardx} Exercise Solution: Demographic comparison with {cardx} 
+
+ Combine your results with `cards::bind_ard()` and subset the ARD to include the rows with p-values only 
+ 
+```{r}
+#| message: true
+final_ard <-  
+  cards::bind_ard( 
+    kruskal_ard,  
+    chisq_ard 
+  ) |>  
+  dplyr::filter(stat_name == "p.value") 
+
+final_ard
+final_ard$warning[[3]]
+```
+
+
+

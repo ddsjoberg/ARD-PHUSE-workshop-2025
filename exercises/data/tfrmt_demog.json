@@ -1,0 +1,121 @@
+{
+  "group": ["variable"],
+  "label": ["label"],
+  "param": ["stat_name"],
+  "value": ["stat"],
+  "column": ["TRT01A"],
+  "title": ["Demographic Table"],
+  "subtitle": ["Safety Population"],
+  "body_plan": [
+    {
+      "group_val": [".default"],
+      "label_val": [".default"],
+      "param_val": ["n", "p"],
+      "frmt_combine": {
+        "expression": ["{n} ({p}%)"],
+        "frmt_ls": {
+          "n": {
+            "frmt": {
+              "expression": ["xx"],
+              "missing": {},
+              "scientific": {},
+              "transform": {}
+            }
+          },
+          "p": {
+            "frmt": {
+              "expression": ["xx.x"],
+              "missing": {},
+              "scientific": {},
+              "transform": {}
+            }
+          }
+        },
+        "missing": {}
+      }
+    },
+    {
+      "group_val": [".default"],
+      "label_val": ["Median"],
+      "param_val": [".default"],
+      "frmt": {
+        "expression": ["xx.x"],
+        "missing": {},
+        "scientific": {},
+        "transform": {}
+      }
+    },
+    {
+      "group_val": [".default"],
+      "label_val": [".default"],
+      "param_val": ["p25", "p75"],
+      "frmt_combine": {
+        "expression": ["{p25}, {p75}"],
+        "frmt_ls": {
+          "p25": {
+            "frmt": {
+              "expression": ["xx.x"],
+              "missing": {},
+              "scientific": {},
+              "transform": {}
+            }
+          },
+          "p75": {
+            "frmt": {
+              "expression": ["xx.x"],
+              "missing": {},
+              "scientific": {},
+              "transform": {}
+            }
+          }
+        },
+        "missing": {}
+      }
+    }
+  ],
+  "col_style_plan": [
+    {
+      "cols": [
+        ["Placebo"],
+        ["Active"]
+      ],
+      "align": [" "],
+      "type": ["char"],
+      "width": {}
+    }
+  ],
+  "col_plan": {
+    "col_plan": {
+      "dots": [
+        ["variable"],
+        ["label"],
+        ["Placebo"],
+        ["Active"],
+        ["-starts_with(\"ord\")"]
+      ],
+      ".drop": [false]
+    }
+  },
+  "sorting_cols": ["ord1", "ord2"],
+  "big_n": {
+    "param_val": ["bigN"],
+    "n_frmt": {
+      "expression": ["<br>N = xx"],
+      "missing": {},
+      "scientific": {},
+      "transform": {}
+    },
+    "by_page": [false]
+  },
+  "footnote_plan": {
+    "struct_list": [
+      {
+        "column_val": ["Active"],
+        "group_val": {},
+        "label_val": {},
+        "footnote_text": ["Pooled High and Low Dose"]
+      }
+    ],
+    "marks": ["numbers"]
+  }
+}

@@ -1,0 +1,125 @@
+---
+title: Exercises
+---
+
+### Exercises
+
+#### `00-warmup.R`
+
+```{r}
+#| echo: false
+#| warning: false
+readLines(here::here("exercises", "00-warmup.R")) |> 
+  purrr::walk(~cat(.x, "\n"))
+```
+
+#### `01-cards-partA.R`
+
+```{r}
+#| echo: false
+#| warning: false
+readLines(here::here("exercises", "01-cards-partA.R")) |> 
+  purrr::walk(~cat(.x, "\n"))
+```
+
+#### `01-cards-partB.R`
+
+```{r}
+#| echo: false
+#| warning: false
+readLines(here::here("exercises", "01-cards-partB.R")) |> 
+  purrr::walk(~cat(.x, "\n"))
+```
+
+#### `02-cardx.R`
+
+```{r}
+#| echo: false
+#| warning: false
+readLines(here::here("exercises", "02-cardx.R")) |> 
+  purrr::walk(~cat(.x, "\n"))
+```
+
+#### `03-gtsummary-partA.R`
+
+```{r}
+#| echo: false
+#| warning: false
+readLines(here::here("exercises", "03-gtsummary-partA.R")) |> 
+  purrr::walk(~cat(.x, "\n"))
+```
+
+#### `03-gtsummary-partB.R`
+
+```{r}
+#| echo: false
+#| warning: false
+readLines(here::here("exercises", "03-gtsummary-partB.R")) |> 
+  purrr::walk(~cat(.x, "\n"))
+```
+
+#### `04-tables-tfrmt.R`
+
+```{r}
+#| echo: false
+#| warning: false
+readLines(here::here("exercises", "04-tables-tfrmt.R")) |> 
+  purrr::walk(~cat(.x, "\n"))
+```
+
+### Solutions
+
+#### `00-warmup-answer-answer.R`
+
+```{r}
+#| echo: false
+#| warning: false
+readLines(here::here("exercises", "answers", "00-warmup-answer.R")) |> 
+  purrr::walk(~cat(.x, "\n"))
+```
+
+#### `01-cards-partA-answer.R`
+
+```{r}
+#| echo: false
+#| warning: false
+readLines(here::here("exercises", "answers", "01-cards-partA-answer.R")) |> 
+  purrr::walk(~cat(.x, "\n"))
+```
+
+#### `01-cards-partB-answer.R`
+
+```{r}
+#| echo: false
+#| warning: false
+readLines(here::here("exercises", "answers", "01-cards-partB-answer.R")) |> 
+  purrr::walk(~cat(.x, "\n"))
+```
+
+#### `02-cardx-answer.R`
+
+```{r}
+#| echo: false
+#| warning: false
+readLines(here::here("exercises", "answers", "02-cardx-answer.R")) |> 
+  purrr::walk(~cat(.x, "\n"))
+```
+
+#### `03-gtsummary-partA-answer.R`
+
+```{r}
+#| echo: false
+#| warning: false
+readLines(here::here("exercises", "answers", "03-gtsummary-partA-answer.R")) |> 
+  purrr::walk(~cat(.x, "\n"))
+```
+
+#### `03-gtsummary-partB-answer.R`
+
+```{r}
+#| echo: false
+#| warning: false
+readLines(here::here("exercises", "answers", "03-gtsummary-partB-answer.R")) |> 
+  purrr::walk(~cat(.x, "\n"))
+```
+

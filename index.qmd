@@ -1,0 +1,98 @@
+---
+title: "Unlocking Analysis Results Datasets (ARDs)"
+subtitle: "A Practical Workshop for Creating and Utilizing ARDs for Clinical Reporting"
+engine: knitr
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+------------------------------------------------------------------------
+
+🗓️ October 28, 2024 \| 13:00-16:00 EDT
+
+📝 [R in Pharma & Workshop Registration](https://events.zoom.us/ev/AvobJEOTVwkUnH6_TgLZDZJauk4dxfm5jCG8JFNN9zukOcsVLvTN~AmO5XY5HRBcxkKG6Hga1aXZaYtpBSER6jHms1seP-NNOA0dhcQZUGJ2NWg)
+
+🌐 Virtual and FREE!
+
+------------------------------------------------------------------------
+
+## Description
+
+The CDISC Analysis Results Data (ARD) Model is an emerging standard for encoding statistical analysis summaries in a machine-readable format. Its primary objective is to streamline the processes of automation, ensuring reproducibility, promoting reusability, and enhancing traceability.
+The newly released {cards} R package, a collaborative effort including Roche, GSK, and Novartis, offers a variety of functions for ARD generation. These range from basic univariate summaries like means and tabulations to complex multivariable summaries encompassing regression models and statistical tests.
+In this interactive workshop, attendees will learn about ARDs and how they fit into the larger CDISC Analysis Results Standard. They will get hands-on experience using {cards} to build ARDs for both simple and complex statistical summaries. Lastly, attendees will also be introduced to open-source tools for converting their ARDs into tables using the {gtsummary} and {tfrmt} R packages. Attendees will leave with a solid understanding of ARDs and the knowledge of how to integrate them into their daily work using open-source tools.
+
+## Schedule
+
+```{r}
+#| echo: false
+tibble::tribble(
+  ~time, ~desc,
+  "Section 1", "[Introduction to the Analysis Results Standard and {cards}](https://www.danieldsjoberg.com/ARD-RinPharma-workshop-2024/slides/01-intro-cards)",
+  "Section 2", "[Introduction to the {cardx} Package and ARD Extras](https://www.danieldsjoberg.com/ARD-RinPharma-workshop-2024/slides/02-intro-cardx)",
+  "Section 3", "[ARD to Tables with {gtsummary}](https://www.danieldsjoberg.com/ARD-RinPharma-workshop-2024/slides/03-tables-gtsummary)",
+  "Section 4", "[ARD to Tables with {tfrmt}](https://www.danieldsjoberg.com/ARD-RinPharma-workshop-2024/slides/04-tables-tfrmt)",
+) |> 
+  gt::gt() |> 
+  gt::cols_align(align = "left") |> 
+  gt::tab_style(
+    style = "vertical-align:top",
+    locations = gt::cells_body(columns = gt::everything())
+  ) |> 
+  gt::cols_label(time = gt::md("**Section**"), desc = gt::md("**Topic**")) |> 
+  gt::fmt_markdown()
+```
+
+## Pre-work
+
+- [ ] Bookmark this site. You'll reference it throughout the workshop.
+
+- [ ] Sign up for a *free* [Posit Cloud](https://posit.cloud/) account.
+
+
+## Instructors
+
+![](images/dan-circle.png){style="float:left;padding: 0 10px 0 0;"
+fig-alt="Headshot of Daniel Sjoberg" width="150"}
+
+[**Daniel D. Sjoberg**](https://www.danieldsjoberg.com/) (he/him) is a
+Senior Principal Data Scientist at Genentech. Previously, he was a Lead
+Data Science Manager at the Prostate Cancer Clinical Trials Consortium,
+and a Senior Biostatistician at Memorial Sloan Kettering Cancer Center
+in New York City. He enjoys R package development, creating many
+packages available on [CRAN](https://cran.r-project.org/web/packages/),
+[R-Universe](https://ddsjoberg.r-universe.dev/ui#packages), and
+[GitHub](https://github.com/ddsjoberg). He's a co-organizer of 
+[rainbowR](https://rainbowr.netlify.app/) (a community that supports, promotes 
+and connects LGBTQ+ people who code in the R language) and of the [R Medicine Conference](https://rconsortium.github.io/RMedicine_website/). 
+His research interests include
+adaptive methods in clinical trials, precision medicine, and predictive
+modeling. Daniel is the winner of the 2021 American Statistical
+Association (ASA) Innovation in Statistical Programming and Analytics
+award.
+
+[`r fontawesome::fa("link", fill = "#606060")`](https://www.danieldsjoberg.com/)
+[`r fontawesome::fa("mastodon", fill = "#606060")`](https://mastodon.social/@ddsjoberg)
+[`r fontawesome::fa("linkedin", fill = "#606060")`](https://www.linkedin.com/in/ddsjoberg/)
+[`r fontawesome::fa("github", fill = "#606060")`](https://github.com/ddsjoberg/)
+
+![](images/becca.png){style="float:left;padding: 0 20px 0 20px;"
+fig-alt="Headshot of Becca Krouse" width="140"}
+
+**Becca Krouse** is a data scientist in GSK's Statistics and Data
+Science Innovation Hub. A biostatistician by training, she has
+experience spanning 14+ years in the field of clinical research and
+specializes in developing R-based tools.
+
+<br>
+
+## Workshop Assistant
+
+![](images/jack-circle.png){style="float:left;padding: 0 20px 0 20px;"
+fig-alt="Headshot of Jack Talboys" width="140"}
+
+**Jack Talboys** is a Software Developer at Novartis, recently joining their 
+Open-Source Enablement team. Before that he worked as a Data Scientist for Ascent, a
+Software Consultancy, building Shiny apps and R packages for companies across
+a range of industries including Insurance, Finance, and Pharma.

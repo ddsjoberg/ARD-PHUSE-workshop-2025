@@ -1,0 +1,201 @@
+# ARD-first tables
+
+## ARD-first Tables
+
+Similar to functions that accept a data frame, the package exports functions with nearly identical APIs that accept an ARD.
+
+::: columns
+::: {.column width="50%"}
+
+```r
+tbl_summary()
+
+tbl_continuous()
+
+tbl_wide_summary()
+```
+
+:::
+::: {.column width="50%"}
+
+```r
+tbl_ard_summary()
+
+tbl_ard_continuous()
+
+tbl_ard_wide_summary()
+```
+
+:::
+:::
+
+## ARD-first Tables
+
+We can use the skills we learned earlier today to create ARDs for gtsummary tables.
+
+```{r}
+#| label: 'ard_stack'
+#| output-location: "column"
+#| message: true
+library(cards)
+library(gtsummary)
+
+ard <- ard_stack(
+  data = trial, 
+  ard_continuous(variables = age),
+  ard_categorical(variables = grade),
+  .attributes=TRUE
+)
+
+ard |> print(n = 7)
+```
+
+::: aside
+The `.attributes=TRUE` call adds column attributes, like labels, to the ARD table, which leads to better defaults by displaying the column labels in the table.
+:::
+
+## ARD-first Tables
+
+We can simply use the ARD from the previous slide, and pass it to `tbl_ard_summary()` for a summary table.
+
+```{r}
+#| label: 'tbl_ard_summary'
+#| output-location: "column"
+#| message: true
+
+tbl_ard_summary(ard)
+```
+
+
+## ARD-first Tables
+
+Now let's try a somewhat more complicated table.
+
+```{r}
+#| label: 'tbl_ard_summary2'
+#| output-location: "slide"
+#| code-line-numbers: "|3|7-8|10-16|17"
+trial |> 
+  ard_stack( 
+    .by = trt,
+    ard_continuous(variables = age),
+    ard_categorical(variables = grade),
+    # add this for best-looking tables
+    .attributes = TRUE,
+    .overall = TRUE # get unstratified summary statistics
+  ) |> 
+  tbl_ard_summary(
+    by = trt,
+    type = all_continuous() ~ "continuous2",
+    statistic = all_continuous() ~ c("{mean} ({sd})", "{min} - {max}"),
+    label = list(age = "Patient Age, yrs"),
+    overall = TRUE
+  ) |> 
+  modify_caption("**Table 1. Subject Demographics**")
+```
+
+
+## What About Other Tables?
+
+::: {.small}
+
+- While our examples have focused on simple demographics tables, the ARD structure is general and any statistic can be presented.
+
+:::
+
+```{r}
+#| code-line-numbers: "|2|3-4|5-10|11"
+trial |> 
+  cardx::ard_stats_t_test_onesample(by = c(trt, grade), variables = age) |> 
+  cards::update_ard_fmt_fn(stat_names = "p.value", 
+                           fmt_fn = label_style_pvalue(prepend_p = TRUE)) |> 
+  tbl_ard_continuous(
+    by = trt, 
+    include = grade,
+    variable = age,
+    statistic = ~"{estimate} ({conf.low}, {conf.high}; {p.value})"
+  ) |> 
+  modify_footnote(all_stat_cols() ~ "One-sample t-test")
+```
+
+
+## {gtsummary} Exercise 2
+
+1. Navigate to Posit Cloud script `exercises/03-gtsummary_partB.R`.
+
+2. Create the table outlined in the script.
+
+```{r}
+#| echo: false
+#| cache: false
+library(countdown)
+countdown(minutes = 10)
+```
+
+## {gtsummary} Exercise 2 Solution
+
+Create a demographics tables split by TRT01A including AGE, SEX, RACE using ARD-first
+
+```{r}
+#| output-location: "slide"
+#| code-line-numbers: "|7-14|9|10|11|12|13"
+#| message: true
+library(cards) 
+library(gtsummary) 
+adsl <- pharmaverseadam::adsl |> dplyr::filter(SAFFL == "Y") 
+
+# Create the ARD with the needed statistics 
+ard <-  
+  ard_stack( 
+    adsl, 
+    .by = TRT01A, 
+    ard_continuous(variables = AGE), 
+    ard_categorical(variables = c(SEX, RACE)), 
+    .attributes = TRUE,  
+    .overall = TRUE 
+  )
+ard
+```
+
+## {gtsummary} Exercise 2 Solution
+
+```{r}
+#| output-location: "slide"
+#| code-line-numbers: "|2-8|3|4|5|6|7"
+ard |>  
+  tbl_ard_summary( 
+    by = TRT01A, 
+    include = c(AGE, SEX, RACE), 
+    type = AGE ~ 'continuous2', 
+    statistic = AGE ~ c("{mean} ({sd})", "{median} ({p25}, {p75})"), 
+    overall = TRUE 
+  ) 
+```
+
+
+## ARD-first Table *Shells*
+
+```{r}
+#| label: 'tbl_ard_summary-mock'
+#| output-location: "slide"
+#| code-line-numbers: "9-11"
+trial |> 
+  ard_stack( 
+    .by = trt,
+    ard_continuous(variables = age),
+    ard_categorical(variables = grade),
+    # add this for best-looking tables
+    .attributes = TRUE
+  ) |> 
+  update_ard_fmt_fn(stat_names = c("mean", "sd", "min", "max", "p"), 
+                    fmt_fn = \(x) "xx.x") |> 
+  update_ard_fmt_fn(stat_names = "n", fmt_fn = \(x) "xx") |> 
+  tbl_ard_summary(
+    by = trt,
+    type = all_continuous() ~ "continuous2",
+    statistic = all_continuous() ~ c("{mean} ({sd})", "{min} - {max}"),
+    label = list(age = "Patient Age, yrs")
+  ) |> 
+  modify_header(all_stat_cols() ~ "**{level}**  \nN = xx")
+```
+

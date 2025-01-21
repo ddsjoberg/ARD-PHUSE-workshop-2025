@@ -1,0 +1,11 @@
+install.packages(c("devtools",
+                   "tidyverse",
+                   "cards",
+                   "cardx",
+                   "gt",
+                   "gtsummary",
+                   "tfrmt",
+                   "tfrmtbuilder",
+                   "labelled",
+                   "pharmaverseadam"))
+devtools::install_github("insightsengineering/crane")
