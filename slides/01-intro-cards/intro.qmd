@@ -60,7 +60,7 @@ countdown(minutes = 5, play_sound = TRUE)
   
 -   If using local RStudio:
 
-    -   Exercises can be found here: https://www.danieldsjoberg.com/ARD-RinPharma-workshop-2024/exercises.html
+    -   Exercises can be found here: https://www.danieldsjoberg.com/ARD-PHUSE-workshop-2025/exercises.html
 
 - Open `exercises/01-warmup.R`
 

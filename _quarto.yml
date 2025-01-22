@@ -11,7 +11,7 @@ website:
   description: "R in Pharma Workshop 2024"
   favicon: "images/cards-hex.png"
 
-  repo-url: https://github.com/ddsjoberg/ARD-RinPharma-workshop-2024
+  repo-url: https://github.com/ddsjoberg/ARD-PHUSE-workshop-2025
   repo-actions: [edit, issue]
 
   page-footer:
@@ -25,7 +25,7 @@ website:
     align: center
     tools:
       - icon: github
-        href: https://github.com/ddsjoberg/ARD-RinPharma-workshop-2024
+        href: https://github.com/ddsjoberg/ARD-PHUSE-workshop-2025
         text: GitHub
     style: docked
     contents:
