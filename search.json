@@ -772,9 +772,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Unlocking Analysis Results Datasets (ARDs)",
+    "title": "Analysis Results Datasets Using Open-Source Tools from the {pharmaverse}",
     "section": "",
-    "text": "🗓️ October 28, 2024 | 13:00-16:00 EDT\n📝 R in Pharma & Workshop Registration\n🌐 Virtual and FREE!",
+    "text": "🗓️ Tuesday March 18, 2025 | 04:00 - 05:30PM EDT\n📝 PHUSE US Connect Registration\n🏢 Renaissance Orlando at SeaWorld, Oceans 1\n💥 FREE for PHUSE US Connect Attendees!",
     "crumbs": [
       "Home"
     ]
@@ -782,7 +782,7 @@
   {
     "objectID": "index.html#description",
     "href": "index.html#description",
-    "title": "Unlocking Analysis Results Datasets (ARDs)",
+    "title": "Analysis Results Datasets Using Open-Source Tools from the {pharmaverse}",
     "section": "Description",
     "text": "Description\nThe CDISC Analysis Results Data (ARD) Model is an emerging standard for encoding statistical analysis summaries in a machine-readable format. Its primary objective is to streamline the processes of automation, ensuring reproducibility, promoting reusability, and enhancing traceability. The newly released {cards} R package, a collaborative effort including Roche, GSK, and Novartis, offers a variety of functions for ARD generation. These range from basic univariate summaries like means and tabulations to complex multivariable summaries encompassing regression models and statistical tests. In this interactive workshop, attendees will learn about ARDs and how they fit into the larger CDISC Analysis Results Standard. They will get hands-on experience using {cards} to build ARDs for both simple and complex statistical summaries. Lastly, attendees will also be introduced to open-source tools for converting their ARDs into tables using the {gtsummary} and {tfrmt} R packages. Attendees will leave with a solid understanding of ARDs and the knowledge of how to integrate them into their daily work using open-source tools.",
     "crumbs": [
@@ -792,7 +792,7 @@
   {
     "objectID": "index.html#schedule",
     "href": "index.html#schedule",
-    "title": "Unlocking Analysis Results Datasets (ARDs)",
+    "title": "Analysis Results Datasets Using Open-Source Tools from the {pharmaverse}",
     "section": "Schedule",
     "text": "Schedule\n\n\n\n\n\n\n\n\nSection\nTopic\n\n\n\n\nSection 1\nIntroduction to the Analysis Results Standard and {cards}\n\n\nSection 2\nIntroduction to the {cardx} Package and ARD Extras\n\n\nSection 3\nARD to Tables with {gtsummary}\n\n\nSection 4\nARD to Tables with {tfrmt}",
     "crumbs": [
@@ -802,7 +802,7 @@
   {
     "objectID": "index.html#pre-work",
     "href": "index.html#pre-work",
-    "title": "Unlocking Analysis Results Datasets (ARDs)",
+    "title": "Analysis Results Datasets Using Open-Source Tools from the {pharmaverse}",
     "section": "Pre-work",
     "text": "Pre-work\n\nBookmark this site. You’ll reference it throughout the workshop.\nSign up for a free Posit Cloud account.",
     "crumbs": [
@@ -812,7 +812,7 @@
   {
     "objectID": "index.html#instructors",
     "href": "index.html#instructors",
-    "title": "Unlocking Analysis Results Datasets (ARDs)",
+    "title": "Analysis Results Datasets Using Open-Source Tools from the {pharmaverse}",
     "section": "Instructors",
     "text": "Instructors\n\nDaniel D. Sjoberg (he/him) is a Senior Principal Data Scientist at Genentech. Previously, he was a Lead Data Science Manager at the Prostate Cancer Clinical Trials Consortium, and a Senior Biostatistician at Memorial Sloan Kettering Cancer Center in New York City. He enjoys R package development, creating many packages available on CRAN, R-Universe, and GitHub. He’s a co-organizer of rainbowR (a community that supports, promotes and connects LGBTQ+ people who code in the R language) and of the R Medicine Conference. His research interests include adaptive methods in clinical trials, precision medicine, and predictive modeling. Daniel is the winner of the 2021 American Statistical Association (ASA) Innovation in Statistical Programming and Analytics award.\n   \n\nBecca Krouse is a data scientist in GSK’s Statistics and Data Science Innovation Hub. A biostatistician by training, she has experience spanning 14+ years in the field of clinical research and specializes in developing R-based tools.",
     "crumbs": [
@@ -822,7 +822,7 @@
   {
     "objectID": "index.html#workshop-assistant",
     "href": "index.html#workshop-assistant",
-    "title": "Unlocking Analysis Results Datasets (ARDs)",
+    "title": "Analysis Results Datasets Using Open-Source Tools from the {pharmaverse}",
     "section": "Workshop Assistant",
     "text": "Workshop Assistant\n\nJack Talboys is a Software Developer at Novartis, recently joining their Open-Source Enablement team. Before that he worked as a Data Scientist for Ascent, a Software Consultancy, building Shiny apps and R packages for companies across a range of industries including Insurance, Finance, and Pharma.",
     "crumbs": [
