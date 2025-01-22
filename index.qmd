@@ -25,6 +25,16 @@ The newly released {cards} R package, a collaborative effort in the Pharmaverse 
 
 In this interactive workshop, attendees will learn about ARDs and how they fit into the larger CDISC Analysis Results Standard. They will get hands-on experience using {cards} to build ARDs for both simple and complex statistical summaries. Lastly, attendees will also be introduced to open-source tools for converting their ARDs into tables using the {gtsummary} and {tfrmt} R packages. Attendees will leave with a solid understanding of ARDs and the knowledge of how to integrate them into their daily work using open-source tools.
 
+## Slides
+
+[Introduction to the Analysis Results Standard and {cards}](https://www.danieldsjoberg.com/ARD-RinPharma-workshop-2024/slides/01-intro-cards)
+
+[Introduction to the {cardx} Package and ARD Extras](https://www.danieldsjoberg.com/ARD-RinPharma-workshop-2024/slides/02-intro-cardx)
+
+[ARD to Tables with {gtsummary}](https://www.danieldsjoberg.com/ARD-RinPharma-workshop-2024/slides/03-tables-gtsummary)
+
+[ARD to Tables with {tfrmt}](https://www.danieldsjoberg.com/ARD-RinPharma-workshop-2024/slides/04-tables-tfrmt)
+
 ## Instructors
 
 ![](images/dan-circle.png){style="float:left;padding: 0 10px 0 0;"
