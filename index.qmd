@@ -1,6 +1,6 @@
 ---
-title: "Unlocking Analysis Results Datasets (ARDs)"
-subtitle: "A Practical Workshop for Creating and Utilizing ARDs for Clinical Reporting"
+title: "Analysis Results Datasets Using Open-Source Tools from the {pharmaverse}"
+subtitle: "A Hands-on Workshop"
 engine: knitr
 editor: 
   markdown: 
@@ -9,11 +9,13 @@ editor:
 
 ------------------------------------------------------------------------
 
-🗓️ October 28, 2024 \| 13:00-16:00 EDT
+🗓️ Tuesday March 18, 2025  \| 04:00 - 05:30PM EDT
 
-📝 [R in Pharma & Workshop Registration](https://events.zoom.us/ev/AvobJEOTVwkUnH6_TgLZDZJauk4dxfm5jCG8JFNN9zukOcsVLvTN~AmO5XY5HRBcxkKG6Hga1aXZaYtpBSER6jHms1seP-NNOA0dhcQZUGJ2NWg)
+📝 [PHUSE US Connect Registration](https://www.phuse-events.org/attend/frontend/reg/thome.csp?pageID=38599&ef_sel_menu=2971&eventID=61)
 
-🌐 Virtual and FREE!
+🏢 Renaissance Orlando at SeaWorld, Oceans 1
+
+💥 FREE for PHUSE US Connect Attendees!
 
 ------------------------------------------------------------------------
 
