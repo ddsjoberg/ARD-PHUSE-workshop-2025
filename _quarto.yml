@@ -16,10 +16,10 @@ website:
 
   page-footer:
     left: "This page is built with ❤️ and [Quarto](https://quarto.org/). Inspired by [@minecr.bsky.social](https://bsky.app/profile/minecr.bsky.social)."
-    background: "#AD99AE"
+    background: "#99B1C6"
 
   sidebar:
-    background: "#AD99AE"
+    background: "#99B1C6"
     logo: "images/cards-hex.png"
     pinned: true
     align: center
