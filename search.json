@@ -459,7 +459,7 @@
     "href": "slides/01-intro-cards/intro.html",
     "title": "Introduction",
     "section": "",
-    "text": "You want to learn about ARDs\nYou want to learn about new tools for working with ARDs\nYou want to learn how to make displays from ARDs\nYou want to practice coding with hands-on exercises\n\n\n\n\n\nWhat to do if you find a bug? 🐛\nAsk questions!\nLet us know in the chat if you need help\nBe respectful, follow the Terms and Conditions of R/Pharma https://rinpharma.com/terms/\n\n\n\n\n\nSlido quiz time!\n\n\n\n\n\nFor consistency, we will be working in Posit Cloud\nEverything has been installed and set up for you\nYou can also opt to work in local RStudio\nFollowing the course, all content from this workshop will be available on the course website and GitHub\n\n\n\n\n\n\n\n−+\n05:00\n\n\n\n\nIf using Posit Cloud:\n\nNavigate to Posit Cloud link\nClick on the Project to make a personal copy\n\nIf using local RStudio:\n\nExercises can be found here: https://www.danieldsjoberg.com/ARD-RinPharma-workshop-2024/exercises.html\n\nOpen exercises/01-warmup.R\nComplete the exercise\n\n\n\n\nUsing dplyr:\n\nFrom the ADSL dataset:\nSubset to the safety population (SAFFL == “Y”)\ncalculate the number of unique subjects in each treatment group (TRT01A)\n\n\nlibrary(dplyr)\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\npharmaverseadam::adsl |&gt; \n  filter(SAFFL == \"Y\") |&gt; \n  count(TRT01A)\n\n# A tibble: 3 × 2\n  TRT01A                   n\n  &lt;chr&gt;                &lt;int&gt;\n1 Placebo                 86\n2 Xanomeline High Dose    72\n3 Xanomeline Low Dose     96"
+    "text": "You want to learn about ARDs\nYou want to learn about new tools for working with ARDs\nYou want to learn how to make displays from ARDs\nYou want to practice coding with hands-on exercises\n\n\n\n\n\nWhat to do if you find a bug? 🐛\nAsk questions!\nLet us know in the chat if you need help\nBe respectful, follow the Terms and Conditions of R/Pharma https://rinpharma.com/terms/\n\n\n\n\n\nSlido quiz time!\n\n\n\n\n\nFor consistency, we will be working in Posit Cloud\nEverything has been installed and set up for you\nYou can also opt to work in local RStudio\nFollowing the course, all content from this workshop will be available on the course website and GitHub\n\n\n\n\n\n\n\n−+\n05:00\n\n\n\n\nIf using Posit Cloud:\n\nNavigate to Posit Cloud link\nClick on the Project to make a personal copy\n\nIf using local RStudio:\n\nExercises can be found here: https://www.danieldsjoberg.com/ARD-PHUSE-workshop-2025/exercises.html\n\nOpen exercises/01-warmup.R\nComplete the exercise\n\n\n\n\nUsing dplyr:\n\nFrom the ADSL dataset:\nSubset to the safety population (SAFFL == “Y”)\ncalculate the number of unique subjects in each treatment group (TRT01A)\n\n\nlibrary(dplyr)\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\npharmaverseadam::adsl |&gt; \n  filter(SAFFL == \"Y\") |&gt; \n  count(TRT01A)\n\n# A tibble: 3 × 2\n  TRT01A                   n\n  &lt;chr&gt;                &lt;int&gt;\n1 Placebo                 86\n2 Xanomeline High Dose    72\n3 Xanomeline Low Dose     96"
   },
   {
     "objectID": "slides/01-intro-cards/intro.html#this-workshop-is-for-you-if",
@@ -494,7 +494,7 @@
     "href": "slides/01-intro-cards/intro.html#quick-warm-up",
     "title": "Introduction",
     "section": "",
-    "text": "−+\n05:00\n\n\n\n\nIf using Posit Cloud:\n\nNavigate to Posit Cloud link\nClick on the Project to make a personal copy\n\nIf using local RStudio:\n\nExercises can be found here: https://www.danieldsjoberg.com/ARD-RinPharma-workshop-2024/exercises.html\n\nOpen exercises/01-warmup.R\nComplete the exercise"
+    "text": "−+\n05:00\n\n\n\n\nIf using Posit Cloud:\n\nNavigate to Posit Cloud link\nClick on the Project to make a personal copy\n\nIf using local RStudio:\n\nExercises can be found here: https://www.danieldsjoberg.com/ARD-PHUSE-workshop-2025/exercises.html\n\nOpen exercises/01-warmup.R\nComplete the exercise"
   },
   {
     "objectID": "slides/01-intro-cards/intro.html#solution-for-00-warmup.r",
@@ -866,7 +866,7 @@
     "href": "slides/01-intro-cards/index.html#quick-warm-up",
     "title": "Unlocking Analysis Results Datasets (ARDs)",
     "section": "Quick warm-up",
-    "text": "Quick warm-up\n\n\n\n−+\n05:00\n\n\n\n\nIf using Posit Cloud:\n\nNavigate to Posit Cloud link\nClick on the Project to make a personal copy\n\nIf using local RStudio:\n\nExercises can be found here: https://www.danieldsjoberg.com/ARD-RinPharma-workshop-2024/exercises.html\n\nOpen exercises/01-warmup.R\nComplete the exercise"
+    "text": "Quick warm-up\n\n\n\n−+\n05:00\n\n\n\n\nIf using Posit Cloud:\n\nNavigate to Posit Cloud link\nClick on the Project to make a personal copy\n\nIf using local RStudio:\n\nExercises can be found here: https://www.danieldsjoberg.com/ARD-PHUSE-workshop-2025/exercises.html\n\nOpen exercises/01-warmup.R\nComplete the exercise"
   },
   {
     "objectID": "slides/01-intro-cards/index.html#solution-for-00-warmup.r",
