@@ -89,12 +89,3 @@ specializes in developing R-based tools.
 
 <br>
 
-## Workshop Assistant
-
-![](images/jack-circle.png){style="float:left;padding: 0 20px 0 20px;"
-fig-alt="Headshot of Jack Talboys" width="140"}
-
-**Jack Talboys** is a Software Developer at Novartis, recently joining their 
-Open-Source Enablement team. Before that he worked as a Data Scientist for Ascent, a
-Software Consultancy, building Shiny apps and R packages for companies across
-a range of industries including Insurance, Finance, and Pharma.
