@@ -1,9 +1,9 @@
 ---
-title: "Unlocking Analysis Results Datasets (ARDs)"
-subtitle: "A Practical Workshop for Creating and Utilizing ARDs for Clinical Reporting"
+title: "Analysis Results Datasets Using Open-Source Tools from the {pharmaverse}"
+subtitle: "A Hands-on workshop"
 author: "Daniel D. Sjoberg and Becca Krouse"
 logo: "images/cards-hex.png"
-footer: "[bit.ly/rpharma-ard](https://bit.ly/rpharma-ard)"
+footer: "[https://www.danieldsjoberg.com/ARD-PHUSE-workshop-2025/](https://www.danieldsjoberg.com/ARD-PHUSE-workshop-2025/)"
 editor: source
 engine: knitr
 format: 
@@ -41,23 +41,15 @@ Why are we here?
 ![Becca Krouse, GSK](images/becca.png){fig-alt="Headshot of Becca Krouse" width="200"}
 :::
 
-::: {.column}
-
-![Jack Talboys, Novartis](images/jack-circle.png){fig-alt="Headshot of Jack Talboys" width="200"}
-
-:::
-
 ::::
 
 ## Workshop outline
 
-1. Introduction to the Analysis Results Standard and {cards}
+1. Introduction to the Analysis Results Standard and ARDs with {cards}
 
 2. Introduction to the {cardx} Package and ARD Extras
 
-3. ARD to Tables with {gtsummary}
-
-4. ARD to Tables with {tfrmt}
+3. ARD to Tables with {gtsummary} and {tfrmt}
 
 {{< include intro.qmd >}}
 
