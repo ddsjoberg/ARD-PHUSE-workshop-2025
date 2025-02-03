@@ -741,23 +741,4 @@ tfrmt(
 
 :::
 
-## Exercise 🏃‍➡️
-
-- Open R file `exercises/04-tables-tfrmt.R`
-
-- Run the provided code, which will open the app in your browser
-
-- Complete the steps to further customize the table (hint: Edit tab):
-
-    1. Switch the order of treatment columns so Active is first
-        (hint: Column Plan)
-
-    2. Change the footnote marks to letters instead of numbers
-        (hint: Footnote Plan)
-
-    3. Split the table into 2 parts by setting a maximum of 3 rows
-        (hint: Page Plan)
-        
-    4. Export the table (hint: Export Tab)
-
 
