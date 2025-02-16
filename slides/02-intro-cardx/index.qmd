@@ -2,7 +2,7 @@
 title: "{cardx} & other extras"
 author: "Daniel D. Sjoberg and Becca Krouse"
 logo: "images/cardx-hex.png"
-footer: "[bit.ly/rpharma-ard](https://bit.ly/rpharma-ard)"
+footer: "[www.danieldsjoberg.com/ARD-PHUSE-workshop-2025/](https://www.danieldsjoberg.com/ARD-PHUSE-workshop-2025/)"
 editor: source
 engine: knitr
 format: 
