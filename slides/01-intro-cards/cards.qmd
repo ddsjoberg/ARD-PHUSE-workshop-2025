@@ -12,7 +12,7 @@
 
 -   Can be used within the ARS workflow and separately
 
--   45k downloads per month 🤯
+-   29k downloads per month 🤯
 
 
 ## {cards}: `ard_continuous()`
@@ -176,20 +176,7 @@ ADSL |>
   )  
 ```
 
-## Exercise 🏃‍➡️
-
-- Open `exercises/01-cards-partA.R` 
-
-- Compute the demographic summaries as described
-
-```{r}
-#| echo: false
-#| cache: false
-library(countdown)
-countdown(minutes = 10, play_sound = TRUE)
-```
-
-## Solutions for `01-cards-partA.R`
+## Example: Demographics ARD
 
 ```{r}
 #| echo: FALSE
@@ -212,22 +199,8 @@ adsl <- pharmaverseadam::adsl |>
   )
 ```
 
-## Solutions for `01-cards-partA.R`
+First, we compute the continuous summaries for AGE, BMI, HEIGHT, WEIGHT by TRT01A
 
-A. First, compute the continuous summaries for AGE, BMI, HEIGHT, WEIGHT by TRT01A
-
-```{r}
-#| eval: FALSE
-ard_continuous(
-  data = adsl,
-  by = ,
-  variables =
-)
-```
-
-## Solutions for `01-cards-partA.R` 
-
-A. First, compute the continuous summaries for AGE, BMI, HEIGHT, WEIGHT by TRT01A
 ```{r}
 ard_continuous(
   data = adsl,
@@ -236,22 +209,9 @@ ard_continuous(
 )
 ```
 
-## Solutions for `01-cards-partA.R`
+## Example: Demographics ARD
 
-B. Next, compute the categorical summaries for AGEGR1, SEX, RACE, ETHNIC by TRT01A
-
-```{r}
-#| eval: FALSE
-ard_categorical(
-  data = adsl,
-  by = ,
-  variables =
-)
-```
-
-## Solutions for `01-cards-partA.R`
-
-B. Next, compute the categorical summaries for AGEGR1, SEX, RACE, ETHNIC by TRT01A
+Next, we compute the categorical summaries for AGEGR1, SEX, RACE, ETHNIC by TRT01A
 
 ```{r}
 ard_categorical(
@@ -261,31 +221,9 @@ ard_categorical(
 )
 ```
 
-## Solutions for `01-cards-partA.R`
+## Example: Demographics ARD
 
-C. Perform all of the summaries in a single ard_stack() call, including:
-  
-    - summaries by TRT01A as performed above
-    
-    - continuous summaries from part A for AGE, BMI, HEIGHT, and WEIGHT
-    
-    - categorical summaries from part B for AGEGR1, SEX, RACE, ETHNIC
-
-```{r}
-#| eval: FALSE
-ard_stack(
-  data = adsl,
-  .by = ,
-
-  # add ard_* calls here
-
-)
-```
-
-
-## Solutions for `01-cards-partA.R`
-
-C. Perform all of the summaries in a single ard_stack() call, including:
+Perform all of the summaries in a single `ard_stack()` call, including:
    
     - summaries by TRT01A as performed above
     
@@ -302,36 +240,13 @@ ard_stack(
 )
 ```
 
-## Solutions for `01-cards-partA.R`
+## Example: Demographics ARD
 
-D. BONUS!
-   For part C. above, add the following pieces
+Also add the following pieces
    
     - overall summaries for all of the variables
     
-    - total N
-    
-(Hint: Modify the `.overall` and `.total_n` arguments, respectively)
-
-```{r}
-ard_stack(
-  data = adsl,
-  .by = TRT01A,
-  ard_continuous( variables = c(AGE, BMI, HEIGHT, WEIGHT)),
-  ard_categorical(variables = c(AGEGR1, SEX, RACE, ETHNIC))
-)
-```
-
-## Solutions for `01-cards-partA.R`
-
-D. BONUS!
-   For part C. above, add the following pieces
-   
-    - overall summaries for all of the variables
-    
-    - total N
-    
-(Hint: Modify the `.overall` and `.total_n` arguments, respectively)
+    - total N 
 
 ```{r}
 ard_stack(
@@ -489,29 +404,8 @@ ard_hier_c |>
     )
 ```
 
+## Example: AE ARD
 
-## Exercise 🏃‍➡️
-
-- Open `exercises/01-cards-partB.R` 
-
-- Compute the nested AE tabulations as described
-
-```{r}
-#| echo: false
-#| cache: false
-library(countdown)
-countdown(minutes = 8, play_sound = TRUE)
-```
-
-## Solutions for `01-cards-partB.R`
-
-```{r}
-#| echo: FALSE
-adsl <- pharmaverseadam::adsl |> dplyr::filter(SAFFL == "Y")
-adae <- pharmaverseadam::adae 
-```
-
-:::{.smaller}
 Calculate the number and percentage of *unique* subjects (USUBJID) with at least one AE:
   
 - Overall
@@ -519,31 +413,7 @@ Calculate the number and percentage of *unique* subjects (USUBJID) with at least
 - By each Preferred term (AEDECOD) within SOC (AESOC)
   
 By every combination of treatment group (TRT01A) and severity (AESEV)
-:::
-```{r}
-#| eval: FALSE
 
-ard_stack_hierarchical(
-  data = ,
-  variables = ,
-  by = , 
-  id = ,
-  denominator = 
-)
-```
-
-
-## Solutions for `01-cards-partB.R`
-
-:::{.smaller}
-Calculate the number and percentage of *unique* subjects (USUBJID) with at least one AE:
-  
--   Overall
--   By each SOC (AESOC)
--   By each Preferred term (AEDECOD) within SOC (AESOC)
-  
-By every combination of treatment group (TRT01A) and severity (AESEV)
-:::
 ```{r}
 ard_stack_hierarchical(
   data = adae,

@@ -2,7 +2,7 @@
 title: "ARD to Tables with {tfrmt}" 
 author: "Daniel D. Sjoberg and Becca Krouse"
 logo: "images/tfrmt-hex.png"
-footer: "[bit.ly/rpharma-ard](https://bit.ly/rpharma-ard)"
+footer: ""
 editor: source
 engine: knitr
 format: 
@@ -25,9 +25,7 @@ cache: false
 
 2. Introduction to the {cardx} Package and ARD Extras
 
-3. ARD to Tables with {gtsummary}
-
-4. _**ARD to Tables with {tfrmt}**_
+3. ARD to Tables with {gtsummary} and {tfrmt}
 
 :::
 
