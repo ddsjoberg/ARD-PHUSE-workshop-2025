@@ -35,7 +35,7 @@
 
 - We see the results like the mean difference, the confidence interval, and p-value as expected.
 
-- And we also see the function's inputs, which is incredibly useful for re-use, e.g. we know the we did not use equal variances.
+- Also includes function inputs; useful for re-use, e.g. we record we did not use equal variances.
 
 :::
 
@@ -52,8 +52,6 @@ pharmaverseadam::adsl |>
 
 - It's simple to wrap existing frameworks to customize.
 
-- One-sample t-test example utilizing `cards::ard_continuous()`.
-
 ```{r}
 #| message: true
 pharmaverseadam::adsl |> 
@@ -67,7 +65,7 @@ pharmaverseadam::adsl |>
 
 ## {cardx} t-test Example
 
-- How to modify if we need a two-sample test, or more generally accessing other columns in the data frame.
+- Update code for a two-sample t-test
 
 ```{r}
 #| message: true
@@ -75,8 +73,7 @@ pharmaverseadam::adsl |>
   dplyr::filter(ARM %in% c("Xanomeline High Dose", "Xanomeline Low Dose")) |>
   cards::ard_complex(
     variables = AGE,
-    statistic = 
-      ~ list(t_test = \(x, data, ...) t.test(x ~ data$ARM) |> broom::tidy())
+    statistic = ~ list(t_test = \(x, data, ...) broom::tidy(t.test(x ~ data$ARM)))
   ) |> 
   dplyr::mutate(group1 = "ARM", context = "t_test_two_sample") |> 
   cards::tidy_ard_column_order()
@@ -99,16 +96,18 @@ pharmaverseadam::adsl |>
 #| message: true
 #| warning: false
 library(survival)
+library(gtsummary)
 
 # build model
 mod <- pharmaverseadam::adtte_onco |> 
   dplyr::filter(PARAM %in% "Progression Free Survival") |>
-  coxph(ggsurvfit::Surv_CNSR() ~ ARM, data = _)
+  coxph(ggsurvfit::Surv_CNSR() ~ ARM + AGE, data = _)
 
 # put model in a summary table
-tbl <- gtsummary::tbl_regression(mod, exponentiate = TRUE) |> 
-  gtsummary::add_n(location = c('label', 'level')) |> 
-  gtsummary::add_nevent(location = c('label', 'level'))
+tbl <- tbl_regression(mod, exponentiate = TRUE) |> 
+  add_n(location = c('label', 'level')) |> 
+  add_nevent(location = c('label', 'level')) |> 
+  bold_labels()
 ```
 
 <br>
@@ -131,76 +130,5 @@ The `cardx::ard_regression()` does **a lot** for us in the background.
 - Contextually aware of slopes, odds ratios, hazard ratios, and incidence rate ratios
 - And much _**much**_ more.
   
-## {cardx} Exercise
-
-- Open `exercises/03-cardx.R` 
-
-- Compute the demographic summaries as described
-
-```{r}
-#| echo: false
-#| cache: false
-library(countdown)
-countdown(minutes = 8, play_sound = TRUE)
-```
-
-## {cardx} Exercise Solution
-
-Prompt: Compare AGE, SEX, RACE distributions across treatment arms (TRT01A)
-
-A. First, compute the Kruskal-Wallis test for AGE by TRT01A 
-
-```{r}
-#| message: true
-adsl <- pharmaverseadam::adsl |> dplyr::filter(SAFFL == "Y") 
-
-kruskal_ard <-  
-  cardx::ard_stats_kruskal_test( 
-    data = adsl,  
-    by = TRT01A, 
-    variables = AGE 
-  ) 
-
-kruskal_ard
-```
-
-## {cardx} Exercise Solution: Demographic comparison with {cardx} 
-
-Second, compute the Chi-squared test for SEX, RACE by TRT01A 
-
-::: {.small}
-
-```{r}
-#| message: true
-chisq_ard <-  
-  cardx::ard_stats_chisq_test( 
-    data = adsl,  
-    by = TRT01A, 
-    variables = c(SEX, RACE) 
-  ) 
-chisq_ard |> 
-  dplyr::filter(!stat_name %in% c("p", "B")) |> 
-  dplyr::select(-warning)
-```
-
-:::
-
-## {cardx} Exercise Solution: Demographic comparison with {cardx} 
-
- Combine your results with `cards::bind_ard()` and subset the ARD to include the rows with p-values only 
- 
-```{r}
-#| message: true
-final_ard <-  
-  cards::bind_ard( 
-    kruskal_ard,  
-    chisq_ard 
-  ) |>  
-  dplyr::filter(stat_name == "p.value") 
-
-final_ard
-final_ard$warning[[3]]
-```
-
 
 
