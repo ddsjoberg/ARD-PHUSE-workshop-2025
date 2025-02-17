@@ -6,14 +6,7 @@
 
 2. Introduction to the {cardx} Package and ARD Extras
 
-3. ARD to Tables with {gtsummary}
-
-4. ARD to Tables with {tfrmt}
-
-
-## Slido
-
-Wrap-up slido quiz
+3. ARD to Tables with {gtsummary} and {tfrmt}
 
 ## Learning more
 
