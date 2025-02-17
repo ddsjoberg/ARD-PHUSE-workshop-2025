@@ -258,7 +258,7 @@ Daniel D. Sjoberg and Becca Krouse
 <div class="small">
 <ul>
 <li><p>We see the results like the mean difference, the confidence interval, and p-value as expected.</p></li>
-<li><p>And we also see the function’s inputs, which is incredibly useful for re-use, e.g.&nbsp;we know the we did not use equal variances.</p></li>
+<li><p>Also includes function inputs; useful for re-use, e.g.&nbsp;we record we did not use equal variances.</p></li>
 </ul>
 </div>
 <div class="cell">
@@ -295,7 +295,6 @@ Daniel D. Sjoberg and Becca Krouse
 <ul>
 <li><p><em>What to do if a method you need is not implemented?</em></p></li>
 <li><p>It’s simple to wrap existing frameworks to customize.</p></li>
-<li><p>One-sample t-test example utilizing <code>cards::ard_continuous()</code>.</p></li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>pharmaverseadam<span class="sc">::</span>adsl <span class="sc">|&gt;</span> </span>
@@ -327,18 +326,17 @@ Daniel D. Sjoberg and Becca Krouse
 <section id="cardx-t-test-example-2" class="slide level2">
 <h2>{cardx} t-test Example</h2>
 <ul>
-<li>How to modify if we need a two-sample test, or more generally accessing other columns in the data frame.</li>
+<li>Update code for a two-sample t-test</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>pharmaverseadam<span class="sc">::</span>adsl <span class="sc">|&gt;</span> </span>
 <span id="cb10-2"><a></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(ARM <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Xanomeline High Dose"</span>, <span class="st">"Xanomeline Low Dose"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb10-3"><a></a>  cards<span class="sc">::</span><span class="fu">ard_complex</span>(</span>
 <span id="cb10-4"><a></a>    <span class="at">variables =</span> AGE,</span>
-<span id="cb10-5"><a></a>    <span class="at">statistic =</span> </span>
-<span id="cb10-6"><a></a>      <span class="sc">~</span> <span class="fu">list</span>(<span class="at">t_test =</span> \(x, data, ...) <span class="fu">t.test</span>(x <span class="sc">~</span> data<span class="sc">$</span>ARM) <span class="sc">|&gt;</span> broom<span class="sc">::</span><span class="fu">tidy</span>())</span>
-<span id="cb10-7"><a></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb10-8"><a></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">group1 =</span> <span class="st">"ARM"</span>, <span class="at">context =</span> <span class="st">"t_test_two_sample"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb10-9"><a></a>  cards<span class="sc">::</span><span class="fu">tidy_ard_column_order</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-5"><a></a>    <span class="at">statistic =</span> <span class="sc">~</span> <span class="fu">list</span>(<span class="at">t_test =</span> \(x, data, ...) broom<span class="sc">::</span><span class="fu">tidy</span>(<span class="fu">t.test</span>(x <span class="sc">~</span> data<span class="sc">$</span>ARM)))</span>
+<span id="cb10-6"><a></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb10-7"><a></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">group1 =</span> <span class="st">"ARM"</span>, <span class="at">context =</span> <span class="st">"t_test_two_sample"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb10-8"><a></a>  cards<span class="sc">::</span><span class="fu">tidy_ard_column_order</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>{cards} data frame: 10 x 9</code></pre>
 </div>
@@ -373,37 +371,39 @@ Daniel D. Sjoberg and Becca Krouse
 <h2>{cardx} Regression Example</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">library</span>(survival)</span>
-<span id="cb14-2"><a></a></span>
-<span id="cb14-3"><a></a><span class="co"># build model</span></span>
-<span id="cb14-4"><a></a>mod <span class="ot">&lt;-</span> pharmaverseadam<span class="sc">::</span>adtte_onco <span class="sc">|&gt;</span> </span>
-<span id="cb14-5"><a></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(PARAM <span class="sc">%in%</span> <span class="st">"Progression Free Survival"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-6"><a></a>  <span class="fu">coxph</span>(ggsurvfit<span class="sc">::</span><span class="fu">Surv_CNSR</span>() <span class="sc">~</span> ARM, <span class="at">data =</span> _)</span>
-<span id="cb14-7"><a></a></span>
-<span id="cb14-8"><a></a><span class="co"># put model in a summary table</span></span>
-<span id="cb14-9"><a></a>tbl <span class="ot">&lt;-</span> gtsummary<span class="sc">::</span><span class="fu">tbl_regression</span>(mod, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb14-10"><a></a>  gtsummary<span class="sc">::</span><span class="fu">add_n</span>(<span class="at">location =</span> <span class="fu">c</span>(<span class="st">'label'</span>, <span class="st">'level'</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb14-11"><a></a>  gtsummary<span class="sc">::</span><span class="fu">add_nevent</span>(<span class="at">location =</span> <span class="fu">c</span>(<span class="st">'label'</span>, <span class="st">'level'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-2"><a></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb14-3"><a></a></span>
+<span id="cb14-4"><a></a><span class="co"># build model</span></span>
+<span id="cb14-5"><a></a>mod <span class="ot">&lt;-</span> pharmaverseadam<span class="sc">::</span>adtte_onco <span class="sc">|&gt;</span> </span>
+<span id="cb14-6"><a></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(PARAM <span class="sc">%in%</span> <span class="st">"Progression Free Survival"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-7"><a></a>  <span class="fu">coxph</span>(ggsurvfit<span class="sc">::</span><span class="fu">Surv_CNSR</span>() <span class="sc">~</span> ARM <span class="sc">+</span> AGE, <span class="at">data =</span> _)</span>
+<span id="cb14-8"><a></a></span>
+<span id="cb14-9"><a></a><span class="co"># put model in a summary table</span></span>
+<span id="cb14-10"><a></a>tbl <span class="ot">&lt;-</span> <span class="fu">tbl_regression</span>(mod, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb14-11"><a></a>  <span class="fu">add_n</span>(<span class="at">location =</span> <span class="fu">c</span>(<span class="st">'label'</span>, <span class="st">'level'</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb14-12"><a></a>  <span class="fu">add_nevent</span>(<span class="at">location =</span> <span class="fu">c</span>(<span class="st">'label'</span>, <span class="st">'level'</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb14-13"><a></a>  <span class="fu">bold_labels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br></p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="craxzoiviv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#craxzoiviv table {
+<div id="eombfttrtx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#eombfttrtx table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#craxzoiviv thead, #craxzoiviv tbody, #craxzoiviv tfoot, #craxzoiviv tr, #craxzoiviv td, #craxzoiviv th {
+#eombfttrtx thead, #eombfttrtx tbody, #eombfttrtx tfoot, #eombfttrtx tr, #eombfttrtx td, #eombfttrtx th {
   border-style: none;
 }
 
-#craxzoiviv p {
+#eombfttrtx p {
   margin: 0;
   padding: 0;
 }
 
-#craxzoiviv .gt_table {
+#eombfttrtx .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -429,12 +429,12 @@ Daniel D. Sjoberg and Becca Krouse
   border-left-color: #D3D3D3;
 }
 
-#craxzoiviv .gt_caption {
+#eombfttrtx .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#craxzoiviv .gt_title {
+#eombfttrtx .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -446,7 +446,7 @@ Daniel D. Sjoberg and Becca Krouse
   border-bottom-width: 0;
 }
 
-#craxzoiviv .gt_subtitle {
+#eombfttrtx .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -458,7 +458,7 @@ Daniel D. Sjoberg and Becca Krouse
   border-top-width: 0;
 }
 
-#craxzoiviv .gt_heading {
+#eombfttrtx .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -470,13 +470,13 @@ Daniel D. Sjoberg and Becca Krouse
   border-right-color: #D3D3D3;
 }
 
-#craxzoiviv .gt_bottom_border {
+#eombfttrtx .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#craxzoiviv .gt_col_headings {
+#eombfttrtx .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -491,7 +491,7 @@ Daniel D. Sjoberg and Becca Krouse
   border-right-color: #D3D3D3;
 }
 
-#craxzoiviv .gt_col_heading {
+#eombfttrtx .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -511,7 +511,7 @@ Daniel D. Sjoberg and Becca Krouse
   overflow-x: hidden;
 }
 
-#craxzoiviv .gt_column_spanner_outer {
+#eombfttrtx .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -523,15 +523,15 @@ Daniel D. Sjoberg and Becca Krouse
   padding-right: 4px;
 }
 
-#craxzoiviv .gt_column_spanner_outer:first-child {
+#eombfttrtx .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#craxzoiviv .gt_column_spanner_outer:last-child {
+#eombfttrtx .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#craxzoiviv .gt_column_spanner {
+#eombfttrtx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -543,11 +543,11 @@ Daniel D. Sjoberg and Becca Krouse
   width: 100%;
 }
 
-#craxzoiviv .gt_spanner_row {
+#eombfttrtx .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#craxzoiviv .gt_group_heading {
+#eombfttrtx .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -573,7 +573,7 @@ Daniel D. Sjoberg and Becca Krouse
   text-align: left;
 }
 
-#craxzoiviv .gt_empty_group_heading {
+#eombfttrtx .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -588,15 +588,15 @@ Daniel D. Sjoberg and Becca Krouse
   vertical-align: middle;
 }
 
-#craxzoiviv .gt_from_md > :first-child {
+#eombfttrtx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#craxzoiviv .gt_from_md > :last-child {
+#eombfttrtx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#craxzoiviv .gt_row {
+#eombfttrtx .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -615,7 +615,7 @@ Daniel D. Sjoberg and Becca Krouse
   overflow-x: hidden;
 }
 
-#craxzoiviv .gt_stub {
+#eombfttrtx .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -628,7 +628,7 @@ Daniel D. Sjoberg and Becca Krouse
   padding-right: 5px;
 }
 
-#craxzoiviv .gt_stub_row_group {
+#eombfttrtx .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -642,15 +642,15 @@ Daniel D. Sjoberg and Becca Krouse
   vertical-align: top;
 }
 
-#craxzoiviv .gt_row_group_first td {
+#eombfttrtx .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#craxzoiviv .gt_row_group_first th {
+#eombfttrtx .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#craxzoiviv .gt_summary_row {
+#eombfttrtx .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -660,16 +660,16 @@ Daniel D. Sjoberg and Becca Krouse
   padding-right: 5px;
 }
 
-#craxzoiviv .gt_first_summary_row {
+#eombfttrtx .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#craxzoiviv .gt_first_summary_row.thick {
+#eombfttrtx .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#craxzoiviv .gt_last_summary_row {
+#eombfttrtx .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -679,7 +679,7 @@ Daniel D. Sjoberg and Becca Krouse
   border-bottom-color: #D3D3D3;
 }
 
-#craxzoiviv .gt_grand_summary_row {
+#eombfttrtx .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -689,7 +689,7 @@ Daniel D. Sjoberg and Becca Krouse
   padding-right: 5px;
 }
 
-#craxzoiviv .gt_first_grand_summary_row {
+#eombfttrtx .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -699,7 +699,7 @@ Daniel D. Sjoberg and Becca Krouse
   border-top-color: #D3D3D3;
 }
 
-#craxzoiviv .gt_last_grand_summary_row_top {
+#eombfttrtx .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -709,11 +709,11 @@ Daniel D. Sjoberg and Becca Krouse
   border-bottom-color: #D3D3D3;
 }
 
-#craxzoiviv .gt_striped {
+#eombfttrtx .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#craxzoiviv .gt_table_body {
+#eombfttrtx .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -722,7 +722,7 @@ Daniel D. Sjoberg and Becca Krouse
   border-bottom-color: #D3D3D3;
 }
 
-#craxzoiviv .gt_footnotes {
+#eombfttrtx .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -736,7 +736,7 @@ Daniel D. Sjoberg and Becca Krouse
   border-right-color: #D3D3D3;
 }
 
-#craxzoiviv .gt_footnote {
+#eombfttrtx .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -745,7 +745,7 @@ Daniel D. Sjoberg and Becca Krouse
   padding-right: 5px;
 }
 
-#craxzoiviv .gt_sourcenotes {
+#eombfttrtx .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -759,7 +759,7 @@ Daniel D. Sjoberg and Becca Krouse
   border-right-color: #D3D3D3;
 }
 
-#craxzoiviv .gt_sourcenote {
+#eombfttrtx .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -767,72 +767,72 @@ Daniel D. Sjoberg and Becca Krouse
   padding-right: 5px;
 }
 
-#craxzoiviv .gt_left {
+#eombfttrtx .gt_left {
   text-align: left;
 }
 
-#craxzoiviv .gt_center {
+#eombfttrtx .gt_center {
   text-align: center;
 }
 
-#craxzoiviv .gt_right {
+#eombfttrtx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#craxzoiviv .gt_font_normal {
+#eombfttrtx .gt_font_normal {
   font-weight: normal;
 }
 
-#craxzoiviv .gt_font_bold {
+#eombfttrtx .gt_font_bold {
   font-weight: bold;
 }
 
-#craxzoiviv .gt_font_italic {
+#eombfttrtx .gt_font_italic {
   font-style: italic;
 }
 
-#craxzoiviv .gt_super {
+#eombfttrtx .gt_super {
   font-size: 65%;
 }
 
-#craxzoiviv .gt_footnote_marks {
+#eombfttrtx .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#craxzoiviv .gt_asterisk {
+#eombfttrtx .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#craxzoiviv .gt_indent_1 {
+#eombfttrtx .gt_indent_1 {
   text-indent: 5px;
 }
 
-#craxzoiviv .gt_indent_2 {
+#eombfttrtx .gt_indent_2 {
   text-indent: 10px;
 }
 
-#craxzoiviv .gt_indent_3 {
+#eombfttrtx .gt_indent_3 {
   text-indent: 15px;
 }
 
-#craxzoiviv .gt_indent_4 {
+#eombfttrtx .gt_indent_4 {
   text-indent: 20px;
 }
 
-#craxzoiviv .gt_indent_5 {
+#eombfttrtx .gt_indent_5 {
   text-indent: 25px;
 }
 
-#craxzoiviv .katex-display {
+#eombfttrtx .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#craxzoiviv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#eombfttrtx div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -850,7 +850,7 @@ Daniel D. Sjoberg and Becca Krouse
 </thead>
 <tbody class="gt_table_body">
 <tr class="odd">
-<td class="gt_row gt_left" headers="label">Description of Planned Arm</td>
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Description of Planned Arm</td>
 <td class="gt_row gt_center" headers="stat_n">254</td>
 <td class="gt_row gt_center" headers="stat_nevent">6</td>
 <td class="gt_row gt_center" headers="estimate"><br>
@@ -873,17 +873,25 @@ Daniel D. Sjoberg and Becca Krouse
 <td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Xanomeline High Dose</td>
 <td class="gt_row gt_center" headers="stat_n">84</td>
 <td class="gt_row gt_center" headers="stat_nevent">2</td>
-<td class="gt_row gt_center" headers="estimate">3.00</td>
-<td class="gt_row gt_center" headers="conf.low">0.39, 22.9</td>
-<td class="gt_row gt_center" headers="p.value">0.3</td>
+<td class="gt_row gt_center" headers="estimate">1.94</td>
+<td class="gt_row gt_center" headers="conf.low">0.27, 14.1</td>
+<td class="gt_row gt_center" headers="p.value">0.5</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Xanomeline Low Dose</td>
 <td class="gt_row gt_center" headers="stat_n">84</td>
 <td class="gt_row gt_center" headers="stat_nevent">1</td>
-<td class="gt_row gt_center" headers="estimate">1.27</td>
-<td class="gt_row gt_center" headers="conf.low">0.11, 14.3</td>
-<td class="gt_row gt_center" headers="p.value">0.8</td>
+<td class="gt_row gt_center" headers="estimate">0.65</td>
+<td class="gt_row gt_center" headers="conf.low">0.06, 7.47</td>
+<td class="gt_row gt_center" headers="p.value">0.7</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Age</td>
+<td class="gt_row gt_center" headers="stat_n">254</td>
+<td class="gt_row gt_center" headers="stat_nevent">6</td>
+<td class="gt_row gt_center" headers="estimate">1.10</td>
+<td class="gt_row gt_center" headers="conf.low">0.95, 1.29</td>
+<td class="gt_row gt_center" headers="p.value">0.2</td>
 </tr>
 </tbody><tfoot class="gt_footnotes">
 <tr class="odd">
@@ -909,134 +917,19 @@ Daniel D. Sjoberg and Becca Krouse
 <li>And much <em><strong>much</strong></em> more.</li>
 </ul>
 </section>
-<section id="cardx-exercise" class="slide level2">
-<h2>{cardx} Exercise</h2>
-<ul>
-<li><p>Open <code>exercises/03-cardx.R</code></p></li>
-<li><p>Compute the demographic summaries as described</p></li>
-</ul>
-<div class="cell">
-<div class="cell-output-display">
-<div class="countdown" id="timer_7daad441" data-update-every="1" data-play-sound="true" tabindex="0" style="right:0;bottom:0;">
-<div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
-<code class="countdown-time"><span class="countdown-digits minutes">08</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
-</div>
-</div>
-</div>
-</section>
-<section id="cardx-exercise-solution" class="slide level2">
-<h2>{cardx} Exercise Solution</h2>
-<p>Prompt: Compare AGE, SEX, RACE distributions across treatment arms (TRT01A)</p>
-<p>A. First, compute the Kruskal-Wallis test for AGE by TRT01A</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>adsl <span class="ot">&lt;-</span> pharmaverseadam<span class="sc">::</span>adsl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(SAFFL <span class="sc">==</span> <span class="st">"Y"</span>) </span>
-<span id="cb15-2"><a></a></span>
-<span id="cb15-3"><a></a>kruskal_ard <span class="ot">&lt;-</span>  </span>
-<span id="cb15-4"><a></a>  cardx<span class="sc">::</span><span class="fu">ard_stats_kruskal_test</span>( </span>
-<span id="cb15-5"><a></a>    <span class="at">data =</span> adsl,  </span>
-<span id="cb15-6"><a></a>    <span class="at">by =</span> TRT01A, </span>
-<span id="cb15-7"><a></a>    <span class="at">variables =</span> AGE </span>
-<span id="cb15-8"><a></a>  ) </span>
-<span id="cb15-9"><a></a></span>
-<span id="cb15-10"><a></a>kruskal_ard</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>{cards} data frame: 4 x 9</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  group1 variable   context stat_name stat_label      stat
-1 TRT01A      AGE stats_kr… statistic  Kruskal-…     3.879
-2 TRT01A      AGE stats_kr…   p.value    p-value     0.144
-3 TRT01A      AGE stats_kr… parameter  Degrees …         2
-4 TRT01A      AGE stats_kr…    method     method Kruskal-…</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ 3 more variables: fmt_fn, warning, error</code></pre>
-</div>
-</div>
-</section>
-<section id="cardx-exercise-solution-demographic-comparison-with-cardx" class="slide level2">
-<h2>{cardx} Exercise Solution: Demographic comparison with {cardx}</h2>
-<p>Second, compute the Chi-squared test for SEX, RACE by TRT01A</p>
-<div class="small">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>chisq_ard <span class="ot">&lt;-</span>  </span>
-<span id="cb19-2"><a></a>  cardx<span class="sc">::</span><span class="fu">ard_stats_chisq_test</span>( </span>
-<span id="cb19-3"><a></a>    <span class="at">data =</span> adsl,  </span>
-<span id="cb19-4"><a></a>    <span class="at">by =</span> TRT01A, </span>
-<span id="cb19-5"><a></a>    <span class="at">variables =</span> <span class="fu">c</span>(SEX, RACE) </span>
-<span id="cb19-6"><a></a>  ) </span>
-<span id="cb19-7"><a></a>chisq_ard <span class="sc">|&gt;</span> </span>
-<span id="cb19-8"><a></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span>stat_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"p"</span>, <span class="st">"B"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb19-9"><a></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>warning)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>{cards} data frame: 14 x 8</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   group1 variable   context        stat_name stat_label      stat
-1  TRT01A      SEX stats_ch…        statistic  X-square…     2.761
-2  TRT01A      SEX stats_ch…          p.value    p-value     0.251
-3  TRT01A      SEX stats_ch…        parameter  Degrees …         2
-4  TRT01A      SEX stats_ch…           method     method Pearson'…
-5  TRT01A      SEX stats_ch…          correct    correct      TRUE
-6  TRT01A      SEX stats_ch…        rescale.p  rescale.p     FALSE
-7  TRT01A      SEX stats_ch… simulate.p.value  simulate…     FALSE
-8  TRT01A     RACE stats_ch…        statistic  X-square…     4.577
-9  TRT01A     RACE stats_ch…          p.value    p-value     0.334
-10 TRT01A     RACE stats_ch…        parameter  Degrees …         4
-11 TRT01A     RACE stats_ch…           method     method Pearson'…
-12 TRT01A     RACE stats_ch…          correct    correct      TRUE
-13 TRT01A     RACE stats_ch…        rescale.p  rescale.p     FALSE
-14 TRT01A     RACE stats_ch… simulate.p.value  simulate…     FALSE</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ 2 more variables: fmt_fn, error</code></pre>
-</div>
-</div>
-</div>
-</section>
-<section id="cardx-exercise-solution-demographic-comparison-with-cardx-1" class="slide level2">
-<h2>{cardx} Exercise Solution: Demographic comparison with {cardx}</h2>
-<p>Combine your results with <code>cards::bind_ard()</code> and subset the ARD to include the rows with p-values only</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>final_ard <span class="ot">&lt;-</span>  </span>
-<span id="cb23-2"><a></a>  cards<span class="sc">::</span><span class="fu">bind_ard</span>( </span>
-<span id="cb23-3"><a></a>    kruskal_ard,  </span>
-<span id="cb23-4"><a></a>    chisq_ard </span>
-<span id="cb23-5"><a></a>  ) <span class="sc">|&gt;</span>  </span>
-<span id="cb23-6"><a></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(stat_name <span class="sc">==</span> <span class="st">"p.value"</span>) </span>
-<span id="cb23-7"><a></a></span>
-<span id="cb23-8"><a></a>final_ard</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>{cards} data frame: 3 x 9</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  group1 variable stat_name stat_label  stat   warning
-1 TRT01A      AGE   p.value    p-value 0.144          
-2 TRT01A      SEX   p.value    p-value 0.251          
-3 TRT01A     RACE   p.value    p-value 0.334 Chi-squa…</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ 3 more variables: context, fmt_fn, error</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>final_ard<span class="sc">$</span>warning[[<span class="dv">3</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Chi-squared approximation may be incorrect"</code></pre>
-</div>
-</div>
-</section>
 <section id="when-things-go-wrong" class="slide level2">
 <h2>When things go wrong 😱</h2>
 <p>What happens when statistics are un-calculable?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>ard_gone_wrong <span class="ot">&lt;-</span> </span>
-<span id="cb29-2"><a></a>  cards<span class="sc">::</span>ADSL <span class="sc">|&gt;</span> </span>
-<span id="cb29-3"><a></a>  cards<span class="sc">::</span><span class="fu">ard_continuous</span>(</span>
-<span id="cb29-4"><a></a>    <span class="at">by =</span> ARM,</span>
-<span id="cb29-5"><a></a>    <span class="at">variable =</span> AGEGR1,</span>
-<span id="cb29-6"><a></a>    <span class="at">statistic =</span> <span class="sc">~</span><span class="fu">list</span>(<span class="at">kurtosis =</span> \(x) e1071<span class="sc">::</span><span class="fu">kurtosis</span>(x))</span>
-<span id="cb29-7"><a></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb29-8"><a></a>  cards<span class="sc">::</span><span class="fu">replace_null_statistic</span>()</span>
-<span id="cb29-9"><a></a>ard_gone_wrong</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>ard_gone_wrong <span class="ot">&lt;-</span> </span>
+<span id="cb15-2"><a></a>  cards<span class="sc">::</span>ADSL <span class="sc">|&gt;</span> </span>
+<span id="cb15-3"><a></a>  cards<span class="sc">::</span><span class="fu">ard_continuous</span>(</span>
+<span id="cb15-4"><a></a>    <span class="at">by =</span> ARM,</span>
+<span id="cb15-5"><a></a>    <span class="at">variable =</span> AGEGR1,</span>
+<span id="cb15-6"><a></a>    <span class="at">statistic =</span> <span class="sc">~</span><span class="fu">list</span>(<span class="at">kurtosis =</span> \(x) e1071<span class="sc">::</span><span class="fu">kurtosis</span>(x))</span>
+<span id="cb15-7"><a></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb15-8"><a></a>  cards<span class="sc">::</span><span class="fu">replace_null_statistic</span>()</span>
+<span id="cb15-9"><a></a>ard_gone_wrong</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>{cards} data frame: 3 x 10</code></pre>
 </div>
@@ -1051,7 +944,7 @@ Daniel D. Sjoberg and Becca Krouse
 </div>
 </div>
 <div class="fragment">
-<div class="sourceCode" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>cards<span class="sc">::</span><span class="fu">print_ard_conditions</span>(ard_gone_wrong)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>cards<span class="sc">::</span><span class="fu">print_ard_conditions</span>(ard_gone_wrong)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img data-src="images/ard-error-msg.png"></p>
 </div>
 <aside class="notes">
@@ -1078,13 +971,13 @@ Daniel D. Sjoberg and Becca Krouse
 </section>
 <section id="mock-ards" class="slide level2">
 <h2>Mock ARDs</h2>
-<p>Like mock tables, mock ARDs are often useful as well</p>
+<p>Like mock tables, mock ARDs are often useful</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>cards<span class="sc">::</span><span class="fu">bind_ard</span>(</span>
-<span id="cb34-2"><a></a>  cards<span class="sc">::</span><span class="fu">mock_categorical</span>(<span class="at">variables =</span> <span class="fu">list</span>(<span class="at">AGEGR1 =</span> <span class="fu">c</span>(<span class="st">"&lt;65"</span>, <span class="st">"&gt;=65"</span>))),</span>
-<span id="cb34-3"><a></a>  cards<span class="sc">::</span><span class="fu">mock_continuous</span>(<span class="at">variables =</span> <span class="st">"AGE"</span>)</span>
-<span id="cb34-4"><a></a>) <span class="sc">|&gt;</span> </span>
-<span id="cb34-5"><a></a>  cards<span class="sc">::</span><span class="fu">apply_fmt_fn</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>cards<span class="sc">::</span><span class="fu">bind_ard</span>(</span>
+<span id="cb20-2"><a></a>  cards<span class="sc">::</span><span class="fu">mock_categorical</span>(<span class="at">variables =</span> <span class="fu">list</span>(<span class="at">AGEGR1 =</span> <span class="fu">c</span>(<span class="st">"&lt;65"</span>, <span class="st">"&gt;=65"</span>))),</span>
+<span id="cb20-3"><a></a>  cards<span class="sc">::</span><span class="fu">mock_continuous</span>(<span class="at">variables =</span> <span class="st">"AGE"</span>)</span>
+<span id="cb20-4"><a></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb20-5"><a></a>  cards<span class="sc">::</span><span class="fu">apply_fmt_fn</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>{cards} data frame: 14 x 10</code></pre>
 </div>
@@ -1113,35 +1006,35 @@ Daniel D. Sjoberg and Becca Krouse
 <section id="mock-ards-1" class="slide level2">
 <h2>Mock ARDs</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>cards<span class="sc">::</span><span class="fu">bind_ard</span>(</span>
-<span id="cb38-2"><a></a>  cards<span class="sc">::</span><span class="fu">mock_continuous</span>(<span class="at">variables =</span> <span class="st">"AGE"</span>, </span>
-<span id="cb38-3"><a></a>                         <span class="at">by =</span> <span class="fu">list</span>(<span class="at">ARM =</span> <span class="fu">c</span>(<span class="st">"Drug A"</span>, <span class="st">"Drug B"</span>))),</span>
-<span id="cb38-4"><a></a>  cards<span class="sc">::</span><span class="fu">mock_categorical</span>(<span class="at">variables =</span> <span class="fu">list</span>(<span class="at">AGEGR1 =</span> <span class="fu">c</span>(<span class="st">"&lt;65"</span>, <span class="st">"&gt;=65"</span>)),</span>
-<span id="cb38-5"><a></a>                          <span class="at">by =</span> <span class="fu">list</span>(<span class="at">ARM =</span> <span class="fu">c</span>(<span class="st">"Drug A"</span>, <span class="st">"Drug B"</span>)))</span>
-<span id="cb38-6"><a></a>) <span class="sc">|&gt;</span> </span>
-<span id="cb38-7"><a></a>  gtsummary<span class="sc">::</span><span class="fu">tbl_ard_summary</span>(</span>
-<span id="cb38-8"><a></a>    <span class="at">by =</span> ARM,</span>
-<span id="cb38-9"><a></a>    <span class="at">type  =</span> AGE <span class="sc">~</span> <span class="st">"continuous2"</span>,</span>
-<span id="cb38-10"><a></a>    <span class="at">statistic =</span> AGE <span class="sc">~</span> <span class="fu">c</span>(<span class="st">"{N}"</span>, <span class="st">"{mean} ({sd})"</span>, <span class="st">"{median} ({p25}, {p75})"</span>)</span>
-<span id="cb38-11"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>cards<span class="sc">::</span><span class="fu">bind_ard</span>(</span>
+<span id="cb24-2"><a></a>  cards<span class="sc">::</span><span class="fu">mock_continuous</span>(<span class="at">variables =</span> <span class="st">"AGE"</span>, </span>
+<span id="cb24-3"><a></a>                         <span class="at">by =</span> <span class="fu">list</span>(<span class="at">ARM =</span> <span class="fu">c</span>(<span class="st">"Drug A"</span>, <span class="st">"Drug B"</span>))),</span>
+<span id="cb24-4"><a></a>  cards<span class="sc">::</span><span class="fu">mock_categorical</span>(<span class="at">variables =</span> <span class="fu">list</span>(<span class="at">AGEGR1 =</span> <span class="fu">c</span>(<span class="st">"&lt;65"</span>, <span class="st">"&gt;=65"</span>)),</span>
+<span id="cb24-5"><a></a>                          <span class="at">by =</span> <span class="fu">list</span>(<span class="at">ARM =</span> <span class="fu">c</span>(<span class="st">"Drug A"</span>, <span class="st">"Drug B"</span>)))</span>
+<span id="cb24-6"><a></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb24-7"><a></a>  gtsummary<span class="sc">::</span><span class="fu">tbl_ard_summary</span>(</span>
+<span id="cb24-8"><a></a>    <span class="at">by =</span> ARM,</span>
+<span id="cb24-9"><a></a>    <span class="at">type  =</span> AGE <span class="sc">~</span> <span class="st">"continuous2"</span>,</span>
+<span id="cb24-10"><a></a>    <span class="at">statistic =</span> AGE <span class="sc">~</span> <span class="fu">c</span>(<span class="st">"{N}"</span>, <span class="st">"{mean} ({sd})"</span>, <span class="st">"{median} ({p25}, {p75})"</span>)</span>
+<span id="cb24-11"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="ktvnjwatfo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ktvnjwatfo table {
+<div id="ytgpxikywm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ytgpxikywm table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ktvnjwatfo thead, #ktvnjwatfo tbody, #ktvnjwatfo tfoot, #ktvnjwatfo tr, #ktvnjwatfo td, #ktvnjwatfo th {
+#ytgpxikywm thead, #ytgpxikywm tbody, #ytgpxikywm tfoot, #ytgpxikywm tr, #ytgpxikywm td, #ytgpxikywm th {
   border-style: none;
 }
 
-#ktvnjwatfo p {
+#ytgpxikywm p {
   margin: 0;
   padding: 0;
 }
 
-#ktvnjwatfo .gt_table {
+#ytgpxikywm .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1167,12 +1060,12 @@ Daniel D. Sjoberg and Becca Krouse
   border-left-color: #D3D3D3;
 }
 
-#ktvnjwatfo .gt_caption {
+#ytgpxikywm .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ktvnjwatfo .gt_title {
+#ytgpxikywm .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1184,7 +1077,7 @@ Daniel D. Sjoberg and Becca Krouse
   border-bottom-width: 0;
 }
 
-#ktvnjwatfo .gt_subtitle {
+#ytgpxikywm .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1196,7 +1089,7 @@ Daniel D. Sjoberg and Becca Krouse
   border-top-width: 0;
 }
 
-#ktvnjwatfo .gt_heading {
+#ytgpxikywm .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1208,13 +1101,13 @@ Daniel D. Sjoberg and Becca Krouse
   border-right-color: #D3D3D3;
 }
 
-#ktvnjwatfo .gt_bottom_border {
+#ytgpxikywm .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ktvnjwatfo .gt_col_headings {
+#ytgpxikywm .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1229,7 +1122,7 @@ Daniel D. Sjoberg and Becca Krouse
   border-right-color: #D3D3D3;
 }
 
-#ktvnjwatfo .gt_col_heading {
+#ytgpxikywm .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1249,7 +1142,7 @@ Daniel D. Sjoberg and Becca Krouse
   overflow-x: hidden;
 }
 
-#ktvnjwatfo .gt_column_spanner_outer {
+#ytgpxikywm .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1261,15 +1154,15 @@ Daniel D. Sjoberg and Becca Krouse
   padding-right: 4px;
 }
 
-#ktvnjwatfo .gt_column_spanner_outer:first-child {
+#ytgpxikywm .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ktvnjwatfo .gt_column_spanner_outer:last-child {
+#ytgpxikywm .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ktvnjwatfo .gt_column_spanner {
+#ytgpxikywm .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1281,11 +1174,11 @@ Daniel D. Sjoberg and Becca Krouse
   width: 100%;
 }
 
-#ktvnjwatfo .gt_spanner_row {
+#ytgpxikywm .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ktvnjwatfo .gt_group_heading {
+#ytgpxikywm .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1311,7 +1204,7 @@ Daniel D. Sjoberg and Becca Krouse
   text-align: left;
 }
 
-#ktvnjwatfo .gt_empty_group_heading {
+#ytgpxikywm .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1326,15 +1219,15 @@ Daniel D. Sjoberg and Becca Krouse
   vertical-align: middle;
 }
 
-#ktvnjwatfo .gt_from_md > :first-child {
+#ytgpxikywm .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ktvnjwatfo .gt_from_md > :last-child {
+#ytgpxikywm .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ktvnjwatfo .gt_row {
+#ytgpxikywm .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1353,7 +1246,7 @@ Daniel D. Sjoberg and Becca Krouse
   overflow-x: hidden;
 }
 
-#ktvnjwatfo .gt_stub {
+#ytgpxikywm .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1366,7 +1259,7 @@ Daniel D. Sjoberg and Becca Krouse
   padding-right: 5px;
 }
 
-#ktvnjwatfo .gt_stub_row_group {
+#ytgpxikywm .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1380,15 +1273,15 @@ Daniel D. Sjoberg and Becca Krouse
   vertical-align: top;
 }
 
-#ktvnjwatfo .gt_row_group_first td {
+#ytgpxikywm .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ktvnjwatfo .gt_row_group_first th {
+#ytgpxikywm .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ktvnjwatfo .gt_summary_row {
+#ytgpxikywm .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1398,16 +1291,16 @@ Daniel D. Sjoberg and Becca Krouse
   padding-right: 5px;
 }
 
-#ktvnjwatfo .gt_first_summary_row {
+#ytgpxikywm .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ktvnjwatfo .gt_first_summary_row.thick {
+#ytgpxikywm .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ktvnjwatfo .gt_last_summary_row {
+#ytgpxikywm .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1417,7 +1310,7 @@ Daniel D. Sjoberg and Becca Krouse
   border-bottom-color: #D3D3D3;
 }
 
-#ktvnjwatfo .gt_grand_summary_row {
+#ytgpxikywm .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1427,7 +1320,7 @@ Daniel D. Sjoberg and Becca Krouse
   padding-right: 5px;
 }
 
-#ktvnjwatfo .gt_first_grand_summary_row {
+#ytgpxikywm .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1437,7 +1330,7 @@ Daniel D. Sjoberg and Becca Krouse
   border-top-color: #D3D3D3;
 }
 
-#ktvnjwatfo .gt_last_grand_summary_row_top {
+#ytgpxikywm .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1447,11 +1340,11 @@ Daniel D. Sjoberg and Becca Krouse
   border-bottom-color: #D3D3D3;
 }
 
-#ktvnjwatfo .gt_striped {
+#ytgpxikywm .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ktvnjwatfo .gt_table_body {
+#ytgpxikywm .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1460,7 +1353,7 @@ Daniel D. Sjoberg and Becca Krouse
   border-bottom-color: #D3D3D3;
 }
 
-#ktvnjwatfo .gt_footnotes {
+#ytgpxikywm .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1474,7 +1367,7 @@ Daniel D. Sjoberg and Becca Krouse
   border-right-color: #D3D3D3;
 }
 
-#ktvnjwatfo .gt_footnote {
+#ytgpxikywm .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1483,7 +1376,7 @@ Daniel D. Sjoberg and Becca Krouse
   padding-right: 5px;
 }
 
-#ktvnjwatfo .gt_sourcenotes {
+#ytgpxikywm .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1497,7 +1390,7 @@ Daniel D. Sjoberg and Becca Krouse
   border-right-color: #D3D3D3;
 }
 
-#ktvnjwatfo .gt_sourcenote {
+#ytgpxikywm .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1505,72 +1398,72 @@ Daniel D. Sjoberg and Becca Krouse
   padding-right: 5px;
 }
 
-#ktvnjwatfo .gt_left {
+#ytgpxikywm .gt_left {
   text-align: left;
 }
 
-#ktvnjwatfo .gt_center {
+#ytgpxikywm .gt_center {
   text-align: center;
 }
 
-#ktvnjwatfo .gt_right {
+#ytgpxikywm .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ktvnjwatfo .gt_font_normal {
+#ytgpxikywm .gt_font_normal {
   font-weight: normal;
 }
 
-#ktvnjwatfo .gt_font_bold {
+#ytgpxikywm .gt_font_bold {
   font-weight: bold;
 }
 
-#ktvnjwatfo .gt_font_italic {
+#ytgpxikywm .gt_font_italic {
   font-style: italic;
 }
 
-#ktvnjwatfo .gt_super {
+#ytgpxikywm .gt_super {
   font-size: 65%;
 }
 
-#ktvnjwatfo .gt_footnote_marks {
+#ytgpxikywm .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ktvnjwatfo .gt_asterisk {
+#ytgpxikywm .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ktvnjwatfo .gt_indent_1 {
+#ytgpxikywm .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ktvnjwatfo .gt_indent_2 {
+#ytgpxikywm .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ktvnjwatfo .gt_indent_3 {
+#ytgpxikywm .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ktvnjwatfo .gt_indent_4 {
+#ytgpxikywm .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ktvnjwatfo .gt_indent_5 {
+#ytgpxikywm .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ktvnjwatfo .katex-display {
+#ytgpxikywm .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ktvnjwatfo div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ytgpxikywm div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1647,9 +1540,9 @@ Daniel D. Sjoberg and Becca Krouse
 <div class="column" style="width:50%;">
 <p><strong>YAML</strong></p>
 <div class="cell" data-output.lines="15">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a>cards<span class="sc">::</span><span class="fu">as_nested_list</span>(ard) <span class="sc">|&gt;</span> </span>
-<span id="cb39-2"><a></a>  yaml<span class="sc">::</span><span class="fu">as.yaml</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb39-3"><a></a>  <span class="fu">cat</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>cards<span class="sc">::</span><span class="fu">as_nested_list</span>(ard) <span class="sc">|&gt;</span> </span>
+<span id="cb25-2"><a></a>  yaml<span class="sc">::</span><span class="fu">as.yaml</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb25-3"><a></a>  <span class="fu">cat</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>variable:
   AGE:
@@ -1672,8 +1565,8 @@ Daniel D. Sjoberg and Becca Krouse
 </div><div class="column" style="width:50%;">
 <p><strong>JSON</strong></p>
 <div class="cell" data-output.lines="15">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a>cards<span class="sc">::</span><span class="fu">as_nested_list</span>(ard) <span class="sc">|&gt;</span> </span>
-<span id="cb41-2"><a></a>  jsonlite<span class="sc">::</span><span class="fu">toJSON</span>(<span class="at">pretty =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>cards<span class="sc">::</span><span class="fu">as_nested_list</span>(ard) <span class="sc">|&gt;</span> </span>
+<span id="cb27-2"><a></a>  jsonlite<span class="sc">::</span><span class="fu">toJSON</span>(<span class="at">pretty =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{
   "variable": {
@@ -1701,9 +1594,9 @@ Daniel D. Sjoberg and Becca Krouse
 
 <div class="cell">
 <div class="cell-output-display">
-<div class="countdown" id="timer_86a1d9df" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
+<div class="countdown" id="timer_50f5f91d" data-update-every="1" tabindex="0" style="right:0;bottom:0;">
 <div class="countdown-controls"><button class="countdown-bump-down">−</button><button class="countdown-bump-up">+</button></div>
-<code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 </div>
 </div>
@@ -1716,7 +1609,7 @@ Daniel D. Sjoberg and Becca Krouse
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="images/cardx-hex.png" class="slide-logo"></p>
 <div class="footer footer-default">
-<p><a href="https://bit.ly/rpharma-ard">bit.ly/rpharma-ard</a></p>
+<p><a href="https://www.danieldsjoberg.com/ARD-PHUSE-workshop-2025/">www.danieldsjoberg.com/ARD-PHUSE-workshop-2025/</a></p>
 </div>
 </div></div>
 
