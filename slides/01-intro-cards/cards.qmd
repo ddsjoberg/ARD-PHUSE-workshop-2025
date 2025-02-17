@@ -418,7 +418,7 @@ By every combination of treatment group (TRT01A) and severity (AESEV)
 ard_stack_hierarchical(
   data = adae,
   variables = c(AESOC, AEDECOD),
-  by = c(TRT01A, AESEV), 
+  by = c(TRTA, AESEV), 
   id = USUBJID,
   denominator = adsl,
   over_variables = TRUE
