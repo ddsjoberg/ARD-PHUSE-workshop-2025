@@ -19,18 +19,10 @@ cache: false
 ---
 
 ## Instructors
+ 
+:::{.larger}
 
 :::: {.columns}
-
-::: {.column}
-:::{.larger}
-Who are we? 
-
-What do we do? 
-
-Why are we here?
-:::
-:::
 
 ::: {.column}
 
@@ -38,10 +30,17 @@ Why are we here?
 :::
 ::: {.column}
 
-![Becca Krouse, GSK](images/becca.png){fig-alt="Headshot of Becca Krouse" width="200"}
+![Becca Krouse, GSK](images/becca.png){fig-alt="Headshot of Becca Krouse" width="230"}
 :::
 
 ::::
+
+Who are we? 
+
+What do we do? 
+
+Why are we here? 
+:::
 
 ## Workshop outline
 
