@@ -314,329 +314,6 @@ tfrmt_demog |>
 ![](images/gtsave.png){fig-align="center"}
 
 
-# Now, let's format a display, 1 piece at a time
-
-## Creating a {tfrmt} table step-by-step
-
-```{r}
-#| echo: false
-# demog data
-adsl <- pharmaverseadam::adsl |>
-  dplyr::filter(SAFFL == "Y") |> 
-  dplyr::rename(
-    `Age (years)` = AGE,
-    `Age Group` = AGEGR1
-  ) |> 
-  dplyr::mutate(
-    TRT01A = ifelse(!TRT01A == "Placebo", "Active", TRT01A)
-  )
-ard_demog <- cards::ard_stack(
-  data = adsl,
-  .by = TRT01A,
-  cards::ard_continuous( variables = `Age (years)`,
-                  statistic = ~ cards::continuous_summary_fns(c("median", "p25", "p75"))),
-  cards::ard_categorical(variables = `Age Group`)
-) |>
-  cards::shuffle_ard() |>
-  dplyr::mutate(stat_name = ifelse(variable=="TRT01A" & stat_name=="n", "bigN", stat_name),
-                ord1 = as.numeric(factor(variable, levels = c("Age (years)", "Age Group"))),
-                ord2 = as.numeric(factor(label, levels = c("18-64",">64"))))|>
-  dplyr::filter(stat_name=="bigN" |
-                  (! variable == "TRT01A" & ! stat_name=="N")) |> 
-  dplyr::select(-context) |> 
-  dplyr::mutate(stat = ifelse(stat_name=="p", stat*100, stat),
-                label = dplyr::case_when(
-                  stat_name %in% c("p25","p75") ~ "[Q1, Q3]", 
-                  TRUE ~ label
-                ))
-gt_style_slides <- function(x){
-  x |> 
-    gt::tab_options(
-      table.font.size = 20
-    ) |>   
-    gt::tab_style(
-      style = gt::cell_text(font = c(gt::google_font("Google Sans Mono"),
-                                     c("Courier", gt::default_fonts()))),
-      locations = list(gt::cells_body(), 
-                       gt::cells_row_groups(), 
-                       gt::cells_stub(),
-                       gt::cells_column_labels(),
-                       gt::cells_column_spanners(),
-                       gt::cells_title(), 
-                       gt::cells_footnotes()
-      )
-    )
-}
-
-```
-
-
-::: {.fragment}
-
-```{r}  
-head(ard_demog)
-```
-
-:::
-
-<br>
-
-::: {.fragment}
-
-
-```{r}  
-#| eval: false
-
-tfrmt_demog <- tfrmt(
-  group = variable, 
-  label = label, 
-  column = TRT01A,
-  param = stat_name,
-  value = stat, 
-  sorting_cols = c(ord1, ord2) 
-)
-
-```
-
-:::
-
-## Ensure placement of all values (Main)
- 
-```{r}   
-#| output-location: "column"
-#| code-line-numbers: "2-7"
-
-tfrmt_demog <- tfrmt(
-  group = variable, 
-  label = label, 
-  column = TRT01A,
-  param = stat_name,
-  value = stat, 
-  sorting_cols = c(ord1, ord2) 
-)
-
-print_to_gt(
-  tfrmt = tfrmt_demog,
-  .data = ard_demog
-) |> 
-   gt_style_slides()
-```
-
-## Ensure placement of all values (Big N)
-
-```{r}
-#| output-location: "column"
-#| code-line-numbers: "3-6"
-
-tfrmt_demog <- tfrmt_demog |>
-  tfrmt(
-    big_n = big_n_structure(
-      param_val = "bigN",
-      n_frmt = frmt("<br>N = xx")
-      )
-  )
-
-print_to_gt(
-  tfrmt = tfrmt_demog, 
-  .data = ard_demog
-  )|> 
-   gt_style_slides()
-```
-
-
-## Select and reorder columns
-```{r}
-#| output-location: "column"
-#| code-line-numbers: "3-7"
-
-tfrmt_demog <- tfrmt_demog |>
-  tfrmt(
-    col_plan = col_plan(
-      Placebo,
-      Active,
-      - starts_with("ord")
-    )
-  )
-
-print_to_gt(
-  tfrmt = tfrmt_demog, 
-  .data = ard_demog
-)|> 
-   gt_style_slides()
-```
-
-
-## Format the data values - Basic
-
-```{r}   
-#| output-location: "column"
-#| code-line-numbers: "3-8"
-
-tfrmt_demog <- tfrmt_demog |>
-  tfrmt(
-    body_plan = body_plan(
-      frmt_structure(
-        group_val = ".default", 
-        label_val = ".default", 
-        frmt("x.xx"))
-    )
-  )
-
-print_to_gt(
-  tfrmt = tfrmt_demog, 
-  .data = ard_demog
-) |> 
-   gt_style_slides()
-```
-
-
-## Format the data values - Advanced
-
-```{r}   
-#| output-location: "column"
-#| code-line-numbers: "4-11"
-
-tfrmt_demog <- tfrmt_demog |>
-  tfrmt(
-    body_plan = body_plan(
-      frmt_structure(
-        group_val = ".default", 
-        label_val = ".default",
-        frmt_combine("{n} ({p}%)",
-                     n = frmt("xx"),
-                     p = frmt("xx.x")
-                     
-        )
-      )
-    )
-  )
-
-print_to_gt(
-  tfrmt = tfrmt_demog, 
-  .data = ard_demog
-  ) |> 
-   gt_style_slides()
-```
-
-## Format the data values - Advanced
-```{r}
-#| output-location: "column"
-#| code-line-numbers: "5-19"
-
-tfrmt_demog <- tfrmt_demog |>
-  tfrmt(
-    body_plan = body_plan(
-      
-      frmt_structure(
-        group_val = ".default", 
-        label_val = "Median",
-        frmt("xx.x")
-      ),
-      
-      frmt_structure(
-        group_val = ".default",
-        label_val = ".default",
-        frmt_combine(
-          expression = "[{p25}, {p75}]",                
-          p25 = frmt("xx.x"),                     
-          p75 = frmt("xx.x")                      
-        )
-      )
-      
-    )
-  )
-  
-print_to_gt(
-  tfrmt = tfrmt_demog, 
-  .data = ard_demog
-  ) |> 
-   gt_style_slides()
-```
-
-
-## Align the columns
-```{r}
-#| output-location: "column"
-#| code-line-numbers: "3,4,5,6,7,8,9"
-
-tfrmt_demog <- tfrmt_demog |>
-  tfrmt(
-    col_style_plan = col_style_plan(
-      col_style_structure(
-        col = c("Placebo", 
-                "Active"),
-        align = " "
-      )
-    )
-  )
-  
-print_to_gt(
-  tfrmt = tfrmt_demog, 
-  .data = ard_demog
-  ) |> 
-   gt_style_slides()
-
-```
-
-## Add footnotes
-
-```{r}
-#| output-location: "column"
-#| code-line-numbers: "3,4,5,6,7,8"
-
-tfrmt_demog <- tfrmt_demog |>
-  tfrmt(
-    footnote_plan = footnote_plan(
-      footnote_structure(
-        "Pooled High and Low Dose",
-        column_val = "Active"
-      )
-    )
-  )
-  
-print_to_gt(
-  tfrmt = tfrmt_demog, 
-  .data = ard_demog
-  ) |> 
-   gt_style_slides()
-
-```
-
-
-## Add titles
-
-
-```{r}
-#| output-location: "column"
-#| code-line-numbers: "3,4"
-
-tfrmt_demog <- tfrmt_demog |>
-  tfrmt(
-    title = "Demographic Table",
-    subtitle = "Safety Population"
-  )
-  
-print_to_gt(
-  tfrmt = tfrmt_demog, 
-  .data = ard_demog
-  ) |> 
-   gt_style_slides()
-
-```
- 
-
-## Other features include:
-
-* Transform values in the formatting
-
-* Row group formatting 
-
-* Pagination
-
-* Multi-positional column alignment
-
-* Templating 
-
 ## cards to tfrmt
 
 ::: {.smaller}
@@ -658,28 +335,27 @@ pharmaverseadam::adsl |>
 ## cards to tfrmt {auto-animate="true"}
 
 ::: {.smaller}
--   {cards} includes a helper function `shuffle_ard()` to transform native {cards} output to display-ready data
-
--   This is also available as an argument `.shuffle` in `ard_stack()`
+{cards} includes a helper function `rename_ard_columns()` to transform native {cards} output to display-ready data 
 :::
 
 ```{r}
 library(cards)
 
 pharmaverseadam::adsl |> 
+  dplyr::filter(SAFFL=="Y") |> 
   ard_categorical(
     by = TRT01A,
     variables = c("AGEGR1","SEX")
   ) |> 
-  shuffle_ard()
+   rename_ard_columns(columns = all_ard_groups(),
+                      unlist = c("variable_level", "stat")) |> 
+  dplyr::select(-c(fmt_fn, warning, error))
 ```
 
 ## cards to tfrmt {auto-animate="true"}
 
 ::: {.smaller}
--   {cards} includes a helper function `shuffle_ard()` to transform native {cards} output to display-ready data
-
--   This is also available as an argument `.shuffle` in `ard_stack()`
+{cards} includes a helper function `rename_ard_columns()` to transform native {cards} output to display-ready data 
 :::
 
 ```{r}
@@ -689,17 +365,20 @@ library(cards)
 library(tfrmt)
 
 my_ard <- pharmaverseadam::adsl |> 
+  dplyr::filter(SAFFL=="Y") |> 
   ard_categorical(
     by = TRT01A,
     variables = c("AGEGR1","SEX")
-  ) |>  
-  shuffle_ard() |> 
+  ) |> 
+   rename_ard_columns(columns = all_ard_groups(),
+                      unlist = c("variable_level", "stat")) |> 
+  dplyr::select(-c(fmt_fn, warning, error)) |> 
   dplyr::filter(stat_name %in% c("n","p")) |> 
-  dplyr::select(-context)
+  dplyr::select(-c(context, stat_label))
 
 tfrmt(
   group = variable,
-  label = label,
+  label = variable_level ,
   column = TRT01A,
   param = stat_name,
   value = stat,
