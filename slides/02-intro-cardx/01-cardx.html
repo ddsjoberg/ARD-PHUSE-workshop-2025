@@ -170,6 +170,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#cardx-t-test-example" id="toc-cardx-t-test-example" class="nav-link" data-scroll-target="#cardx-t-test-example">{cardx} t-test Example</a></li>
   <li><a href="#cardx-t-test-example-1" id="toc-cardx-t-test-example-1" class="nav-link" data-scroll-target="#cardx-t-test-example-1">{cardx} t-test Example</a></li>
   <li><a href="#cardx-t-test-example-2" id="toc-cardx-t-test-example-2" class="nav-link" data-scroll-target="#cardx-t-test-example-2">{cardx} t-test Example</a></li>
+  <li><a href="#example-build-ard-for-prop.test" id="toc-example-build-ard-for-prop.test" class="nav-link" data-scroll-target="#example-build-ard-for-prop.test">Example: Build ARD for <code>prop.test()</code></a></li>
+  <li><a href="#example-build-ard-for-prop.test-1" id="toc-example-build-ard-for-prop.test-1" class="nav-link" data-scroll-target="#example-build-ard-for-prop.test-1">Example: Build ARD for <code>prop.test()</code></a></li>
+  <li><a href="#building-your-own-ard-functions" id="toc-building-your-own-ard-functions" class="nav-link" data-scroll-target="#building-your-own-ard-functions">Building your own ARD functions</a></li>
   <li><a href="#cardx-regression" id="toc-cardx-regression" class="nav-link" data-scroll-target="#cardx-regression">{cardx} Regression</a></li>
   <li><a href="#cardx-regression-example" id="toc-cardx-regression-example" class="nav-link" data-scroll-target="#cardx-regression-example">{cardx} Regression Example</a></li>
   <li><a href="#cardx-regression-example-1" id="toc-cardx-regression-example-1" class="nav-link" data-scroll-target="#cardx-regression-example-1">{cardx} Regression Example</a></li>
@@ -323,6 +326,64 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
+<section id="example-build-ard-for-prop.test" class="level2">
+<h2 class="anchored" data-anchor-id="example-build-ard-for-prop.test">Example: Build ARD for <code>prop.test()</code></h2>
+<ul>
+<li>Save the results from <code>prop.test()</code> in an ARD for columns <code>am</code> and <code>vs</code> in mtcars</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  cards<span class="sc">::</span><span class="fu">ard_continuous</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">variables =</span> <span class="fu">c</span>(  ),</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">statistic =</span> </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">everything</span>() <span class="sc">~</span> <span class="fu">list</span>(<span class="at">prop_test =</span>  )</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="example-build-ard-for-prop.test-1" class="level2">
+<h2 class="anchored" data-anchor-id="example-build-ard-for-prop.test-1">Example: Build ARD for <code>prop.test()</code></h2>
+<ul>
+<li>Save the results from <code>prop.test()</code> in an ARD</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  cards<span class="sc">::</span><span class="fu">ard_continuous</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">variables =</span> <span class="fu">c</span>(am, vs),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">statistic =</span> </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">everything</span>() <span class="sc">~</span> <span class="fu">list</span>(<span class="at">prop_test =</span> \(x) <span class="fu">prop.test</span>(<span class="at">x =</span> <span class="fu">sum</span>(x), <span class="at">n =</span> <span class="fu">length</span>(x)) <span class="sc">|&gt;</span> broom<span class="sc">::</span><span class="fu">tidy</span>())</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>{cards} data frame: 16 x 8</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   variable   context   stat_name stat_label      stat fmt_fn
+1        am continuo…    estimate   estimate     0.406      1
+2        am continuo…   statistic  statistic     0.781      1
+3        am continuo…     p.value    p.value     0.377      1
+4        am continuo…   parameter  parameter         1      0
+5        am continuo…    conf.low   conf.low     0.242      1
+6        am continuo…   conf.high  conf.high     0.592      1
+7        am continuo…      method     method 1-sample…   &lt;fn&gt;
+8        am continuo… alternative  alternat… two.sided   &lt;fn&gt;
+9        vs continuo…    estimate   estimate     0.438      1
+10       vs continuo…   statistic  statistic     0.281      1
+11       vs continuo…     p.value    p.value     0.596      1
+12       vs continuo…   parameter  parameter         1      0
+13       vs continuo…    conf.low   conf.low     0.268      1
+14       vs continuo…   conf.high  conf.high     0.621      1
+15       vs continuo…      method     method 1-sample…   &lt;fn&gt;
+16       vs continuo… alternative  alternat… two.sided   &lt;fn&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ 2 more variables: warning, error</code></pre>
+</div>
+</div>
+</section>
+<section id="building-your-own-ard-functions" class="level2">
+<h2 class="anchored" data-anchor-id="building-your-own-ard-functions">Building your own ARD functions</h2>
+<p>See the full <a href="https://insightsengineering.github.io/cards/latest-tag/articles/creating-ards.html">vignette</a> for details on creating both one-off ARDs and functions for creating ARDs.</p>
+<iframe width="980" height="500" src="https://insightsengineering.github.io/cards/latest-tag/articles/creating-ards.html"></iframe>
+</section>
 <section id="cardx-regression" class="level2">
 <h2 class="anchored" data-anchor-id="cardx-regression">{cardx} Regression</h2>
 <ul>
@@ -335,40 +396,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="cardx-regression-example" class="level2">
 <h2 class="anchored" data-anchor-id="cardx-regression-example">{cardx} Regression Example</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># build model</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> pharmaverseadam<span class="sc">::</span>adtte_onco <span class="sc">|&gt;</span> </span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(PARAM <span class="sc">%in%</span> <span class="st">"Progression Free Survival"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coxph</span>(ggsurvfit<span class="sc">::</span><span class="fu">Surv_CNSR</span>() <span class="sc">~</span> ARM <span class="sc">+</span> AGE, <span class="at">data =</span> _)</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># put model in a summary table</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">tbl_regression</span>(mod, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_n</span>(<span class="at">location =</span> <span class="fu">c</span>(<span class="st">'label'</span>, <span class="st">'level'</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_nevent</span>(<span class="at">location =</span> <span class="fu">c</span>(<span class="st">'label'</span>, <span class="st">'level'</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bold_labels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># build model</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> pharmaverseadam<span class="sc">::</span>adtte_onco <span class="sc">|&gt;</span> </span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(PARAM <span class="sc">%in%</span> <span class="st">"Progression Free Survival"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coxph</span>(ggsurvfit<span class="sc">::</span><span class="fu">Surv_CNSR</span>() <span class="sc">~</span> ARM <span class="sc">+</span> AGE, <span class="at">data =</span> _)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co"># put model in a summary table</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">tbl_regression</span>(mod, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_n</span>(<span class="at">location =</span> <span class="fu">c</span>(<span class="st">'label'</span>, <span class="st">'level'</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_nevent</span>(<span class="at">location =</span> <span class="fu">c</span>(<span class="st">'label'</span>, <span class="st">'level'</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bold_labels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><br></p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="mztdkxvrke" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#mztdkxvrke table {
+<div id="ntzuevxqgc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ntzuevxqgc table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#mztdkxvrke thead, #mztdkxvrke tbody, #mztdkxvrke tfoot, #mztdkxvrke tr, #mztdkxvrke td, #mztdkxvrke th {
+#ntzuevxqgc thead, #ntzuevxqgc tbody, #ntzuevxqgc tfoot, #ntzuevxqgc tr, #ntzuevxqgc td, #ntzuevxqgc th {
   border-style: none;
 }
 
-#mztdkxvrke p {
+#ntzuevxqgc p {
   margin: 0;
   padding: 0;
 }
 
-#mztdkxvrke .gt_table {
+#ntzuevxqgc .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -394,12 +454,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-left-color: #D3D3D3;
 }
 
-#mztdkxvrke .gt_caption {
+#ntzuevxqgc .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#mztdkxvrke .gt_title {
+#ntzuevxqgc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -411,7 +471,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-width: 0;
 }
 
-#mztdkxvrke .gt_subtitle {
+#ntzuevxqgc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -423,7 +483,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-width: 0;
 }
 
-#mztdkxvrke .gt_heading {
+#ntzuevxqgc .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -435,13 +495,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#mztdkxvrke .gt_bottom_border {
+#ntzuevxqgc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mztdkxvrke .gt_col_headings {
+#ntzuevxqgc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -456,7 +516,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#mztdkxvrke .gt_col_heading {
+#ntzuevxqgc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -476,7 +536,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#mztdkxvrke .gt_column_spanner_outer {
+#ntzuevxqgc .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -488,15 +548,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 4px;
 }
 
-#mztdkxvrke .gt_column_spanner_outer:first-child {
+#ntzuevxqgc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mztdkxvrke .gt_column_spanner_outer:last-child {
+#ntzuevxqgc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mztdkxvrke .gt_column_spanner {
+#ntzuevxqgc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -508,11 +568,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   width: 100%;
 }
 
-#mztdkxvrke .gt_spanner_row {
+#ntzuevxqgc .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#mztdkxvrke .gt_group_heading {
+#ntzuevxqgc .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -538,7 +598,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   text-align: left;
 }
 
-#mztdkxvrke .gt_empty_group_heading {
+#ntzuevxqgc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -553,15 +613,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: middle;
 }
 
-#mztdkxvrke .gt_from_md > :first-child {
+#ntzuevxqgc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mztdkxvrke .gt_from_md > :last-child {
+#ntzuevxqgc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mztdkxvrke .gt_row {
+#ntzuevxqgc .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -580,7 +640,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   overflow-x: hidden;
 }
 
-#mztdkxvrke .gt_stub {
+#ntzuevxqgc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -593,7 +653,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#mztdkxvrke .gt_stub_row_group {
+#ntzuevxqgc .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -607,15 +667,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   vertical-align: top;
 }
 
-#mztdkxvrke .gt_row_group_first td {
+#ntzuevxqgc .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mztdkxvrke .gt_row_group_first th {
+#ntzuevxqgc .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#mztdkxvrke .gt_summary_row {
+#ntzuevxqgc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -625,16 +685,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#mztdkxvrke .gt_first_summary_row {
+#ntzuevxqgc .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mztdkxvrke .gt_first_summary_row.thick {
+#ntzuevxqgc .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mztdkxvrke .gt_last_summary_row {
+#ntzuevxqgc .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -644,7 +704,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#mztdkxvrke .gt_grand_summary_row {
+#ntzuevxqgc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -654,7 +714,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#mztdkxvrke .gt_first_grand_summary_row {
+#ntzuevxqgc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -664,7 +724,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-top-color: #D3D3D3;
 }
 
-#mztdkxvrke .gt_last_grand_summary_row_top {
+#ntzuevxqgc .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -674,11 +734,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#mztdkxvrke .gt_striped {
+#ntzuevxqgc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mztdkxvrke .gt_table_body {
+#ntzuevxqgc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -687,7 +747,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-bottom-color: #D3D3D3;
 }
 
-#mztdkxvrke .gt_footnotes {
+#ntzuevxqgc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -701,7 +761,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#mztdkxvrke .gt_footnote {
+#ntzuevxqgc .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -710,7 +770,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#mztdkxvrke .gt_sourcenotes {
+#ntzuevxqgc .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -724,7 +784,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   border-right-color: #D3D3D3;
 }
 
-#mztdkxvrke .gt_sourcenote {
+#ntzuevxqgc .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -732,72 +792,72 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   padding-right: 5px;
 }
 
-#mztdkxvrke .gt_left {
+#ntzuevxqgc .gt_left {
   text-align: left;
 }
 
-#mztdkxvrke .gt_center {
+#ntzuevxqgc .gt_center {
   text-align: center;
 }
 
-#mztdkxvrke .gt_right {
+#ntzuevxqgc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mztdkxvrke .gt_font_normal {
+#ntzuevxqgc .gt_font_normal {
   font-weight: normal;
 }
 
-#mztdkxvrke .gt_font_bold {
+#ntzuevxqgc .gt_font_bold {
   font-weight: bold;
 }
 
-#mztdkxvrke .gt_font_italic {
+#ntzuevxqgc .gt_font_italic {
   font-style: italic;
 }
 
-#mztdkxvrke .gt_super {
+#ntzuevxqgc .gt_super {
   font-size: 65%;
 }
 
-#mztdkxvrke .gt_footnote_marks {
+#ntzuevxqgc .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#mztdkxvrke .gt_asterisk {
+#ntzuevxqgc .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mztdkxvrke .gt_indent_1 {
+#ntzuevxqgc .gt_indent_1 {
   text-indent: 5px;
 }
 
-#mztdkxvrke .gt_indent_2 {
+#ntzuevxqgc .gt_indent_2 {
   text-indent: 10px;
 }
 
-#mztdkxvrke .gt_indent_3 {
+#ntzuevxqgc .gt_indent_3 {
   text-indent: 15px;
 }
 
-#mztdkxvrke .gt_indent_4 {
+#ntzuevxqgc .gt_indent_4 {
   text-indent: 20px;
 }
 
-#mztdkxvrke .gt_indent_5 {
+#ntzuevxqgc .gt_indent_5 {
   text-indent: 25px;
 }
 
-#mztdkxvrke .katex-display {
+#ntzuevxqgc .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#mztdkxvrke div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ntzuevxqgc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
