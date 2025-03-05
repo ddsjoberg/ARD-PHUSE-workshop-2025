@@ -2,7 +2,7 @@
 title: "gtsummary + ARD"
 author: "Daniel D. Sjoberg and Becca Krouse"
 logo: "images/gtsummary-logo.png"
-footer: "[bit.ly/rpharma-ard](https://bit.ly/rpharma-ard)"
+footer: "[www.danieldsjoberg.com/ARD-PHUSE-workshop-2025/](https://www.danieldsjoberg.com/ARD-PHUSE-workshop-2025/)"
 editor: source
 format: 
   revealjs: 

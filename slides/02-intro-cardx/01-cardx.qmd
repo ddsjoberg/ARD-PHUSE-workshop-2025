@@ -79,6 +79,42 @@ pharmaverseadam::adsl |>
   cards::tidy_ard_column_order()
 ```
 
+## Example: Build ARD for `prop.test()`
+
+* Save the results from `prop.test()` in an ARD for columns `am` and `vs` in mtcars
+
+```{r, eval = FALSE}
+mtcars |> 
+  cards::ard_continuous(
+    variables = c(  ),
+    statistic = 
+      everything() ~ list(prop_test =  )
+  )
+```
+
+## Example: Build ARD for `prop.test()`
+
+* Save the results from `prop.test()` in an ARD
+
+```{r}
+mtcars |> 
+  cards::ard_continuous(
+    variables = c(am, vs),
+    statistic = 
+      everything() ~ list(prop_test = \(x) prop.test(x = sum(x), n = length(x)) |> broom::tidy())
+  )
+```
+
+## Building your own ARD functions
+
+See the full [vignette](https://insightsengineering.github.io/cards/latest-tag/articles/creating-ards.html) for details on creating both one-off ARDs and functions for creating ARDs.
+
+```{=html}
+<iframe width="980" height="500" src="https://insightsengineering.github.io/cards/latest-tag/articles/creating-ards.html"></iframe>
+```
+
+
+
 ## {cardx} Regression
 
 -   Includes functionality to summarize nearly every type of regression model in the R ecosystem: 
@@ -110,7 +146,6 @@ tbl <- tbl_regression(mod, exponentiate = TRUE) |>
   bold_labels()
 ```
 
-<br>
 
 ```{r}
 #| echo: false
