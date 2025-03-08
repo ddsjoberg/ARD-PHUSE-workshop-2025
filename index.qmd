@@ -27,13 +27,13 @@ In this interactive workshop, attendees will learn about ARDs and how they fit i
 
 ## Slides
 
-[Introduction to the Analysis Results Standard and {cards}](https://www.danieldsjoberg.com/ARD-PHUSE-workshop-2025/slides/01-intro-cards)
+[Introduction to the Analysis Results Standard and {cards}](slides/01-intro-cards)
 
-[Introduction to the {cardx} Package and ARD Extras](https://www.danieldsjoberg.com/ARD-PHUSE-workshop-2025/slides/02-intro-cardx)
+[Introduction to the {cardx} Package and ARD Extras](slides/02-intro-cardx)
 
-[ARD to Tables with {gtsummary}](https://www.danieldsjoberg.com/ARD-PHUSE-workshop-2025/slides/03-tables-gtsummary)
+[ARD to Tables with {gtsummary}](slides/03-tables-gtsummary)
 
-[ARD to Tables with {tfrmt}](https://www.danieldsjoberg.com/ARD-PHUSE-workshop-2025/slides/04-tables-tfrmt)
+[ARD to Tables with {tfrmt}](slides/04-tables-tfrmt)
 
 ## Instructors
 
