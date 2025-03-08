@@ -920,210 +920,210 @@
   {
     "objectID": "slides/03-tables-gtsummary/index.html#workshop-outline",
     "href": "slides/03-tables-gtsummary/index.html#workshop-outline",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "Workshop outline",
     "text": "Workshop outline\n\n\nIntroduction to the Analysis Results Standard and {cards}\nIntroduction to the {cardx} Package and ARD Extras\nARD to Tables with {gtsummary}\nARD to Tables with {tfrmt}"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#tables-in-the-pharmaverse",
     "href": "slides/03-tables-gtsummary/index.html#tables-in-the-pharmaverse",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "Tables in the {pharmaverse}",
     "text": "Tables in the {pharmaverse}"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#tables-in-the-pharmaverse-1",
     "href": "slides/03-tables-gtsummary/index.html#tables-in-the-pharmaverse-1",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "Tables in the {pharmaverse}",
     "text": "Tables in the {pharmaverse}\n\n\nData frame-first packages"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#tables-in-the-pharmaverse-2",
     "href": "slides/03-tables-gtsummary/index.html#tables-in-the-pharmaverse-2",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "Tables in the {pharmaverse}",
     "text": "Tables in the {pharmaverse}\n\n\nARD-first packages"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#section",
     "href": "slides/03-tables-gtsummary/index.html#section",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "",
     "text": "How it started\n\n\nBegan to address reproducible issues while working in academia\nGoal was to build a package to summarize study results with code that was both simple and customizable\nFirst release in May 2019\n\n\n\nHow it’s going\n\n\nThe stats\n\n1,300,000+ installations from CRAN\n1100+ GitHub stars\n300+ contributors\n50+ code contributors\n\nWon the 2021 American Statistical Association (ASA) Innovation in Programming Award\nWon the 2024 Posit Pharma Table Contest"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#gtsummary-overview",
     "href": "slides/03-tables-gtsummary/index.html#gtsummary-overview",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "{gtsummary} overview",
     "text": "{gtsummary} overview\n\n\n\nCreate tabular summaries with sensible defaults but highly customizable\nTypes of summaries:\n\nDemographic- or “Table 1”-types\nCross-tabulation\nRegression models\nSurvival data\nNested summaries (AE tables)\nCustom tables\n\n\n\n\nStack and/or merge any table type\nUse themes to standardize across tables\nChoose from different print engines"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#gtsummary-runs-on-ards",
     "href": "slides/03-tables-gtsummary/index.html#gtsummary-runs-on-ards",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "{gtsummary} runs on ARDs!",
     "text": "{gtsummary} runs on ARDs!"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#simple-summary-table",
     "href": "slides/03-tables-gtsummary/index.html#simple-summary-table",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "Simple Summary Table",
     "text": "Simple Summary Table\n\nlibrary(gtsummary)\nADSL &lt;- cards::ADSL |&gt; dplyr::filter(startsWith(ARM, \"Xanomeline\"))\nADAE &lt;- cards::ADAE |&gt; dplyr::filter(startsWith(TRTA, \"Xanomeline\"))\n\ntbl &lt;- ADSL |&gt; \n  tbl_summary(\n    by = ARM, \n    include = c(AGE, RACE)\n  )\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nXanomeline High Dose N = 841\nXanomeline Low Dose N = 841\n\n\n\n\nAge\n76 (71, 80)\n78 (71, 82)\n\n\nRace\n\n\n\n\n\n\n    AMERICAN INDIAN OR ALASKA NATIVE\n1 (1.2%)\n0 (0.0%)\n\n\n    BLACK OR AFRICAN AMERICAN\n9 (10.7%)\n6 (7.1%)\n\n\n    WHITE\n74 (88.1%)\n78 (92.9%)\n\n\n\n1 Median (Q1, Q3); n (%)"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#simple-summary-table-1",
     "href": "slides/03-tables-gtsummary/index.html#simple-summary-table-1",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "Simple Summary Table",
     "text": "Simple Summary Table\n\ntbl &lt;- ADSL |&gt; \n  tbl_summary(\n    by = ARM, \n    include = c(AGE, RACE),\n    type = AGE ~ \"continuous2\",\n    statistic = all_continuous() ~ c(\"{mean} ({sd})\", \"{min}, {max}\")\n  ) |&gt; \n  add_overall()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nOverall N = 1681\nXanomeline High Dose N = 841\nXanomeline Low Dose N = 841\n\n\n\n\nAge\n\n\n\n\n\n\n\n\n    Mean (SD)\n75 (8)\n74 (8)\n76 (8)\n\n\n    Min, Max\n51, 88\n56, 88\n51, 88\n\n\nRace\n\n\n\n\n\n\n\n\n    AMERICAN INDIAN OR ALASKA NATIVE\n1 (0.6%)\n1 (1.2%)\n0 (0.0%)\n\n\n    BLACK OR AFRICAN AMERICAN\n15 (8.9%)\n9 (10.7%)\n6 (7.1%)\n\n\n    WHITE\n152 (90.5%)\n74 (88.1%)\n78 (92.9%)\n\n\n\n1 n (%)"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#simple-summary-table-2",
     "href": "slides/03-tables-gtsummary/index.html#simple-summary-table-2",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "Simple Summary Table",
     "text": "Simple Summary Table\nBut where are the ARDs?!\n\n\n\ngather_ard(tbl) |&gt; \n  purrr::pluck(\"tbl_summary\") |&gt; \n  cards::apply_fmt_fn()\n\n   group1 group1_level variable variable_level stat_name stat_label  stat stat_fmt\n1     ARM    Xanomeli…     RACE      AMERICAN…         n          n     1        1\n2     ARM    Xanomeli…     RACE      AMERICAN…         N          N    84       84\n3     ARM    Xanomeli…     RACE      AMERICAN…         p          % 0.012      1.2\n4     ARM    Xanomeli…     RACE      BLACK OR…         n          n     9        9\n5     ARM    Xanomeli…     RACE      BLACK OR…         N          N    84       84\n6     ARM    Xanomeli…     RACE      BLACK OR…         p          % 0.107     10.7\n7     ARM    Xanomeli…     RACE          WHITE         n          n    74       74\n8     ARM    Xanomeli…     RACE          WHITE         N          N    84       84\n9     ARM    Xanomeli…     RACE          WHITE         p          % 0.881     88.1\n10    ARM    Xanomeli…     RACE      AMERICAN…         n          n     0        0\n\n\n\n\nBecause the ARD is created as a byproduct of every gtsummary function, QC is a breeze.\nSimply compare the ARD above to the ARD created with {cards}, which allows you to compare both the underlying numeric values and the rounded/formatted value that appears in the table."
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#ae-summary-table",
     "href": "slides/03-tables-gtsummary/index.html#ae-summary-table",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "AE Summary Table",
     "text": "AE Summary Table\n\ntbl &lt;- ADAE |&gt; \n  dplyr::filter(AESOC %in% c(\"EYE DISORDERS\", \"VASCULAR DISORDERS\")) |&gt; \n  tbl_hierarchical(\n    by = TRTA,\n    variables = c(AESOC, AETERM),\n    id = USUBJID,\n    denominator = ADSL |&gt; dplyr::rename(TRTA = ARM)\n  )\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPrimary System Organ Class     Reported Term for the Adverse Event\nXanomeline High Dose N = 841\nXanomeline Low Dose N = 841\n\n\n\n\nEYE DISORDERS\n1 (1.2%)\n2 (2.4%)\n\n\n    CONJUNCTIVAL HAEMORRHAGE\n0 (0.0%)\n1 (1.2%)\n\n\n    VISION BLURRED\n1 (1.2%)\n1 (1.2%)\n\n\nVASCULAR DISORDERS\n2 (2.4%)\n3 (3.6%)\n\n\n    HOT FLUSH\n0 (0.0%)\n1 (1.2%)\n\n\n    HYPERTENSION\n1 (1.2%)\n1 (1.2%)\n\n\n    HYPOTENSION\n0 (0.0%)\n1 (1.2%)\n\n\n    WOUND HAEMORRHAGE\n1 (1.2%)\n0 (0.0%)\n\n\n\n1 n (%)"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#tbl_merge-for-side-by-side-tables",
     "href": "slides/03-tables-gtsummary/index.html#tbl_merge-for-side-by-side-tables",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "tbl_merge() for side-by-side tables",
     "text": "tbl_merge() for side-by-side tables\n\n\n\ntbl_n &lt;- \n  tbl_summary(\n    trial, \n    include = grade, \n    statistic = grade ~ \"{n}\"\n  ) |&gt; \n  modify_header(all_stat_cols() ~ \"**N**\") |&gt; \n  remove_footnote_header(all_stat_cols()) \n\n\n\ntbl_n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nN\n\n\n\n\nGrade\n\n\n\n\n    I\n68\n\n\n    II\n68\n\n\n    III\n64\n\n\n\n\n\n\n\n\n\ntbl_age &lt;-\n  tbl_continuous(\n    trial, \n    include = grade, \n    variable = age, \n    by = trt\n  ) |&gt; \n  modify_header(\n    all_stat_cols() ~ \"**{level}**\"\n  ) \n\ntbl_age\n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nDrug A1\nDrug B1\n\n\n\n\nGrade\n\n\n\n\n\n\n    I\n46 (36, 60)\n48 (42, 55)\n\n\n    II\n45 (31, 55)\n51 (42, 58)\n\n\n    III\n52 (42, 61)\n45 (36, 52)\n\n\n\n1 Age: Median (Q1, Q3)"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#tbl_merge-for-side-by-side-tables-1",
     "href": "slides/03-tables-gtsummary/index.html#tbl_merge-for-side-by-side-tables-1",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "tbl_merge() for side-by-side tables",
     "text": "tbl_merge() for side-by-side tables\n\n# combine the tables side by side\nlist(tbl_n, tbl_age) |&gt; \n  tbl_merge(tab_spanner = FALSE) # suppress default header\n\n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nN\nDrug A1\nDrug B1\n\n\n\n\nGrade\n\n\n\n\n\n\n\n\n    I\n68\n46 (36, 60)\n48 (42, 55)\n\n\n    II\n68\n45 (31, 55)\n51 (42, 58)\n\n\n    III\n64\n52 (42, 61)\n45 (36, 52)\n\n\n\n1 Age: Median (Q1, Q3)"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#tbl_stack-to-combine-vertically",
     "href": "slides/03-tables-gtsummary/index.html#tbl_stack-to-combine-vertically",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "tbl_stack() to combine vertically",
     "text": "tbl_stack() to combine vertically\n\ntbl_drug_a &lt;- trial |&gt; \n  dplyr::filter(trt == \"Drug A\") |&gt; \n  tbl_summary(include = c(response, death), missing = \"no\")\ntbl_drug_b &lt;- trial |&gt; \n  dplyr::filter(trt == \"Drug B\") |&gt; \n  tbl_summary(include = c(response, death), missing = \"no\")\n\n# stack the two tables \nlist(tbl_drug_a, tbl_drug_b) |&gt; \n  tbl_stack(group_header = c(\"Drug A\", \"Drug B\")) |&gt; # optionally include headers for each table\n  modify_header(all_stat_cols() ~ \"**Outcome Rates**\")\n\n\n\n\n\n\n\nCharacteristic\nOutcome Rates1\n\n\n\n\nDrug A\n\n\nTumor Response\n28 (29.5%)\n\n\nPatient Died\n52 (53.1%)\n\n\nDrug B\n\n\nTumor Response\n33 (33.7%)\n\n\nPatient Died\n60 (58.8%)\n\n\n\n1 n (%)"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#tbl_strata_nested_stack",
     "href": "slides/03-tables-gtsummary/index.html#tbl_strata_nested_stack",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "tbl_strata_nested_stack()",
     "text": "tbl_strata_nested_stack()\n\ntrial |&gt; \n  tbl_strata_nested_stack(\n    strata = trt, \n    ~ tbl_summary(.x, include = c(response, death), missing = \"no\")\n  )\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nN = 981\n\n\n\n\nDrug A\n\n\n\n\n    Tumor Response\n28 (29.5%)\n\n\n    Patient Died\n52 (53.1%)\n\n\nDrug B\n\n\n\n\n    Tumor Response\n33 (33.7%)\n\n\n    Patient Died\n60 (58.8%)\n\n\n\n1 n (%)"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#ard-first-tables-1",
     "href": "slides/03-tables-gtsummary/index.html#ard-first-tables-1",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "ARD-first Tables",
     "text": "ARD-first Tables\nSimilar to functions that accept a data frame, the package exports functions with nearly identical APIs that accept an ARD.\n\n\ntbl_summary()\n\ntbl_continuous()\n\ntbl_wide_summary()\n\ntbl_ard_summary()\n\ntbl_ard_continuous()\n\ntbl_ard_wide_summary()"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#ard-first-tables-2",
     "href": "slides/03-tables-gtsummary/index.html#ard-first-tables-2",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "ARD-first Tables",
     "text": "ARD-first Tables\nWe can use the skills we learned earlier today to create ARDs for gtsummary tables.\n\n\nard &lt;- ard_stack(\n  data = trial, \n  ard_continuous(variables = age),\n  ard_categorical(variables = grade),\n  .attributes=TRUE\n)\n\nard\n\n\n{cards} data frame: 22 x 9\n\n\n   variable variable_level   context stat_name stat_label   stat\n1       age                continuo…         N          N    189\n2       age                continuo…      mean       Mean 47.238\n3       age                continuo…        sd         SD 14.312\n4       age                continuo…    median     Median     47\n5       age                continuo…       p25         Q1     38\n6       age                continuo…       p75         Q3     57\n7       age                continuo…       min        Min      6\n8       age                continuo…       max        Max     83\n9     grade              I categori…         n          n     68\n10    grade              I categori…         N          N    200\n\n\nℹ 12 more rows\n\n\nℹ Use `print(n = ...)` to see more rows\n\n\nℹ 3 more variables: fmt_fn, warning, error\n\n\n\n\nThe .attributes=TRUE call adds column attributes, like labels, to the ARD table, which leads to better defaults by displaying the column labels in the table."
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#ard-first-tables-3",
     "href": "slides/03-tables-gtsummary/index.html#ard-first-tables-3",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "ARD-first Tables",
     "text": "ARD-first Tables\nWe can simply use the ARD from the previous slide, and pass it to tbl_ard_summary() for a summary table.\n\n\ntbl_ard_summary(ard)\n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nOverall1\n\n\n\n\nAge\n47.0 (38.0, 57.0)\n\n\nGrade\n\n\n\n\n    I\n68 (34.0%)\n\n\n    II\n68 (34.0%)\n\n\n    III\n64 (32.0%)\n\n\n\n1 Median (Q1, Q3); n (%)"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#ard-first-tables-4",
     "href": "slides/03-tables-gtsummary/index.html#ard-first-tables-4",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "ARD-first Tables",
     "text": "ARD-first Tables\nNow let’s try a somewhat more complicated table.\n\ntrial |&gt; \n  ard_stack( \n    .by = trt,\n    ard_continuous(variables = age),\n    ard_categorical(variables = grade),\n    # add this for best-looking tables\n    .attributes = TRUE,\n    .overall = TRUE # get unstratified summary statistics\n  ) |&gt; \n  tbl_ard_summary(\n    by = trt,\n    type = all_continuous() ~ \"continuous2\",\n    statistic = all_continuous() ~ c(\"{mean} ({sd})\", \"{min} - {max}\"),\n    label = list(age = \"Patient Age, yrs\"),\n    overall = TRUE\n  ) |&gt; \n  modify_caption(\"**Table 1. Subject Demographics**\")"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#ard-first-tables-4-output",
     "href": "slides/03-tables-gtsummary/index.html#ard-first-tables-4-output",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "ARD-first Tables",
     "text": "ARD-first Tables\n\n\n\n\n\nTable 1. Subject Demographics\n\n\n\n\n\n\n\n\nCharacteristic\nOverall1\nDrug A1\nDrug B1\n\n\n\n\nPatient Age, yrs\n\n\n\n\n\n\n\n\n    Mean (SD)\n47.2 (14.3)\n47.0 (14.7)\n47.4 (14.0)\n\n\n    Min - Max\n6.0 - 83.0\n6.0 - 78.0\n9.0 - 83.0\n\n\nGrade\n\n\n\n\n\n\n\n\n    I\n68 (34.0%)\n35 (35.7%)\n33 (32.4%)\n\n\n    II\n68 (34.0%)\n32 (32.7%)\n36 (35.3%)\n\n\n    III\n64 (32.0%)\n31 (31.6%)\n33 (32.4%)\n\n\n\n1 n (%)"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#what-about-other-tables",
     "href": "slides/03-tables-gtsummary/index.html#what-about-other-tables",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "What About Other Tables?",
     "text": "What About Other Tables?\n\nWhile our examples have focused on simple demographics tables, the ARD structure is general and any statistic can be presented.\n\n\ntrial |&gt; \n  cardx::ard_stats_t_test_onesample(by = c(trt, grade), variables = age) |&gt; \n  cards::update_ard_fmt_fn(stat_names = \"p.value\", \n                           fmt_fn = label_style_pvalue(prepend_p = TRUE)) |&gt; \n  tbl_ard_continuous(\n    by = trt, \n    include = grade,\n    variable = age,\n    statistic = ~\"{estimate} ({conf.low}, {conf.high}; {p.value})\"\n  ) |&gt; \n  modify_footnote(all_stat_cols() ~ \"One-sample t-test\")\n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nDrug A1\nDrug B1\n\n\n\n\ngrade\n\n\n\n\n\n\n    I\n45.9 (40.2, 51.5; p&lt;0.001)\n46.4 (41.2, 51.6; p&lt;0.001)\n\n\n    II\n44.6 (39.0, 50.1; p&lt;0.001)\n50.3 (45.9, 54.7; p&lt;0.001)\n\n\n    III\n51.0 (46.1, 55.9; p&lt;0.001)\n45.7 (40.4, 51.0; p&lt;0.001)\n\n\n\n1 One-sample t-test"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#ard-first-table-shells",
     "href": "slides/03-tables-gtsummary/index.html#ard-first-table-shells",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "ARD-first Table Shells",
     "text": "ARD-first Table Shells\n\ntrial |&gt; \n  ard_stack( \n    .by = trt,\n    ard_continuous(variables = age),\n    ard_categorical(variables = grade),\n    # add this for best-looking tables\n    .attributes = TRUE\n  ) |&gt; \n  update_ard_fmt_fn(stat_names = c(\"mean\", \"sd\", \"min\", \"max\", \"p\"), \n                    fmt_fn = \\(x) \"xx.x\") |&gt; \n  update_ard_fmt_fn(stat_names = \"n\", fmt_fn = \\(x) \"xx\") |&gt; \n  tbl_ard_summary(\n    by = trt,\n    type = all_continuous() ~ \"continuous2\",\n    statistic = all_continuous() ~ c(\"{mean} ({sd})\", \"{min} - {max}\"),\n    label = list(age = \"Patient Age, yrs\")\n  ) |&gt; \n  modify_header(all_stat_cols() ~ \"**{level}**  \\nN = xx\")"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#ard-first-table-shells-output",
     "href": "slides/03-tables-gtsummary/index.html#ard-first-table-shells-output",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "ARD-first Table Shells",
     "text": "ARD-first Table Shells\n\n\n\n\n\n\n\n\n\n\n\n\nCharacteristic\nDrug A N = xx1\nDrug B N = xx1\n\n\n\n\nPatient Age, yrs\n\n\n\n\n\n\n    Mean (SD)\nxx.x (xx.x)\nxx.x (xx.x)\n\n\n    Min - Max\nxx.x - xx.x\nxx.x - xx.x\n\n\nGrade\n\n\n\n\n\n\n    I\nxx (xx.x%)\nxx (xx.x%)\n\n\n    II\nxx (xx.x%)\nxx (xx.x%)\n\n\n    III\nxx (xx.x%)\nxx (xx.x%)\n\n\n\n1 n (%)"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#as_gtsummary",
     "href": "slides/03-tables-gtsummary/index.html#as_gtsummary",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "as_gtsummary()",
     "text": "as_gtsummary()\nFor tables that just don’t fit any mold, use as_gtsummary().\n\nCreate a data frame of the data summary convert to gtsummary\n\n\nADAE[1:5,] |&gt; \n  dplyr::select(USUBJID, AESOC, AETERM) |&gt; \n  dplyr::mutate(\n    .by = USUBJID, \n    USUBJID = ifelse(dplyr::row_number() == 1, USUBJID, NA)\n  ) |&gt; \n  as_gtsummary() |&gt; \n  modify_header(USUBJID = \"Patient ID\") |&gt; \n  modify_column_alignment(everything(), \"left\")"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#as_gtsummary-output",
     "href": "slides/03-tables-gtsummary/index.html#as_gtsummary-output",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "as_gtsummary()",
     "text": "as_gtsummary()\n\n\n\n\n\n\n\n\n\n\n\n\nPatient ID\nPrimary System Organ Class\nReported Term for the Adverse Event\n\n\n\n\n01-701-1028\nGENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS\nAPPLICATION SITE ERYTHEMA\n\n\n\n\nGENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS\nAPPLICATION SITE PRURITUS\n\n\n01-701-1034\nGENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS\nAPPLICATION SITE PRURITUS\n\n\n\n\nGENERAL DISORDERS AND ADMINISTRATION SITE CONDITIONS\nFATIGUE\n\n\n01-701-1097\nSKIN AND SUBCUTANEOUS TISSUE DISORDERS\nERYTHEMA"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#gtsummary-print-engines-1",
     "href": "slides/03-tables-gtsummary/index.html#gtsummary-print-engines-1",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "{gtsummary} print engines",
     "text": "{gtsummary} print engines"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#gtsummary-print-engines-2",
     "href": "slides/03-tables-gtsummary/index.html#gtsummary-print-engines-2",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "{gtsummary} print engines",
     "text": "{gtsummary} print engines\nUse any print engine to customize table\n\n\nlibrary(gtsummary)\nlibrary(gt)\ntrial |&gt;\n  select(age, grade) |&gt;\n  tbl_summary() |&gt;\n  as_gt() |&gt;\n  cols_width(label ~ px(300)) |&gt;\n  cols_align(columns = stat_0, \n             align = \"left\")\n\n\n\n\n\n\n\n\nCharacteristic\nN = 2001\n\n\n\n\nAge\n47 (38, 57)\n\n\n    Unknown\n11\n\n\nGrade\n\n\n\n\n    I\n68 (34.0%)\n\n\n    II\n68 (34.0%)\n\n\n    III\n64 (32.0%)\n\n\n\n1 Median (Q1, Q3); n (%)"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#gtsummary-website",
     "href": "slides/03-tables-gtsummary/index.html#gtsummary-website",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "{gtsummary} website",
     "text": "{gtsummary} website\nhttp://www.danieldsjoberg.com/gtsummary/"
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#section-1",
     "href": "slides/03-tables-gtsummary/index.html#section-1",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "",
     "text": "Package Authors/Contributors\n\nDaniel D. Sjoberg\nJoseph Larmarange\nMichael Curry\nJessica Lavery\nKarissa Whiting\nEmily C. Zabor\nXing Bai\nEsther Drill\nJessica Flynn\nMargie Hannum\nStephanie Lobaugh\nShannon Pileggi\nAmy Tin\nGustavo Zapata Wainberg\n\n\nOther Contributors\n\n@abduazizR, @ablack3, @ABohynDOE, @ABorakati, @adilsonbauhofer, @aghaynes, @ahinton-mmc, @aito123, @akarsteve, @akefley, @albamrt, @albertostefanelli, @alecbiom, @alexandrayas, @alexis-catherine, @AlexZHENGH, @alnajar, @amygimma, @anaavu, @anddis, @andrader, @Andrzej-Andrzej, @angelgar, @arbet003, @arnmayer, @aspina7, @AurelienDasre, @awcm0n, @ayogasekaram, @barretmonchka, @barthelmes, @bc-teixeira, @bcjaeger, @BeauMeche, @benediktclaus, @benwhalley, @berg-michael, @bhattmaulik, @BioYork, @blue-abdur, @brachem-christian, @brianmsm, @browne123, @bwiernik, @bx259, @calebasaraba, @CarolineXGao, @CharlyMarie, @ChongTienGoh, @Chris-M-P, @chrisleitzinger, @cjprobst, @ClaudiaCampani, @clmawhorter, @CodieMonster, @coeusanalytics, @coreysparks, @CorradoLanera, @crystalluckett-sanofi, @ctlamb, @dafxy, @DanChaltiel, @DanielPark-MGH, @davideyre, @davidgohel, @davidkane9, @DavisVaughan, @dax44, @dchiu911, @ddsjoberg, @DeFilippis, @denis-or, @dereksonderegger, @derekstein, @DesiQuintans, @dieuv0, @dimbage, @discoleo, @djbirke, @dmenne, @DrDinhLuong, @edelarua, @edrill, @Eduardo-Auer, @ElfatihHasabo, @emilyvertosick, @eokoshi, @ercbk, @eremingt, @erikvona, @eugenividal, @eweisbrod, @fdehrich, @feizhadj, @fh-jsnider, @fh-mthomson, @FrancoisGhesquiere, @ge-generation, @Generalized, @ghost, @giorgioluciano, @giovannitinervia9, @gjones1219, @gorkang, @GuiMarthe, @gungorMetehan, @hass91, @hescalar, @HichemLa, @hichew22, @hr70, @huftis, @hughjonesd, @iaingallagher, @ilyamusabirov, @IndrajeetPatil, @irene9116, @IsadoraBM, @j-tamad, @jalavery, @jaromilfrossard, @JBarsotti, @jbtov, @jeanmanguy, @jemus42, @jenifav, @jennybc, @JeremyPasco, @jerrodanzalone, @JesseRop, @jflynn264, @jhchou, @jhelvy, @jhk0530, @jjallaire, @jkylearmstrong, @jmbarajas, @jmbarbone, @JoanneF1229, @joelgautschi, @johnryan412, @JohnSodling, @jonasrekdalmathisen, @JonGretar, @jordan49er, @jsavinc, @jthomasmock, @juseer, @jwilliman, @karissawhiting, @karl-an, @kendonB, @kentm4, @klh281, @kmdono02, @kristyrobledo, @kwakuduahc1, @lamberp6, @lamhine, @larmarange, @ledermanr, @leejasme, @leslem, @levossen, @lngdet, @longjp, @lorenzoFabbri, @loukesio, @love520lfh, @lspeetluk, @ltin1214, @ltj-github, @lucavd, @LucyMcGowan, @LuiNov, @lukejenner6, @maciekbanas, @maia-sh, @malcolmbarrett, @mariamaseng, @Marsus1972, @martsobm, @Mathicaa, @matthieu-faron, @maxanes, @mayazadok2, @mbac, @mdidish, @medewitt, @meenakshi-kushwaha, @melindahiggins2000, @MelissaAssel, @Melkiades, @mfansler, @michaelcurry1123, @mikemazzucco, @mlamias, @mljaniczek, @moleps, @monitoringhsd, @motocci, @mrmvergeer, @msberends, @mvuorre, @myamortor, @myensr, @MyKo101, @nalimilan, @ndunnewind, @nikostr, @ningyile, @O16789, @oliviercailloux, @oranwutang, @palantre, @parmsam, @Pascal-Schmidt, @PaulC91, @paulduf, @pedersebastian, @perlatex, @pgseye, @philippemichel, @philsf, @polc1410, @Polperobis, @postgres-newbie, @proshano, @raphidoc, @RaviBot, @rawand-hanna, @rbcavanaugh, @remlapmot, @rich-iannone, @RiversPharmD, @rmgpanw, @roaldarbol, @roman2023, @ryzhu75, @s-j-choi, @sachijay, @saifelayan, @sammo3182, @samrodgersmelnick, @samuele-mercan, @sandhyapc, @sbalci, @sda030, @shah-in-boots, @shannonpileggi, @shaunporwal, @shengchaohou, @ShixiangWang, @simonpcouch, @slb2240, @slobaugh, @spiralparagon, @Spring75xx, @StaffanBetner, @steenharsted, @stenw, @Stephonomon, @storopoli, @stratopopolis, @strengejacke, @szimmer, @tamytsujimoto, @TAOS25, @TarJae, @themichjam, @THIB20, @tibirkrajc, @tjmeyers, @tldrcharlene, @tormodb, @toshifumikuroda, @TPDeramus, @UAB-BST-680, @uakimix, @uriahf, @Valja64, @viola-hilbert, @violet-nova, @vvm02, @will-gt, @xkcococo, @xtimbeau, @yatirbe, @yihunzeleke, @yonicd, @yoursdearboy, @YousufMohammed2002, @yuryzablotski, @zabore, @zachariae, @zaddyzad, @zawkzaw, @zdz2101, @zeyunlu, @zhangkaicr, @zhaohongxin0, @zheer-kejlberg, @zhengnow, @zhonghua723, @zlkrvsm, @zongell-star, and @Zoulf001."
   },
   {
     "objectID": "slides/03-tables-gtsummary/index.html#connect",
     "href": "slides/03-tables-gtsummary/index.html#connect",
-    "title": "ARD + Tables",
+    "title": "ARD + {gtsummary}",
     "section": "Connect!",
     "text": "Connect!\n\n\n\n Ask on stackoverflow.com\n Use the gtsummary tag\n Thousands of posts!\n\n danieldsjoberg.com\n @ddsjoberg.bsky.social\n linkedin.com/in/ddsjoberg/\n github.com/ddsjoberg"
   },
