@@ -23,6 +23,9 @@
 -   Input: ARD with raw, numeric values ({cards}!)
 
 -   Output: Formatted table via {gt}
+
+  -   You can export the table to a variety of formats using `gt::gt_save()` 
+  
 :::
 
 :::
@@ -305,52 +308,6 @@ tfrmt_demog |>
 
 * Load JSON back into R and recreate the table with `json_to_tfrmt()`
 
-## Saving display
-
--   `tfrmt::print_to_gt()` creates a {gt} object under the hood
-
--   You can export the table to a variety of formats using `gt::gt_save()`
-
-![](images/gtsave.png){fig-align="center"}
-
-
-## cards to tfrmt
-
-::: {.smaller}
--   {cards} includes a helper function `shuffle_ard()` to transform native {cards} output to display-ready data
-
--   This is also available as an argument `.shuffle` in `ard_stack()`
-:::
-
-```{r}
-library(cards)
-
-pharmaverseadam::adsl |> 
-  ard_categorical(
-    by = TRT01A,
-    variables = c("AGEGR1","SEX")
-  )
-```
-
-## cards to tfrmt {auto-animate="true"}
-
-::: {.smaller}
-{cards} includes a helper function `rename_ard_columns()` to transform native {cards} output to display-ready data 
-:::
-
-```{r}
-library(cards)
-
-pharmaverseadam::adsl |> 
-  dplyr::filter(SAFFL=="Y") |> 
-  ard_categorical(
-    by = TRT01A,
-    variables = c("AGEGR1","SEX")
-  ) |> 
-   rename_ard_columns(columns = all_ard_groups(),
-                      unlist = c("variable_level", "stat")) |> 
-  dplyr::select(-c(fmt_fn, warning, error))
-```
 
 ## cards to tfrmt {auto-animate="true"}
 
