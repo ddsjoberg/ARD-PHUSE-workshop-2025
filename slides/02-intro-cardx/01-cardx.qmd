@@ -96,7 +96,10 @@ mtcars |>
 
 * Save the results from `prop.test()` in an ARD
 
+<!-- TODO: Danile, consider reformatting to easier reading -->
+
 ```{r}
+#| message: TRUE
 mtcars |> 
   cards::ard_continuous(
     variables = c(am, vs),
