@@ -16,18 +16,12 @@ execute:
 
 ## Workshop outline
 
-TODO: Remove mock tables
-TODO: Make examples in ARD-first section the same as the previous section
-TODO: I have to cut some slides, or move to the back.
-
 ::: larger
-1.  Introduction to the Analysis Results Standard and {cards}
+1. Introduction to the Analysis Results Standard and ARDs with {cards}
 
-2.  Introduction to the {cardx} Package and ARD Extras
+2. Introduction to the {cardx} Package and ARD Extras
 
-3.  ***ARD to Tables with {gtsummary}***
-
-4.  ARD to Tables with {tfrmt}
+3. _ARD to Tables with {gtsummary} and {tfrmt}_
 :::
 
 ## Tables in the {pharmaverse}
@@ -130,29 +124,11 @@ crane::theme_gtsummary_roche(set_theme = FALSE, font_size = 20) |>
 ```
 
 ```{r}
+#| code-line-numbers: "|6,7,8,9,10,11|7|9,10|12"
 library(gtsummary)
 ADSL <- cards::ADSL |> dplyr::filter(startsWith(ARM, "Xanomeline"))
 ADAE <- cards::ADAE |> dplyr::filter(startsWith(TRTA, "Xanomeline"))
 
-tbl <- ADSL |> 
-  tbl_summary(
-    by = ARM, 
-    include = c(AGE, RACE)
-  )
-```
-
-<br>
-
-```{r echo = FALSE}
-tbl |> 
-  as_gt() |> 
-  gt::cols_width(all_stat_cols() ~ gt::pct(30))
-```
-
-## Simple Summary Table
-
-```{r}
-#| code-line-numbers: "|5,6|8"
 tbl <- ADSL |> 
   tbl_summary(
     by = ARM, 
@@ -163,7 +139,6 @@ tbl <- ADSL |>
   add_overall()
 ```
 
-<br>
 
 ```{r echo = FALSE}
 tbl |> 
@@ -228,18 +203,16 @@ tbl |>
 
 ```{r}
 #| label: 'tbl_n'
-tbl_n <- 
-  tbl_summary(
-    trial, 
-    include = grade, 
-    statistic = grade ~ "{n}"
-  ) |> 
-  modify_header(all_stat_cols() ~ "**N**") |> 
-  remove_footnote_header(all_stat_cols()) 
+library(survival)
 
-
-
-tbl_n
+tbl_uvreg <- cards::ADTTE |> 
+  tbl_uvregression(
+    y = Surv(AVAL, 1 - CNSR),
+    include = c(TRTA, AGE),
+    method = coxph,
+    exponentiate = TRUE, 
+    hide_n = TRUE)
+tbl_uvreg
 ```
 
 :::
@@ -248,18 +221,16 @@ tbl_n
 
 ```{r}
 #| label: 'tbl_age'
-tbl_age <-
-  tbl_continuous(
-    trial, 
-    include = grade, 
-    variable = age, 
-    by = trt
-  ) |> 
-  modify_header(
-    all_stat_cols() ~ "**{level}**"
-  ) 
+tbl_reg <- 
+  coxph(
+    Surv(AVAL, 1-CNSR)~TRTA+AGE, 
+    data = cards::ADTTE) |> 
+  tbl_regression(exponentiate=TRUE)
 
-tbl_age
+
+
+
+tbl_reg
 ```
 
 :::
@@ -271,35 +242,33 @@ tbl_age
 ```{r}
 #| label: 'tbl_merge'
 # combine the tables side by side
-list(tbl_n, tbl_age) |> 
-  tbl_merge(tab_spanner = FALSE) # suppress default header
+tbl <- list(tbl_uvreg, tbl_reg) |> 
+  tbl_merge(tab_spanner = c("**Univariable**", "**Multivariable**"))
+```
+
+<br>
+
+```{r echo = FALSE}
+as_gt(tbl) |> 
+  gt::cols_width(starts_with("estimate") ~ gt::pct(5))
+  
 ```
 
 ## tbl_stack() to combine vertically
 
 ```{r}
 #| label: 'tbl_stack'
-tbl_drug_a <- trial |> 
-  dplyr::filter(trt == "Drug A") |> 
-  tbl_summary(include = c(response, death), missing = "no")
-tbl_drug_b <- trial |> 
-  dplyr::filter(trt == "Drug B") |> 
-  tbl_summary(include = c(response, death), missing = "no")
-
 # stack the two tables 
-list(tbl_drug_a, tbl_drug_b) |> 
-  tbl_stack(group_header = c("Drug A", "Drug B")) |> # optionally include headers for each table
-  modify_header(all_stat_cols() ~ "**Outcome Rates**")
+tbl <- list(tbl_uvreg, tbl_reg) |> 
+  tbl_stack(group_header = c("Univariable", "Multivariable")) 
 ```
 
-## tbl_strata_nested_stack()
 
-```{r}
-trial |> 
-  tbl_strata_nested_stack(
-    strata = trt, 
-    ~ tbl_summary(.x, include = c(response, death), missing = "no")
-  )
+```{r echo=FALSE}
+modify_header(tbl, label = "") |> 
+  as_gt() |> 
+  gt::cols_width(starts_with("estimate") ~ gt::pct(5)) |> 
+  gt::tab_options(row_group.font.weight = "bold")
 ```
 
 # ARD-first tables
@@ -335,70 +304,37 @@ tbl_ard_wide_summary()
 
 ## ARD-first Tables
 
-We can use the skills we learned earlier today to create ARDs for gtsummary tables.
+We can use the skills we learned earlier today to create ARDs for simple _and_ complex gtsummary tables.
 
-```{r echo=FALSE, message=FALSE} 
+```{r message=FALSE, echo=FALSE}
 library(cards)
 ```
 
 ```{r}
-#| label: 'ard_stack'
-#| output-location: "column"
-#| message: true
-ard <- ard_stack(
-  data = trial, 
-  ard_continuous(variables = age),
-  ard_categorical(variables = grade),
-  .attributes=TRUE
-)
-
-ard
-```
-
-::: aside
-The `.attributes=TRUE` call adds column attributes, like labels, to the ARD table, which leads to better defaults by displaying the column labels in the table.
-:::
-
-## ARD-first Tables
-
-We can simply use the ARD from the previous slide, and pass it to `tbl_ard_summary()` for a summary table.
-
-```{r}
-#| label: 'tbl_ard_summary'
-#| output-location: "column"
-#| message: true
-
-tbl_ard_summary(ard)
-```
-
-
-## ARD-first Tables
-
-Now let's try a somewhat more complicated table.
-
-```{r}
 #| label: 'tbl_ard_summary2'
-#| output-location: "slide"
-#| code-line-numbers: "|3|7-8|10-16|17"
-trial |> 
+#| code-line-numbers: "|2,3,4,5,6,7,8|9,10,11,12,13"
+tbl <- ADSL |> 
   ard_stack( 
-    .by = trt,
-    ard_continuous(variables = age),
-    ard_categorical(variables = grade),
+    .by = ARM,
+    ard_continuous(variables = AGE),
+    ard_categorical(variables = RACE),
     # add this for best-looking tables
-    .attributes = TRUE,
-    .overall = TRUE # get unstratified summary statistics
+    .attributes = TRUE
   ) |> 
   tbl_ard_summary(
-    by = trt,
+    by = ARM,
     type = all_continuous() ~ "continuous2",
-    statistic = all_continuous() ~ c("{mean} ({sd})", "{min} - {max}"),
-    label = list(age = "Patient Age, yrs"),
-    overall = TRUE
+    statistic = all_continuous() ~ c("{mean} ({sd})", "{min} - {max}")
   ) |> 
   modify_caption("**Table 1. Subject Demographics**")
 ```
 
+## ARD-first Tables
+
+```{r echo=FALSE}
+as_gt(tbl) |> 
+  gt::cols_width(all_stat_cols() ~ gt::pct(25))
+```
 
 ## What About Other Tables?
 
@@ -410,25 +346,23 @@ While our examples have focused on simple demographics tables, the ARD structure
 
 ```{r}
 #| code-line-numbers: "|2|3-4|5-10|11"
-trial |> 
-  cardx::ard_stats_t_test_onesample(by = c(trt, grade), variables = age) |> 
+ADSL |> 
+  cardx::ard_stats_t_test_onesample(by = c(ARM, SEX), variables = AGE) |> 
   cards::update_ard_fmt_fn(stat_names = "p.value", 
                            fmt_fn = label_style_pvalue(prepend_p = TRUE)) |> 
   tbl_ard_continuous(
-    by = trt, 
-    include = grade,
-    variable = age,
+    by = ARM, 
+    include = SEX,
+    variable = AGE,
     statistic = ~"{estimate} ({conf.low}, {conf.high}; {p.value})"
   ) |> 
-  modify_footnote(all_stat_cols() ~ "One-sample t-test")
+  modify_footnote(all_stat_cols() ~ "Mean (95% CI; p-value)")
 ```
 
 ## ARD-first Table *Shells*
 
-```{r}
+```{r echo=FALSE}
 #| label: 'tbl_ard_summary-mock'
-#| output-location: "slide"
-#| code-line-numbers: "9-11"
 trial |> 
   ard_stack( 
     .by = trt,
@@ -475,24 +409,6 @@ ADAE[1:5,] |>
 ## {gtsummary} print engines
 
 ![](images/gtsummary_rmarkdown.png)
-
-## {gtsummary} print engines
-
-Use any print engine to customize table
-
-```{r}
-#| output-location: "column"
-#| code-line-numbers: "1,5,6,7,8"
-library(gtsummary)
-library(gt)
-trial |>
-  select(age, grade) |>
-  tbl_summary() |>
-  as_gt() |>
-  cols_width(label ~ px(300)) |>
-  cols_align(columns = stat_0, 
-             align = "left")
-```
 
 # In Closing
 
@@ -553,7 +469,7 @@ Gustavo Zapata Wainberg
 
 ## Connect!
 
-![](https://raw.githubusercontent.com/ddsjoberg/gtsummary/main/data-raw/misc_files/tbl_summary_demo_fast.gif)
+![](images/example-recording.gif)
 
 
 ::: columns
