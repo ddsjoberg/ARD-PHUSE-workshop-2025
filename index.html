@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -131,6 +165,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#description" id="toc-description" class="nav-link active" data-scroll-target="#description">Description</a></li>
+  <li><a href="#pre-work" id="toc-pre-work" class="nav-link" data-scroll-target="#pre-work">Pre-work</a></li>
   <li><a href="#slides" id="toc-slides" class="nav-link" data-scroll-target="#slides">Slides</a></li>
   <li><a href="#instructors" id="toc-instructors" class="nav-link" data-scroll-target="#instructors">Instructors</a></li>
   </ul>
@@ -169,6 +204,13 @@ ul.task-list li input[type="checkbox"] {
 <p>The CDISC Analysis Results Data (ARD) Model is an emerging standard for encoding statistical analysis summaries in a machine-readable format. Its primary objective is to streamline the processes of automation, ensuring reproducibility, promoting reusability, and enhancing traceability.</p>
 <p>The newly released {cards} R package, a collaborative effort in the Pharmaverse including Roche, GSK, and Novartis, offers a variety of functions for ARD generation. These range from basic univariate summaries like means and tabulations to complex multivariable summaries encompassing regression models and statistical tests.</p>
 <p>In this interactive workshop, attendees will learn about ARDs and how they fit into the larger CDISC Analysis Results Standard. They will get hands-on experience using {cards} to build ARDs for both simple and complex statistical summaries. Lastly, attendees will also be introduced to open-source tools for converting their ARDs into tables using the {gtsummary} and {tfrmt} R packages. Attendees will leave with a solid understanding of ARDs and the knowledge of how to integrate them into their daily work using open-source tools.</p>
+</section>
+<section id="pre-work" class="level2">
+<h2 class="anchored" data-anchor-id="pre-work">Pre-work</h2>
+<p>If you are planning to participate in the hands-on portion of the workshop, please come prepared the following packages installed on your local machine:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"cards"</span>, <span class="st">"cardx"</span>, <span class="st">"gtsummary"</span>, <span class="st">"tfrmt"</span>, <span class="st">"tfrmtbuilder"</span>, <span class="st">"pharmaverseadam"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or, you can make a copy of the following RStudio Cloud instance that has these packages pre-installed.</p>
+<p>TODO: ADD RSTUDIO CLOUD LINK</p>
 </section>
 <section id="slides" class="level2">
 <h2 class="anchored" data-anchor-id="slides">Slides</h2>
