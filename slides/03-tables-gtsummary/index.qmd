@@ -16,6 +16,10 @@ execute:
 
 ## Workshop outline
 
+TODO: Remove mock tables
+TODO: Make examples in ARD-first section the same as the previous section
+TODO: I have to cut some slides, or move to the back.
+
 ::: larger
 1.  Introduction to the Analysis Results Standard and {cards}
 

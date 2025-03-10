@@ -37,6 +37,7 @@ ADSL |>
 
 ```{r}
 #| message: true
+#| code-line-numbers: "4"
 ADSL |> 
   ard_continuous(
     variables = AGE,
@@ -52,6 +53,7 @@ ADSL |>
 
 
 ```{r}
+#| code-line-numbers: "7"
 cv <- function(x)  sd(x, na.rm = TRUE)/mean(x, na.rm = TRUE)
 
 ADSL |> 
@@ -70,6 +72,7 @@ Customize the statistics returned for each variable
 :::
 
 ```{r}
+#| code-line-numbers: "6,7"
 ADSL |> 
   dplyr::mutate(AGE2 = AGE) |> 
   ard_continuous(
@@ -80,31 +83,16 @@ ADSL |>
   )
 ```
 
-## {cards}: `ard_continuous()` fmt_fn
-
-::: {.small}
-Override the default formatting functions, method 1:
-:::
- 
-```{r}
-#| message: true
-ADSL |> 
-  ard_continuous(
-    variables = AGE,
-    by = ARM,                               
-    fmt_fn = ~list(mean = 0)                
-  ) |> 
-  apply_fmt_fn() # add a character column of rounded results
-```
 
 ## {cards}: `ard_continuous()` fmt_fn
 
 ::: {.small}
-Override the default formatting functions, method 2:
+Override the default formatting functions
 :::
 
 ```{r}
 #| message: true
+#| code-line-numbers: "6"
 ADSL |> 
   ard_continuous(
     variables = AGE,
@@ -145,7 +133,7 @@ _Any unobserved levels of the variables will be present in the resulting ARD._
 
 - `ard_missing()`: tabulates rates of missingness
 
-The results from all these functions are entirely compatible with one another, and can be stacked into a single data frame. 🥞
+The results from all these functions are entirely compatible with one another, and can be stacked into a single data frame. 🥞🥞🥞
 
 ## {cards}: Other Functions
 
@@ -153,7 +141,7 @@ In addition to exporting functions to prepare summaries, {cards} exports many ut
 
 Constructing: `bind_ard()`, `tidy_as_ard()`, `nest_for_ard()`, `check_ard_structure()`, and many more
 
-Wrangling: `shuffle_ard()`, `get_ard_statistics()`, `replace_null_statistic()`, etc.
+Wrangling: `rename_ard_columns()`, `get_ard_statistics()`, `replace_null_statistic()`, etc.
 
 
 ## {cards}: Stacking utilities
@@ -218,6 +206,7 @@ ard_continuous(
 First, compute the continuous summaries for AGE, BMI, HEIGHT, WEIGHT by TRT01A
 
 ```{r}
+#| message: TRUE
 ard_continuous(
   data = adsl,
   by = TRT01A,
@@ -230,6 +219,7 @@ ard_continuous(
 Next, compute the categorical summaries for AGEGR1, SEX, RACE, ETHNIC by TRT01A
 
 ```{r}
+#| message: TRUE
 #| eval: FALSE
 ard_categorical(
   data = adsl,
@@ -243,6 +233,7 @@ ard_categorical(
 Next, compute the categorical summaries for AGEGR1, SEX, RACE, ETHNIC by TRT01A
 
 ```{r}
+#| message: TRUE
 ard_categorical(
   data = adsl,
   by = TRT01A,
@@ -300,6 +291,7 @@ Also add the following pieces
 
 ```{r}
 #| eval: FALSE
+#| message: TRUE
 ard_stack(
   data = adsl,
   .by = TRT01A,
@@ -319,6 +311,7 @@ Also add the following pieces
     - total N 
 
 ```{r}
+#| message: TRUE
 ard_stack(
   data = adsl,
   .by = TRT01A,
@@ -332,6 +325,7 @@ ard_stack(
 
 ## {cards}: Hierarchical Summary Functions
 
+<!-- TODO: Becca to de-priotitize the messaging about ``ard_hierarchical()` and `ard_hierarchical_count()`; shorten title on upcoming slide -->
 Following hierarchical summary functions aid in nested tabulations (e.g. AE terms within SOC):
 
 -   `ard_hierarchical()`: calculating nested **subject-level** rates
@@ -352,6 +346,7 @@ Following hierarchical summary functions aid in nested tabulations (e.g. AE term
 :::
 ```{r}
 #| echo: FALSE
+#| message: TRUE
 
 adae <- ADAE |> 
   dplyr::filter(AESOC %in% unique(AESOC)[1:3]) |> 
@@ -396,8 +391,11 @@ ard_hier |>
 
 :::
 
+<!-- TODO: Becca to set width wider -->
+
 ```{r}
 #| eval: FALSE
+#| message: TRUE
 ard_stack_hierarchical_count(
   data = adae,
   variables = c(AESOC, AEDECOD),
@@ -408,6 +406,7 @@ ard_stack_hierarchical_count(
 
 ```{r}
 #| echo: FALSE
+#| message: TRUE
 ard_hier_c <- ard_stack_hierarchical_count(
   data = adae,
   variables = c(AESOC, AEDECOD),
@@ -446,6 +445,8 @@ ard_stack_hierarchical(
 
 ## Example: AE ARD
 
+<!-- TODO: Becca to make the results fit on slide. -->
+
 Calculate the number and percentage of *unique* subjects (USUBJID) with at least one AE:
   
 - Overall
@@ -455,6 +456,7 @@ Calculate the number and percentage of *unique* subjects (USUBJID) with at least
 By every combination of treatment group (TRT01A) and severity (AESEV)
 
 ```{r}
+#| message: TRUE
 ard_stack_hierarchical(
   data = adae,
   variables = c(AESOC, AEDECOD),
