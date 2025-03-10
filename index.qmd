@@ -25,6 +25,18 @@ The newly released {cards} R package, a collaborative effort in the Pharmaverse 
 
 In this interactive workshop, attendees will learn about ARDs and how they fit into the larger CDISC Analysis Results Standard. They will get hands-on experience using {cards} to build ARDs for both simple and complex statistical summaries. Lastly, attendees will also be introduced to open-source tools for converting their ARDs into tables using the {gtsummary} and {tfrmt} R packages. Attendees will leave with a solid understanding of ARDs and the knowledge of how to integrate them into their daily work using open-source tools.
 
+## Pre-work
+
+If you are planning to participate in the hands-on portion of the workshop, please come prepared the following packages installed on your local machine:
+
+```r
+install.packages(c("cards", "cardx", "gtsummary", "tfrmt", "tfrmtbuilder", "pharmaverseadam"))
+```
+
+Or, you can make a copy of the following RStudio Cloud instance that has these packages pre-installed.
+
+TODO: ADD RSTUDIO CLOUD LINK
+
 ## Slides
 
 [Introduction to the Analysis Results Standard and {cards}](slides/01-intro-cards)
