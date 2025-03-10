@@ -83,7 +83,7 @@ Example ARS Flow
 
 -   Rethinking QC
 
-    -   QC can be focused on the raw _and_/_or_ formatted values
+    -   QC can be focused on the raw and/or formatted values
   
         -   Optionnally, you don’t need to spend time trying to match formatted values
     
