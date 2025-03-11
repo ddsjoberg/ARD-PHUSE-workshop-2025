@@ -185,8 +185,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#example-demographics-ard-7" id="toc-example-demographics-ard-7" class="nav-link" data-scroll-target="#example-demographics-ard-7">Example: Demographics ARD</a></li>
   <li><a href="#example-demographics-ard-8" id="toc-example-demographics-ard-8" class="nav-link" data-scroll-target="#example-demographics-ard-8">Example: Demographics ARD</a></li>
   <li><a href="#cards-hierarchical-summary-functions" id="toc-cards-hierarchical-summary-functions" class="nav-link" data-scroll-target="#cards-hierarchical-summary-functions">{cards}: Hierarchical Summary Functions</a></li>
-  <li><a href="#cards-stacking-function-for-ard_hierarchical" id="toc-cards-stacking-function-for-ard_hierarchical" class="nav-link" data-scroll-target="#cards-stacking-function-for-ard_hierarchical">{cards}: Stacking function for <code>ard_hierarchical()</code></a></li>
-  <li><a href="#cards-stacking-function-for-ard_hierarchical_count" id="toc-cards-stacking-function-for-ard_hierarchical_count" class="nav-link" data-scroll-target="#cards-stacking-function-for-ard_hierarchical_count">{cards}: Stacking function for <code>ard_hierarchical_count()</code></a></li>
+  <li><a href="#cards-ard_stack_hierarchical" id="toc-cards-ard_stack_hierarchical" class="nav-link" data-scroll-target="#cards-ard_stack_hierarchical">{cards}: <code>ard_stack_hierarchical()</code></a></li>
+  <li><a href="#cards-ard_hierarchical_count" id="toc-cards-ard_hierarchical_count" class="nav-link" data-scroll-target="#cards-ard_hierarchical_count">{cards}: <code>ard_hierarchical_count()</code></a></li>
   <li><a href="#example-ae-ard" id="toc-example-ae-ard" class="nav-link" data-scroll-target="#example-ae-ard">Example: AE ARD</a></li>
   <li><a href="#example-ae-ard-1" id="toc-example-ae-ard-1" class="nav-link" data-scroll-target="#example-ae-ard-1">Example: AE ARD</a></li>
   </ul></li>
@@ -705,19 +705,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="cards-hierarchical-summary-functions" class="level2">
 <h2 class="anchored" data-anchor-id="cards-hierarchical-summary-functions">{cards}: Hierarchical Summary Functions</h2>
-<!-- TODO: Becca to de-priotitize the messaging about ``ard_hierarchical()` and `ard_hierarchical_count()`; shorten title on upcoming slide -->
-<p>Following hierarchical summary functions aid in nested tabulations (e.g.&nbsp;AE terms within SOC):</p>
 <ul>
-<li><p><code>ard_hierarchical()</code>: calculating nested <strong>subject-level</strong> rates</p></li>
-<li><p><code>ard_hierarchical_count()</code>: calculating nested <strong>event-level</strong> counts</p></li>
-<li><p><code>ard_stack_hierarchical()</code> and <code>ard_stack_hierarchical_count()</code>: perform hierarchical calculations across many levels of the hierarchy (e.g., Any AE Overall, by System Organ Class, by Preferred Term)</p></li>
+<li><p>Displays for hierarchical data typically report on each level of the hierarchy (Any AE Overall, by System Organ Class, by Preferred Term)</p></li>
+<li><p>Further, subject-level summaries require a different subset of the data each time. For example, to calculate Overall rates, we need to subset to 1 record per subject in ADAE.</p></li>
+<li><p><code>ard_stack_hierarchical</code> stacking functions simplify this multi-step process into a single step</p>
+<ul>
+<li><p><code>ard_stack_hierarchical()</code>: calculating nested <strong>subject-level rates</strong></p></li>
+<li><p><code>ard_stack_hierarchical_count()</code>: calculating nested <strong>event-level counts</strong></p></li>
+</ul></li>
 </ul>
 </section>
-<section id="cards-stacking-function-for-ard_hierarchical" class="level2">
-<h2 class="anchored" data-anchor-id="cards-stacking-function-for-ard_hierarchical">{cards}: Stacking function for <code>ard_hierarchical()</code></h2>
+<section id="cards-ard_stack_hierarchical" class="level2">
+<h2 class="anchored" data-anchor-id="cards-ard_stack_hierarchical">{cards}: <code>ard_stack_hierarchical()</code></h2>
 <div class="small">
 <ul>
-<li><p><code>ard_hierarchical</code> stacking functions simplify this multi-step process for calculating over a hierarchy into a single step</p></li>
+<li><p>Calculate <strong>subject-level rates</strong> over every level of <code>variables</code></p></li>
 <li><p>The <code>id</code> argument is used to subset the data along the way</p></li>
 </ul>
 </div>
@@ -767,11 +769,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="cards-stacking-function-for-ard_hierarchical_count" class="level2">
-<h2 class="anchored" data-anchor-id="cards-stacking-function-for-ard_hierarchical_count">{cards}: Stacking function for <code>ard_hierarchical_count()</code></h2>
+<section id="cards-ard_hierarchical_count" class="level2">
+<h2 class="anchored" data-anchor-id="cards-ard_hierarchical_count">{cards}: <code>ard_hierarchical_count()</code></h2>
 <div class="small">
 <ul>
-<li>Below is the stacking function for event-level summaries, aligned with <code>ard_hierarchical_count()</code></li>
+<li>Calculate <strong>event-level counts</strong> over every level of <code>variables</code></li>
 </ul>
 </div>
 <!-- TODO: Becca to set width wider -->
@@ -806,13 +808,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="example-ae-ard" class="level2">
 <h2 class="anchored" data-anchor-id="example-ae-ard">Example: AE ARD</h2>
-<p>Calculate the number and percentage of <em>unique</em> subjects (USUBJID) with at least one AE:</p>
-<ul>
-<li>Overall</li>
-<li>By each SOC (AESOC)</li>
-<li>By each Preferred term (AEDECOD) within SOC (AESOC)</li>
-</ul>
-<p>By every combination of treatment group (TRT01A) and severity (AESEV)</p>
+<div class="small">
+<p>Within every combination of <strong>treatment group (TRT01A)</strong> and <strong>severity (AESEV)</strong>, calculate the number and percentage of <em>unique</em> subjects (USUBJID) with at least one AE: (1) <strong>Overall</strong>, (2) <strong>By each SOC (AESOC)</strong>, and (3) <strong>By each Preferred term (AEDECOD) within SOC (AESOC)</strong></p>
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ard_stack_hierarchical</span>(</span>
 <span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ,</span>
@@ -826,13 +824,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="example-ae-ard-1" class="level2">
 <h2 class="anchored" data-anchor-id="example-ae-ard-1">Example: AE ARD</h2>
 <!-- TODO: Becca to make the results fit on slide. -->
-<p>Calculate the number and percentage of <em>unique</em> subjects (USUBJID) with at least one AE:</p>
-<ul>
-<li>Overall</li>
-<li>By each SOC (AESOC)</li>
-<li>By each Preferred term (AEDECOD) within SOC (AESOC)</li>
-</ul>
-<p>By every combination of treatment group (TRT01A) and severity (AESEV)</p>
+<div class="small">
+<p>Within every combination of <strong>treatment group (TRT01A)</strong> and <strong>severity (AESEV)</strong>, calculate the number and percentage of <em>unique</em> subjects (USUBJID) with at least one AE: (1) <strong>Overall</strong>, (2) <strong>By each SOC (AESOC)</strong>, and (3) <strong>By each Preferred term (AEDECOD) within SOC (AESOC)</strong></p>
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ard_stack_hierarchical</span>(</span>
 <span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> adae,</span>
