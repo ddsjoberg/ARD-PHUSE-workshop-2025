@@ -21,13 +21,13 @@ cache: false
 
 ::: {.larger}
 
-1. Introduction to the Analysis Results Standard and {cards}
+## Workshop outline
 
-2. _**Introduction to the {cardx} Package and ARD Extras**_
+1. Introduction to the Analysis Results Standard and ARDs with {cards}
 
-3. ARD to Tables with {gtsummary}
+2. _Introduction to the {cardx} Package and ARD Extras_
 
-4. ARD to Tables with {tfrmt}
+3. ARD to Tables with {gtsummary} and {tfrmt}
 
 :::
 
