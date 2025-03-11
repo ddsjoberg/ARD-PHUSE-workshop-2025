@@ -18,6 +18,22 @@ execute:
 cache: false
 ---
 
+## This workshop is brought to you by:
+
+:::: {.columns}
+
+::: {.column}
+
+![](images/sanofi.png){fig-alt="Sanofi"}
+:::
+
+::: {.column}
+
+![](images/pharmaverse-hex.png){fig-alt="pharmaverse hex"}
+:::
+
+::::
+
 ## Instructors
  
 :::{.larger}

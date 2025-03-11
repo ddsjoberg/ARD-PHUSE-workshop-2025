@@ -53,6 +53,7 @@ ADSL |>
 
 
 ```{r}
+#| message: true
 #| code-line-numbers: "7"
 cv <- function(x)  sd(x, na.rm = TRUE)/mean(x, na.rm = TRUE)
 
@@ -72,7 +73,8 @@ Customize the statistics returned for each variable
 :::
 
 ```{r}
-#| code-line-numbers: "6,7"
+#| message: true
+#| code-line-numbers: "4,6,7"
 ADSL |> 
   dplyr::mutate(AGE2 = AGE) |> 
   ard_continuous(
@@ -325,21 +327,22 @@ ard_stack(
 
 ## {cards}: Hierarchical Summary Functions
 
-<!-- TODO: Becca to de-priotitize the messaging about ``ard_hierarchical()` and `ard_hierarchical_count()`; shorten title on upcoming slide -->
-Following hierarchical summary functions aid in nested tabulations (e.g. AE terms within SOC):
+- Displays for hierarchical data typically report on each level of the hierarchy (Any AE Overall, by System Organ Class, by Preferred Term)
 
--   `ard_hierarchical()`: calculating nested **subject-level** rates
+- Further, subject-level summaries require a different subset of the data each time. For example, to calculate Overall rates, we need to subset to 1 record per subject in ADAE. 
 
--   `ard_hierarchical_count()`: calculating nested **event-level** counts
+- `ard_stack_hierarchical` stacking functions simplify this multi-step process into a single step
 
--   `ard_stack_hierarchical()` and `ard_stack_hierarchical_count()`: perform hierarchical calculations across many levels of the hierarchy (e.g., Any AE Overall, by System Organ Class, by Preferred Term)
+  -   `ard_stack_hierarchical()`: calculating nested **subject-level rates**
 
+  -   `ard_stack_hierarchical_count()`: calculating nested **event-level counts**
+  
 
-## {cards}: Stacking function for `ard_hierarchical()`
+## {cards}: `ard_stack_hierarchical()`
 
 ::: {.small}
 
-- `ard_hierarchical` stacking functions simplify this multi-step process for calculating over a hierarchy into a single step
+- Calculate **subject-level rates** over every level of `variables`
 
 - The `id` argument is used to subset the data along the way
 
@@ -366,6 +369,7 @@ ard_stack_hierarchical(
 ```
 
 ```{r}
+#| message: true
 #| echo: FALSE
 ard_hier <- ard_stack_hierarchical(
   data = adae,
@@ -383,11 +387,11 @@ ard_hier |>
 
 ```
 
-## {cards}: Stacking function for `ard_hierarchical_count()`
+## {cards}: `ard_hierarchical_count()`
 
 ::: {.small}
 
-- Below is the stacking function for event-level summaries, aligned with `ard_hierarchical_count()`
+- Calculate  **event-level counts** over every level of `variables`
 
 :::
 
@@ -421,15 +425,13 @@ ard_hier_c |>
     )
 ```
 
-## Example: AE ARD
+## Example: AE ARD 
 
-Calculate the number and percentage of *unique* subjects (USUBJID) with at least one AE:
-  
-- Overall
-- By each SOC (AESOC)
-- By each Preferred term (AEDECOD) within SOC (AESOC)
-  
-By every combination of treatment group (TRT01A) and severity (AESEV)
+::: {.small}
+Within every combination of **treatment group (TRT01A)** and **severity (AESEV)**,
+  calculate the number and percentage of *unique* subjects (USUBJID) with at least one AE:
+    (1) **Overall**, (2) **By each SOC (AESOC)**, and (3) **By each Preferred term (AEDECOD) within SOC (AESOC)**
+:::
 
 ```{r}
 #| eval: FALSE
@@ -447,13 +449,11 @@ ard_stack_hierarchical(
 
 <!-- TODO: Becca to make the results fit on slide. -->
 
-Calculate the number and percentage of *unique* subjects (USUBJID) with at least one AE:
-  
-- Overall
-- By each SOC (AESOC)
-- By each Preferred term (AEDECOD) within SOC (AESOC)
-  
-By every combination of treatment group (TRT01A) and severity (AESEV)
+::: {.small}
+Within every combination of **treatment group (TRT01A)** and **severity (AESEV)**,
+  calculate the number and percentage of *unique* subjects (USUBJID) with at least one AE:
+    (1) **Overall**, (2) **By each SOC (AESOC)**, and (3) **By each Preferred term (AEDECOD) within SOC (AESOC)**
+:::
 
 ```{r}
 #| message: TRUE
