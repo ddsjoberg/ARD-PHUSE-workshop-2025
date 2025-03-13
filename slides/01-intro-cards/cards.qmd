@@ -12,7 +12,7 @@
 
 -   Can be used within the ARS workflow and separately
 
--   49K downloads per month 🤯
+-   51K downloads per month 🤯
 
 
 ## {cards}: `ard_continuous()`
