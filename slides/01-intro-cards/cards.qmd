@@ -395,7 +395,9 @@ ard_hier |>
 
 :::
 
-<!-- TODO: Becca to set width wider -->
+```{r echo=FALSE}
+options(width = 200)
+```
 
 ```{r}
 #| eval: FALSE
@@ -447,13 +449,6 @@ ard_stack_hierarchical(
 
 ## Example: AE ARD
 
-<!-- TODO: Becca to make the results fit on slide. -->
-
-::: {.small}
-Within every combination of **treatment group (TRT01A)** and **severity (AESEV)**,
-  calculate the number and percentage of *unique* subjects (USUBJID) with at least one AE:
-    (1) **Overall**, (2) **By each SOC (AESOC)**, and (3) **By each Preferred term (AEDECOD) within SOC (AESOC)**
-:::
 
 ```{r}
 #| message: TRUE
@@ -468,4 +463,6 @@ ard_stack_hierarchical(
 ```
 
 
-
+```{r echo=FALSE}
+options(width = 120)
+```
