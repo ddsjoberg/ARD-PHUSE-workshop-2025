@@ -1,5 +1,5 @@
 ---
-title: "ARD + {gtsummary}"
+title: "ARD + Tables"
 author: "Daniel D. Sjoberg and Becca Krouse"
 logo: "images/gtsummary-logo.png"
 footer: "[https://www.danieldsjoberg.com/ARD-PHUSE-workshop-2025/](https://www.danieldsjoberg.com/ARD-PHUSE-workshop-2025/)"
@@ -21,7 +21,7 @@ execute:
 
 2. Introduction to the {cardx} Package and ARD Extras
 
-3. _ARD to Tables with {gtsummary} and {tfrmt}_
+3. **_ARD to Tables with {gtsummary} and {tfrmt}_**
 :::
 
 ## Tables in the {pharmaverse}
