@@ -6,7 +6,7 @@
 
 -   Part of the Pharmaverse
 
--   Collaboration between Roche, GSK, Novartis
+-   Collaboration between Roche, GSK, Novartis, and Pfizer
 
 -   Contains a variety of utilities for making ARDs
 
