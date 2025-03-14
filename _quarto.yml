@@ -31,6 +31,7 @@ website:
     contents:
      - href: index.qmd
        text: Home
+     - href: exercises.qmd
      - href: license.qmd
 
 format:

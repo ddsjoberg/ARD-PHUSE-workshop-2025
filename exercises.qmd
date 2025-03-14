@@ -1,0 +1,21 @@
+---
+title: Exercises
+---
+
+### Exercises
+
+```{r}
+#| echo: false
+#| warning: false
+readLines(here::here("exercises", "exercises.R")) |> 
+  purrr::walk(~cat(.x, "\n"))
+```
+
+### Solutions
+
+```{r}
+#| echo: false
+#| warning: false
+readLines(here::here("exercises", "solutions.R")) |> 
+  purrr::walk(~cat(.x, "\n"))
+```

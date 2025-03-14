@@ -190,7 +190,8 @@ adsl <- pharmaverseadam::adsl |>
     by = "USUBJID"
   )
 ```
-## Example: Demographics ARD
+
+## Exercise 1: Demographics ARD
 
 First, compute the continuous summaries for AGE, BMI, HEIGHT, WEIGHT by TRT01A
 
@@ -203,7 +204,7 @@ ard_continuous(
 )
 ```
 
-## Example: Demographics ARD
+## Exercise 1: Demographics ARD
 
 First, compute the continuous summaries for AGE, BMI, HEIGHT, WEIGHT by TRT01A
 
@@ -216,7 +217,7 @@ ard_continuous(
 )
 ```
 
-## Example: Demographics ARD
+## Exercise 2: Demographics ARD
 
 Next, compute the categorical summaries for AGEGR1, SEX, RACE, ETHNIC by TRT01A
 
@@ -230,7 +231,7 @@ ard_categorical(
 )
 ```
 
-## Example: Demographics ARD
+## Exercise 2: Demographics ARD
 
 Next, compute the categorical summaries for AGEGR1, SEX, RACE, ETHNIC by TRT01A
 
@@ -243,7 +244,7 @@ ard_categorical(
 )
 ```
 
-## Example: Demographics ARD
+## Exercise 3: Demographics ARD
 
 Perform all of the summaries in a single `ard_stack()` call, including:
    
@@ -264,7 +265,7 @@ ard_stack(
 )
 ```
 
-## Example: Demographics ARD
+## Exercise 3: Demographics ARD
 
 Perform all of the summaries in a single `ard_stack()` call, including:
    
@@ -283,7 +284,7 @@ ard_stack(
 )
 ```
 
-## Example: Demographics ARD
+## Exercise 4: Demographics ARD
 
 Also add the following pieces
    
@@ -304,7 +305,7 @@ ard_stack(
 )
 ```
 
-## Example: Demographics ARD
+## Exercise 4: Demographics ARD
 
 Also add the following pieces
    
@@ -427,7 +428,7 @@ ard_hier_c |>
     )
 ```
 
-## Example: AE ARD 
+## Exercise 5: AE ARD 
 
 ::: {.small}
 Within every combination of **treatment group (TRT01A)** and **severity (AESEV)**,
@@ -447,7 +448,7 @@ ard_stack_hierarchical(
 )
 ```
 
-## Example: AE ARD
+## Exercise 5: AE ARD
 
 
 ```{r}
