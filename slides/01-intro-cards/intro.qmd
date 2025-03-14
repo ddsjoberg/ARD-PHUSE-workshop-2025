@@ -9,6 +9,8 @@
 
 - You want to learn about new tools for making displays from ARDs
 
+- Familiarity with R helpful (but not required!)
+
 
 # Analysis Results Standard
 
