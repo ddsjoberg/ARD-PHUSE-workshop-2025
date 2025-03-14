@@ -839,8 +839,8 @@
     },
     "cards": {
       "Package": "cards",
-      "Version": "0.5.1",
-      "Source": "Repository",
+      "Version": "0.5.1.9002",
+      "Source": "GitHub",
       "Title": "Analysis Results Data",
       "Authors@R": "c( person(\"Daniel D.\", \"Sjoberg\", , \"danield.sjoberg@gmail.com\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0003-0862-2018\")), person(\"Becca\", \"Krouse\", , \"becca.z.krouse@gsk.com\", role = \"aut\"), person(\"Emily\", \"de la Rua\", , \"emily.de_la_rua@contractors.roche.com\", role = \"aut\"), person(\"F. Hoffmann-La Roche AG\", role = c(\"cph\", \"fnd\")), person(\"GlaxoSmithKline Research & Development Limited\", role = \"cph\") )",
       "Description": "Construct CDISC (Clinical Data Interchange Standards Consortium) compliant Analysis Results Data objects. These objects are used and re-used to construct summary tables, visualizations, and written reports. The package also exports utilities for working with these objects and creating new Analysis Results Data objects.",
@@ -870,16 +870,21 @@
       "Encoding": "UTF-8",
       "Language": "en-US",
       "LazyData": "true",
+      "Roxygen": "list(markdown = TRUE)",
       "RoxygenNote": "7.3.2",
-      "NeedsCompilation": "no",
       "Author": "Daniel D. Sjoberg [aut, cre] (<https://orcid.org/0000-0003-0862-2018>), Becca Krouse [aut], Emily de la Rua [aut], F. Hoffmann-La Roche AG [cph, fnd], GlaxoSmithKline Research & Development Limited [cph]",
       "Maintainer": "Daniel D. Sjoberg <danield.sjoberg@gmail.com>",
-      "Repository": "CRAN"
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "insightsengineering",
+      "RemoteRepo": "cards",
+      "RemoteRef": "main",
+      "RemoteSha": "bcc901cd5734b9c762b69ef36ebd50a7b332b607"
     },
     "cardx": {
       "Package": "cardx",
-      "Version": "0.2.3",
-      "Source": "Repository",
+      "Version": "0.2.3.9003",
+      "Source": "GitHub",
       "Title": "Extra Analysis Results Data Utilities",
       "Authors@R": "c( person(\"Daniel D.\", \"Sjoberg\", , \"danield.sjoberg@gmail.com\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0003-0862-2018\")), person(\"Abinaya\", \"Yogasekaram\", , \"abinaya.yogasekaram@contractors.roche.com\", role = \"aut\"), person(\"Emily\", \"de la Rua\", , \"emily.de_la_rua@contractors.roche.com\", role = \"aut\"), person(\"F. Hoffmann-La Roche AG\", role = c(\"cph\", \"fnd\")) )",
       "Description": "Create extra Analysis Results Data (ARD) summary objects. The package supplements the simple ARD functions from the 'cards' package, exporting functions to put statistical results in the ARD format. These objects are used and re-used to construct summary tables, visualizations, and written reports.",
@@ -921,11 +926,18 @@
       "Config/testthat/parallel": "true",
       "Encoding": "UTF-8",
       "Language": "en-US",
+      "LazyData": "true",
+      "Roxygen": "list(markdown = TRUE)",
       "RoxygenNote": "7.3.2",
-      "NeedsCompilation": "no",
       "Author": "Daniel D. Sjoberg [aut, cre] (<https://orcid.org/0000-0003-0862-2018>), Abinaya Yogasekaram [aut], Emily de la Rua [aut], F. Hoffmann-La Roche AG [cph, fnd]",
       "Maintainer": "Daniel D. Sjoberg <danield.sjoberg@gmail.com>",
-      "Repository": "CRAN"
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "insightsengineering",
+      "RemoteRepo": "cardx",
+      "RemoteRef": "main",
+      "RemoteSha": "4294026c8e904db8cf0fe11ed187b91c26f3759a",
+      "Remotes": "insightsengineering/cards"
     },
     "cellranger": {
       "Package": "cellranger",
@@ -960,10 +972,10 @@
     },
     "class": {
       "Package": "class",
-      "Version": "7.3-23",
+      "Version": "7.3-22",
       "Source": "Repository",
       "Priority": "recommended",
-      "Date": "2025-01-01",
+      "Date": "2023-05-02",
       "Depends": [
         "R (>= 3.0.0)",
         "stats",
@@ -972,7 +984,7 @@
       "Imports": [
         "MASS"
       ],
-      "Authors@R": "c(person(\"Brian\", \"Ripley\", role = c(\"aut\", \"cre\", \"cph\"), email = \"Brian.Ripley@R-project.org\"), person(\"William\", \"Venables\", role = \"cph\"))",
+      "Authors@R": "c(person(\"Brian\", \"Ripley\", role = c(\"aut\", \"cre\", \"cph\"), email = \"ripley@stats.ox.ac.uk\"), person(\"William\", \"Venables\", role = \"cph\"))",
       "Description": "Various functions for classification, including k-nearest neighbour, Learning Vector Quantization and Self-Organizing Maps.",
       "Title": "Functions for Classification",
       "ByteCompile": "yes",
@@ -980,7 +992,7 @@
       "URL": "http://www.stats.ox.ac.uk/pub/MASS4/",
       "NeedsCompilation": "yes",
       "Author": "Brian Ripley [aut, cre, cph], William Venables [cph]",
-      "Maintainer": "Brian Ripley <Brian.Ripley@R-project.org>",
+      "Maintainer": "Brian Ripley <ripley@stats.ox.ac.uk>",
       "Repository": "CRAN"
     },
     "cli": {
@@ -1254,8 +1266,8 @@
     },
     "crane": {
       "Package": "crane",
-      "Version": "0.1.0",
-      "Source": "Repository",
+      "Version": "0.1.0.9004",
+      "Source": "GitHub",
       "Title": "Supplements the 'gtsummary' Package for Pharmaceutical Reporting",
       "Authors@R": "c( person(\"Daniel D.\", \"Sjoberg\", , \"danield.sjoberg@gmail.com\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0003-0862-2018\")), person(\"Emily\", \"de la Rua\", , \"emily.de_la_rua@contractors.roche.com\", role = \"aut\"), person(\"Davide\", \"Garolini\", , \"davide.garolini@roche.com\", role = \"aut\"), person(\"Abinaya\", \"Yogasekaram\", , \"abinaya.yogasekaram@contractors.roche.com\", role = \"aut\"), person(\"F. Hoffmann-La Roche AG\", role = c(\"cph\", \"fnd\")) )",
       "Description": "Tables summarizing clinical trial results are often complex and require detailed tailoring prior to submission to a health authority.  The 'crane' package supplements the functionality of the 'gtsummary' package for creating these often highly bespoke tables in the pharmaceutical industry.",
@@ -1266,15 +1278,22 @@
         "R (>= 4.2)"
       ],
       "Imports": [
+        "broom (>= 1.0.5)",
+        "cards (>= 0.5.0)",
+        "cardx (>= 0.2.3.9002)",
         "cli (>= 3.6.4)",
         "dplyr (>= 1.1.4)",
         "flextable (>= 0.9.7)",
+        "glue (>= 1.8.0)",
         "gt (>= 0.11.1)",
         "gtsummary (>= 2.1.0)",
-        "rlang (>= 1.1.5)"
+        "rlang (>= 1.1.5)",
+        "survival (>= 3.6-4)",
+        "tidyr (>= 1.3.0)"
       ],
       "Suggests": [
-        "testthat (>= 3.0.0)"
+        "testthat (>= 3.0.0)",
+        "withr (>= 3.0.1)"
       ],
       "Config/Needs/check": "hms",
       "Config/Needs/website": "rmarkdown, yaml, insightsengineering/nesttemplate",
@@ -1282,11 +1301,18 @@
       "Config/testthat/parallel": "true",
       "Encoding": "UTF-8",
       "Language": "en-US",
+      "LazyData": "true",
+      "Roxygen": "list(markdown = TRUE)",
       "RoxygenNote": "7.3.2",
-      "NeedsCompilation": "no",
       "Author": "Daniel D. Sjoberg [aut, cre] (<https://orcid.org/0000-0003-0862-2018>), Emily de la Rua [aut], Davide Garolini [aut], Abinaya Yogasekaram [aut], F. Hoffmann-La Roche AG [cph, fnd]",
       "Maintainer": "Daniel D. Sjoberg <danield.sjoberg@gmail.com>",
-      "Repository": "CRAN"
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "insightsengineering",
+      "RemoteRepo": "crane",
+      "RemoteRef": "main",
+      "RemoteSha": "35e284ddbd7232ead302c96e04e14b671b637b61",
+      "Remotes": "insightsengineering/cardx"
     },
     "crayon": {
       "Package": "crayon",
@@ -5036,8 +5062,8 @@
     },
     "remotes": {
       "Package": "remotes",
-      "Version": "2.5.0",
-      "Source": "Repository",
+      "Version": "2.5.0.9000",
+      "Source": "GitHub",
       "Title": "R Package Installation from Remote Repositories, Including 'GitHub'",
       "Authors@R": "c( person(\"Gábor\", \"Csárdi\", , \"csardi.gabor@gmail.com\", role = c(\"aut\", \"cre\")), person(\"Jim\", \"Hester\", role = \"aut\"), person(\"Hadley\", \"Wickham\", role = \"aut\"), person(\"Winston\", \"Chang\", role = \"aut\"), person(\"Martin\", \"Morgan\", role = \"aut\"), person(\"Dan\", \"Tenenbaum\", role = \"aut\"), person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\")), person(\"Ascent Digital Services\", role = \"cph\") )",
       "Description": "Download and install R packages stored in 'GitHub', 'GitLab', 'Bitbucket', 'Bioconductor', or plain 'subversion' or 'git' repositories.  This package provides the 'install_*' functions in 'devtools'. Indeed most of the code was copied over from 'devtools'.",
@@ -5074,12 +5100,17 @@
       "Config/Needs/website": "tidyverse/tidytemplate",
       "Config/testthat/edition": "3",
       "Encoding": "UTF-8",
+      "Roxygen": "list(markdown = TRUE)",
       "RoxygenNote": "7.2.3",
       "SystemRequirements": "Subversion for install_svn, git for install_git",
-      "NeedsCompilation": "no",
       "Author": "Gábor Csárdi [aut, cre], Jim Hester [aut], Hadley Wickham [aut], Winston Chang [aut], Martin Morgan [aut], Dan Tenenbaum [aut], Posit Software, PBC [cph, fnd], Ascent Digital Services [cph]",
       "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
-      "Repository": "CRAN"
+      "RemoteType": "github",
+      "RemoteUsername": "r-lib",
+      "RemoteRepo": "remotes",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "bcd35d5ce22d7565397dea1bcf3f1bba5fd96d3e",
+      "RemoteHost": "api.github.com"
     },
     "renv": {
       "Package": "renv",
