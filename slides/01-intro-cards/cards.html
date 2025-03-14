@@ -776,7 +776,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Calculate <strong>event-level counts</strong> over every level of <code>variables</code></li>
 </ul>
 </div>
-<!-- TODO: Becca to set width wider -->
 <div class="cell">
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ard_stack_hierarchical_count</span>(</span>
 <span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> adae,</span>
@@ -790,16 +789,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>{cards} data frame: 4 x 13</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  group1 group1_level group2 group2_level variable variable_level stat_name
-1   TRTA      Placebo   &lt;NA&gt;                 AESOC      GASTROIN…         n
-2   TRTA      Placebo  AESOC    GASTROIN…  AEDECOD      DIARRHOEA         n
-3   TRTA      Placebo  AESOC    GASTROIN…  AEDECOD      DYSPEPSIA         n
-4   TRTA      Placebo  AESOC    GASTROIN…  AEDECOD      HIATUS H…         n
-  stat_label stat
-1          n   14
-2          n   10
-3          n    2
-4          n    2</code></pre>
+<pre><code>  group1 group1_level group2 group2_level variable variable_level stat_name stat_label stat
+1   TRTA      Placebo   &lt;NA&gt;                 AESOC      GASTROIN…         n          n   14
+2   TRTA      Placebo  AESOC    GASTROIN…  AEDECOD      DIARRHOEA         n          n   10
+3   TRTA      Placebo  AESOC    GASTROIN…  AEDECOD      DYSPEPSIA         n          n    2
+4   TRTA      Placebo  AESOC    GASTROIN…  AEDECOD      HIATUS H…         n          n    2</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ 4 more variables: context, fmt_fn, warning, error</code></pre>
@@ -823,10 +817,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="example-ae-ard-1" class="level2">
 <h2 class="anchored" data-anchor-id="example-ae-ard-1">Example: AE ARD</h2>
-<!-- TODO: Becca to make the results fit on slide. -->
-<div class="small">
-<p>Within every combination of <strong>treatment group (TRT01A)</strong> and <strong>severity (AESEV)</strong>, calculate the number and percentage of <em>unique</em> subjects (USUBJID) with at least one AE: (1) <strong>Overall</strong>, (2) <strong>By each SOC (AESOC)</strong>, and (3) <strong>By each Preferred term (AEDECOD) within SOC (AESOC)</strong></p>
-</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ard_stack_hierarchical</span>(</span>
 <span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> adae,</span>
@@ -841,28 +831,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 {cards} data frame: 351 x 15</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   group1 group1_level group2 group2_level group3 group3_level
-1    TRTA      Placebo  AESEV         MILD   &lt;NA&gt;             
-2    TRTA      Placebo  AESEV         MILD   &lt;NA&gt;             
-3    TRTA      Placebo  AESEV         MILD   &lt;NA&gt;             
-4    TRTA      Placebo  AESEV         MILD   &lt;NA&gt;             
-5    TRTA      Placebo  AESEV         MILD   &lt;NA&gt;             
-6    TRTA      Placebo  AESEV         MILD   &lt;NA&gt;             
-7    TRTA      Placebo  AESEV         MILD   &lt;NA&gt;             
-8    TRTA      Placebo  AESEV         MILD   &lt;NA&gt;             
-9    TRTA      Placebo  AESEV         MILD   &lt;NA&gt;             
-10   TRTA      Placebo  AESEV         MILD   &lt;NA&gt;             
-                       variable variable_level stat_name stat_label  stat
-1                         AESOC      GASTROIN…         n          n    10
-2                         AESOC      GASTROIN…         N          N   254
-3                         AESOC      GASTROIN…         p          % 0.039
-4                         AESOC      GENERAL …         n          n     8
-5                         AESOC      GENERAL …         N          N   254
-6                         AESOC      GENERAL …         p          % 0.031
-7                         AESOC      SKIN AND…         n          n    10
-8                         AESOC      SKIN AND…         N          N   254
-9                         AESOC      SKIN AND…         p          % 0.039
-10 ..ard_hierarchical_overall..           TRUE         n          n    25</code></pre>
+<pre><code>   group1 group1_level group2 group2_level group3 group3_level                     variable variable_level stat_name stat_label  stat
+1    TRTA      Placebo  AESEV         MILD   &lt;NA&gt;                                     AESOC      GASTROIN…         n          n    10
+2    TRTA      Placebo  AESEV         MILD   &lt;NA&gt;                                     AESOC      GASTROIN…         N          N   254
+3    TRTA      Placebo  AESEV         MILD   &lt;NA&gt;                                     AESOC      GASTROIN…         p          % 0.039
+4    TRTA      Placebo  AESEV         MILD   &lt;NA&gt;                                     AESOC      GENERAL …         n          n     8
+5    TRTA      Placebo  AESEV         MILD   &lt;NA&gt;                                     AESOC      GENERAL …         N          N   254
+6    TRTA      Placebo  AESEV         MILD   &lt;NA&gt;                                     AESOC      GENERAL …         p          % 0.031
+7    TRTA      Placebo  AESEV         MILD   &lt;NA&gt;                                     AESOC      SKIN AND…         n          n    10
+8    TRTA      Placebo  AESEV         MILD   &lt;NA&gt;                                     AESOC      SKIN AND…         N          N   254
+9    TRTA      Placebo  AESEV         MILD   &lt;NA&gt;                                     AESOC      SKIN AND…         p          % 0.039
+10   TRTA      Placebo  AESEV         MILD   &lt;NA&gt;              ..ard_hierarchical_overall..           TRUE         n          n    25</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ 341 more rows
