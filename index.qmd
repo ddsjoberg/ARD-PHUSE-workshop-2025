@@ -33,9 +33,7 @@ If you are planning to participate in the hands-on portion of the workshop, plea
 install.packages(c("cards", "cardx", "gtsummary", "tfrmt", "tfrmtbuilder", "pharmaverseadam"))
 ```
 
-Or, you can make a copy of the following RStudio Cloud instance that has these packages pre-installed.
-
-TODO: ADD RSTUDIO CLOUD LINK
+Or, you can make a copy of the following [RStudio Cloud instance](https://posit.cloud/spaces/627244/join?access_code=4hSWozyBep5aoNaasEbDhVg8iwtoRd7am4R4WPir) that has these packages pre-installed. A (free) Posit Cloud account is required.
 
 ## Slides
 
