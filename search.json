@@ -583,7 +583,7 @@
     "href": "index.html#pre-work",
     "title": "Analysis Results Datasets Using Open-Source Tools from the {pharmaverse}",
     "section": "Pre-work",
-    "text": "Pre-work\nIf you are planning to participate in the hands-on portion of the workshop, please come prepared the following packages installed on your local machine:\ninstall.packages(c(\"cards\", \"cardx\", \"gtsummary\", \"tfrmt\", \"tfrmtbuilder\", \"pharmaverseadam\"))\nOr, you can make a copy of the following RStudio Cloud instance that has these packages pre-installed.\nTODO: ADD RSTUDIO CLOUD LINK",
+    "text": "Pre-work\nIf you are planning to participate in the hands-on portion of the workshop, please come prepared the following packages installed on your local machine:\ninstall.packages(c(\"cards\", \"cardx\", \"gtsummary\", \"tfrmt\", \"tfrmtbuilder\", \"pharmaverseadam\"))\nOr, you can make a copy of the following RStudio Cloud instance that has these packages pre-installed. A (free) Posit Cloud account is required.",
     "crumbs": [
       "Home"
     ]
